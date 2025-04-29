@@ -300,7 +300,7 @@
             lblTitle.ForeColor = Color.FromArgb(64, 0, 64);
             lblTitle.Location = new Point(15, 16);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(151, 21);
+            lblTitle.Size = new Size(138, 21);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "Заполните анкету";
             // 
@@ -324,6 +324,7 @@
             btnSave.TabIndex = 16;
             btnSave.Text = "СОХРАНИТЬ";
             btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
             // 
             // QuestionForm
             // 

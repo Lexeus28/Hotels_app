@@ -1,90 +1,74 @@
-﻿using System;
+﻿using Hotels_app.classes;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Hotels_app
 {
     public partial class HotelListingForm : Form
     {
-        // Список отелей
         private List<Hotel> hotels;
+        private readonly ApplicationDbContext _context;
+        private readonly User _currentUser;
 
-        public HotelListingForm()
+        public HotelListingForm(User currentUser, ApplicationDbContext context)
         {
             InitializeComponent();
-            LoadHotelsData(); // Загружаем данные об отелях
-            LoadHotels();      // Отображаем отели
-        }
 
-        /// <summary>
-        /// Загрузка данных об отелях
-        /// </summary>
-        private void LoadHotelsData()
-        {
-            hotels = new List<Hotel>
+            _context = context;
+            _currentUser = currentUser;
+
+            // Заполняем текстовые поля
+            txtName.Text = _currentUser.first_name;
+            txtSurname.Text = _currentUser.last_name;
+
+            LoadHotelsData(); // Загружаем данные об отелях
+            LoadHotels();     // Отображаем отели
+            LoadCities();     // Загружаем города
+            LoadStars();      // Загружаем количество звезд
+
+            // Подписываемся на события изменения значений в ComboBox
+            cmbCity.SelectedIndexChanged += (sender, e) => FilterHotels();
+            cmbStars.SelectedIndexChanged += (sender, e) => FilterHotels();
+
+            txtPriceFrom.TextChanged += (sender, e) =>
             {
-                new Hotel
-                {
-                    hotel_name = "TETRIS RESORT",
-                    address = "ул. Парижская Коммуна д.64",
-                    hotel_description = "Прекрасное место для отдыха",
-                    hasSeaAccess = true,
-                    stars = 5
-                },
-                new Hotel
-                {
-                    hotel_name = "SUNSET INN",
-                    address = "ул. Ленина д.12",
-                    hotel_description = "Идеально для семейного отдыха",
-                    hasMountainView = true,
-                    stars = 4
-                },
-                new Hotel
-                {
-                    hotel_name = "MOUNTAIN VIEW",
-                    address = "ул. Горная д.3",
-                    hotel_description = "Незабываемые виды на горы",
-                    offersActiveRecreation = true,
-                    stars = 3
-                },
-               new Hotel
-                {
-                    hotel_name = "OVERDRIIIIIVE",
-                    address = "ул. Комарова д.3",
-                    hotel_description = "Вкусите хамона",
-                    offersActiveRecreation = true,
-                    stars = 5
-                }
+                FilterHotels();
+            };
+
+            txtPriceTo.TextChanged += (sender, e) =>
+            {
+                FilterHotels();
             };
         }
 
-        /// <summary>
-        /// Создание и отображение панелей для отелей
-        /// </summary>
-        private void LoadHotels()
+        private void LoadHotelsData()
+        {
+            hotels = _context.Hotels.ToList(); // Загружаем данные из базы данных
+        }
+
+        private void LoadHotels(List<Hotel> filteredHotels = null)
         {
             panelHotels.Controls.Clear();
             panelHotels.AutoScroll = true;
 
-            int verticalOffset = 13; // Начальный отступ
+            var hotelsToDisplay = filteredHotels ?? hotels;
 
-            foreach (var hotel in hotels)
+            int verticalOffset = 13;
+
+            foreach (var hotel in hotelsToDisplay)
             {
                 var hotelPanel = CreateHotelPanel(hotel);
 
-                hotelPanel.Location = new Point(4, verticalOffset); // Отступ слева
+                hotelPanel.Location = new Point(4, verticalOffset);
                 panelHotels.Controls.Add(hotelPanel);
 
-                verticalOffset += hotelPanel.Height + 7; // Межпанельный отступ
+                verticalOffset += hotelPanel.Height + 7;
             }
         }
 
-        /// <summary>
-        /// Создание панели для одного отеля
-        /// </summary>
-        /// <param name="hotel">Объект класса Hotel</param>
-        /// <returns>Панель с данными об отеле</returns>
         private Panel CreateHotelPanel(Hotel hotel)
         {
             var hotelPanel = new Panel
@@ -101,7 +85,7 @@ namespace Hotels_app
                 BorderColor = Color.Transparent,
                 BorderRadius = 15,
                 FlatStyle = FlatStyle.Flat,
-                Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 204),
+                Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold),
                 ForeColor = Color.FromArgb(243, 200, 220),
                 HoverColor = Color.FromArgb(213, 140, 176),
                 Location = new Point(12, 10),
@@ -112,12 +96,17 @@ namespace Hotels_app
                 Text = "НОМЕРА",
                 UseVisualStyleBackColor = false
             };
+            roomsButton.Click += (sender, e) =>
+            {
+                MessageBox.Show($"Просмотр номеров отеля: {hotel.hotel_name}", "Номера");
+                // Здесь можно открыть новую форму с номерами отеля
+            };
             hotelPanel.Controls.Add(roomsButton);
 
             // Название отеля
             var nameLabel = new Label
             {
-                Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold, GraphicsUnit.Point, 204),
+                Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold),
                 ForeColor = Color.FromArgb(243, 200, 220),
                 Location = new Point(181, 32),
                 Size = new Size(307, 40),
@@ -137,7 +126,7 @@ namespace Hotels_app
             // Адрес
             var addressLabel = new Label
             {
-                Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 204),
+                Font = new Font("Microsoft Sans Serif", 10F),
                 ForeColor = Color.FromArgb(230, 174, 207),
                 Location = new Point(0, 5),
                 Size = new Size(455, 20),
@@ -149,7 +138,7 @@ namespace Hotels_app
             // Описание
             var descLabel = new Label
             {
-                Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Italic, GraphicsUnit.Point, 204),
+                Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Italic),
                 ForeColor = Color.FromArgb(230, 174, 207),
                 Location = new Point(0, 25),
                 Size = new Size(455, 20),
@@ -164,7 +153,7 @@ namespace Hotels_app
             var pictureBox = new PictureBox
             {
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
-                Image = Properties.Resources.кама, // Используем ресурс по умолчанию
+                Image = Properties.Resources.кама,
                 Location = new Point(510, 12),
                 Size = new Size(230, 150),
                 SizeMode = PictureBoxSizeMode.StretchImage,
@@ -173,6 +162,61 @@ namespace Hotels_app
             hotelPanel.Controls.Add(pictureBox);
 
             return hotelPanel;
+        }
+
+        private void LoadCities()
+        {
+            var cities = _context.Hotels.Select(h => h.city).Distinct().ToList();
+            cmbCity.Items.Clear();
+            cmbCity.Items.AddRange(cities.ToArray());
+        }
+
+        private void LoadStars()
+        {
+            cmbStars.Items.Clear();
+            for (int i = 1; i <= 5; i++)
+            {
+                cmbStars.Items.Add(i.ToString());
+            }
+        }
+
+        private void BtnOpenQuestionnaire_Click(object sender, EventArgs e)
+        {
+            var questionnaireForm = new QuestionForm(_currentUser, _context);
+            questionnaireForm.ShowDialog();
+        }
+
+        private void FilterHotels()
+        {
+            var filteredHotels = hotels;
+
+            // Фильтр по городу
+            if (cmbCity.SelectedItem != null)
+            {
+                string selectedCity = cmbCity.SelectedItem.ToString();
+                filteredHotels = filteredHotels.Where(h => h.city.Equals(selectedCity, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            // Фильтр по количеству звезд
+            if (int.TryParse(cmbStars.SelectedItem?.ToString(), out int stars))
+            {
+                filteredHotels = filteredHotels.Where(h => h.stars == stars).ToList();
+            }
+
+            // Фильтр по цене "от"
+            if (!string.IsNullOrWhiteSpace(txtPriceFrom.Text) && decimal.TryParse(txtPriceFrom.Text, out decimal priceFrom))
+            {
+                filteredHotels = filteredHotels.Where(h => h.mn_price >= priceFrom).ToList();
+            }
+
+            // Фильтр по цене "до"
+            if (!string.IsNullOrWhiteSpace(txtPriceTo.Text) && decimal.TryParse(txtPriceTo.Text, out decimal priceTo))
+            {
+                filteredHotels = filteredHotels.Where(h => h.mx_price <= priceTo).ToList();
+            }
+
+            // Обновление отображения
+            LoadHotels(filteredHotels);
         }
     }
 }
