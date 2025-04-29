@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +17,7 @@ namespace Hotels_app.classes
         private int _capacity;
         private string _description;
         private Image _image;
-
+        [Key]
         public Guid RoomId
         {
             get { return _roomId; }
@@ -50,6 +52,7 @@ namespace Hotels_app.classes
             get { return _description; }
             set { _description = value; }
         }
+        [NotMapped]
         public Image image
         {
             get { return _image; }

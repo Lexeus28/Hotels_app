@@ -1,6 +1,6 @@
 ﻿namespace Hotels_app
 {
-    partial class AutorizationForm
+    partial class AuthorizationForm
     {
         /// <summary>
         /// Required designer variable.
@@ -98,17 +98,18 @@
             btnLogin.TabIndex = 4;
             btnLogin.Text = "ВОЙТИ";
             btnLogin.UseVisualStyleBackColor = false;
+            btnLogin.Click += this.btnLogin_Click;
             // 
             // txtPassword
             // 
             txtPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtPassword.PasswordChar = '•';
             txtPassword.BackColor = Color.FromArgb(243, 200, 220);
             txtPassword.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             txtPassword.ForeColor = Color.FromArgb(118, 118, 118);
             txtPassword.Location = new Point(93, 162);
             txtPassword.Margin = new Padding(4, 3, 4, 3);
             txtPassword.Name = "txtPassword";
+            txtPassword.PasswordChar = '•';
             txtPassword.PlaceholderText = "пароль";
             txtPassword.Size = new Size(460, 26);
             txtPassword.TabIndex = 3;
@@ -154,7 +155,7 @@
             btnClose.Text = "×";
             btnClose.UseVisualStyleBackColor = false;
             // 
-            // AutorizationForm
+            // AuthorizationForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -162,7 +163,7 @@
             Controls.Add(panelMain);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4, 3, 4, 3);
-            Name = "AutorizationForm";
+            Name = "AuthorizationForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Авторизация";
             panelMain.ResumeLayout(false);

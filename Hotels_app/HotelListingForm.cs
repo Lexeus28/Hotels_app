@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hotels_app.classes;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -10,7 +12,7 @@ namespace Hotels_app
         // Список отелей
         private List<Hotel> hotels;
 
-        public HotelListingForm()
+        public HotelListingForm(ApplicationDbContext context)
         {
             InitializeComponent();
             LoadHotelsData(); // Загружаем данные об отелях

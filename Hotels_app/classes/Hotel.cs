@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 public class Hotel
 {
@@ -28,7 +29,7 @@ public class Hotel
     }
 
     // Свойства с открытым чтением и записью
-
+    [Key]
     public Guid hotel_id
     {
         get { return _hotelId; }
