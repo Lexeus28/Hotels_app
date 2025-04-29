@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Hotels_app.classes;
 
 namespace Hotels_app
 {
@@ -22,7 +23,7 @@ namespace Hotels_app
 
         private const int WM_NCLBUTTONDOWN = 0xA1;
         private const int HT_CAPTION = 0x2;
-        public QuestionForm()
+        public QuestionForm(User user, ApplicationDbContext context)
         {
             InitializeComponent();
             panelMain.MouseDown += Panel_MouseDown;

@@ -22,6 +22,7 @@ namespace Hotels_app
         public bool? prefers_active_rest { get; set; }        // Активный отдых (true) или Спокойный (false)
         public bool? prefers_asian_cuisine { get; set; }      // Азиатская кухня (true) или Европейская (false)
         public bool? prefers_quiet_place { get; set; }        // Тихая местность (true) или Шумный город (false)
+        public bool isfirstlogin { get; set; } = true;
         [Key]
         public Guid user_id
         {

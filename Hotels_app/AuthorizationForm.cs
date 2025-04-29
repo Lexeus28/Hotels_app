@@ -81,12 +81,39 @@ namespace Hotels_app
             {
                 MessageBox.Show("Авторизация успешна!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Передаем контекст в новую форму
-                var hotelListingForm = new HotelListingForm(_context);
-                hotelListingForm.Closed += (s, args) => this.Close(); // Закрываем приложение, если новая форма закрыта
-                hotelListingForm.Show();
+                // Находим пользователя по логину
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.username == login);
 
-                this.Hide();
+                // Проверяем, является ли это первым входом
+                if (user.isfirstlogin)
+                {
+                    // Открываем форму HotelListingForm
+                    var hotelListingForm = new HotelListingForm(_context);
+
+                    // Предлагаем пройти анкету
+                    var result = MessageBox.Show(
+                        "Вы впервые авторизуетесь. Хотите пройти анкету?",
+                        "Анкета",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        // Открываем форму QuestionForm поверх HotelListingForm
+                        var questionForm = new QuestionForm(user, _context);
+                        questionForm.ShowDialog(); // ShowDialog делает форму модальной
+                    }
+
+                    // Обновляем флаг IsFirstLogin
+                    user.isfirstlogin = false;
+                    await _context.SaveChangesAsync();
+                }
+
+                // Открываем форму HotelListingForm
+                var hotelListing = new HotelListingForm(_context);
+                hotelListing.Show();
+
+                this.Close();
             }
         }
 
