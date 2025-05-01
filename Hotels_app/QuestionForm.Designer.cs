@@ -71,7 +71,7 @@
             panelMain.Location = new Point(0, 0);
             panelMain.Margin = new Padding(0);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(504, 353);
+            panelMain.Size = new Size(504, 367);
             panelMain.TabIndex = 0;
             // 
             // btnClose
@@ -330,7 +330,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(504, 353);
+            ClientSize = new Size(504, 367);
             Controls.Add(panelMain);
             FormBorderStyle = FormBorderStyle.None;
             Name = "QuestionForm";

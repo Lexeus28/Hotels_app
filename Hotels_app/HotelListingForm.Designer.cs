@@ -18,7 +18,7 @@
             panelMain = new Panel();
             panelHotels = new Panel();
             panelProfile = new Panel();
-            BtnOpenQuestionnaire = new Button();
+            BtnOpenQuestionnaire = new RoundButton();
             btnDeleteAccount = new RoundButton();
             btnBooked = new RoundButton();
             txtPriceTo = new TextBox();
@@ -88,11 +88,19 @@
             // BtnOpenQuestionnaire
             // 
             BtnOpenQuestionnaire.BackColor = Color.FromArgb(231, 143, 174);
-            BtnOpenQuestionnaire.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            BtnOpenQuestionnaire.BorderColor = Color.Transparent;
+            BtnOpenQuestionnaire.BorderRadius = 15;
+            BtnOpenQuestionnaire.FlatAppearance.BorderSize = 0;
+            BtnOpenQuestionnaire.FlatStyle = FlatStyle.Flat;
+            BtnOpenQuestionnaire.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
             BtnOpenQuestionnaire.ForeColor = Color.FromArgb(243, 200, 220);
-            BtnOpenQuestionnaire.Location = new Point(161, 0);
+            BtnOpenQuestionnaire.HoverColor = Color.FromArgb(213, 140, 176);
+            BtnOpenQuestionnaire.Location = new Point(120, 11);
+            BtnOpenQuestionnaire.MinimumSize = new Size(100, 46);
             BtnOpenQuestionnaire.Name = "BtnOpenQuestionnaire";
-            BtnOpenQuestionnaire.Size = new Size(75, 30);
+            BtnOpenQuestionnaire.PressColor = Color.FromArgb(132, 49, 90);
+            BtnOpenQuestionnaire.PressDepth = 0.15F;
+            BtnOpenQuestionnaire.Size = new Size(100, 46);
             BtnOpenQuestionnaire.TabIndex = 1;
             BtnOpenQuestionnaire.Text = "Анкета";
             BtnOpenQuestionnaire.UseVisualStyleBackColor = false;
@@ -343,6 +351,6 @@
         private TextBox txtSurname;
         private Label lblSurname;
         private Label lblProfile;
-        private Button BtnOpenQuestionnaire;
+        private RoundButton BtnOpenQuestionnaire;
     }
 }

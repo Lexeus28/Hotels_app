@@ -1,4 +1,5 @@
 ﻿using Hotels_app.classes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -59,7 +60,9 @@ namespace Hotels_app
 
         private void LoadHotelsData()
         {
-            hotels = _context.Hotels.ToList(); // Загружаем данные из базы данных
+            hotels = _context.Hotels
+                .Include(h => h.city) // Загружаем связанные данные о городах
+                .ToList();
         }
         public void ReloadHotels()
         {
@@ -188,7 +191,7 @@ namespace Hotels_app
 
         private void LoadCities()
         {
-            var cities = _context.Hotels.Select(h => h.city).Distinct().ToList();
+            var cities = _context.Cities.Select(c => c.title).Distinct().ToList();
             cmbCity.Items.Clear();
             cmbCity.Items.Add("");
             cmbCity.Items.AddRange(cities.ToArray());
@@ -215,36 +218,36 @@ namespace Hotels_app
 
         private void FilterHotels()
         {
-            // Начинаем с полного списка отелей
-            var filteredHotels = hotels;
+            var filteredHotels = hotels.AsQueryable(); // Преобразуем в IQueryable
 
             // Фильтр по городу
             if (!string.IsNullOrWhiteSpace(cmbCity.Text))
             {
                 string selectedCity = cmbCity.Text.Trim();
-                filteredHotels = filteredHotels.Where(h => h.city.Equals(selectedCity, StringComparison.OrdinalIgnoreCase)).ToList();
+                filteredHotels = filteredHotels
+                    .Where(h => h.city != null && h.city.title.Equals(selectedCity, StringComparison.OrdinalIgnoreCase));
             }
 
             // Фильтр по количеству звезд
             if (int.TryParse(cmbStars.SelectedItem?.ToString(), out int stars))
             {
-                filteredHotels = filteredHotels.Where(h => h.stars == stars).ToList();
+                filteredHotels = filteredHotels.Where(h => h.stars == stars);
             }
 
             // Фильтр по цене "от"
             if (!string.IsNullOrWhiteSpace(txtPriceFrom.Text) && decimal.TryParse(txtPriceFrom.Text, out decimal priceFrom))
             {
-                filteredHotels = filteredHotels.Where(h => h.mn_price >= priceFrom).ToList();
+                filteredHotels = filteredHotels.Where(h => h.mn_price >= priceFrom);
             }
 
             // Фильтр по цене "до"
             if (!string.IsNullOrWhiteSpace(txtPriceTo.Text) && decimal.TryParse(txtPriceTo.Text, out decimal priceTo))
             {
-                filteredHotels = filteredHotels.Where(h => h.mx_price <= priceTo).ToList();
+                filteredHotels = filteredHotels.Where(h => h.mx_price <= priceTo);
             }
 
             // Обновление отображения
-            LoadHotels(filteredHotels);
+            LoadHotels(filteredHotels.ToList());
         }
 
         private int CalculateMatchScore(Hotel hotel, User user)

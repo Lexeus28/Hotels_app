@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hotels_app.classes;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,8 +8,7 @@ public class Hotel
     // Приватные поля
     private Guid _hotelId;
     private string _hotelName;
-    private string _country;
-    private string _city;
+    private City _city;
     private byte _stars;
     private byte[] _image_byte;
     private Image _image;
@@ -45,13 +45,7 @@ public class Hotel
         set { _hotelName = value; }
     }
 
-    public string country
-    {
-        get { return _country; }
-        set { _country = value; }
-    }
-
-    public string city
+    public City city
     {
         get { return _city; }
         set { _city = value; }
