@@ -117,6 +117,7 @@
             btnDeleteAccount.TabIndex = 15;
             btnDeleteAccount.Text = "удалить аккаунт";
             btnDeleteAccount.UseVisualStyleBackColor = false;
+            btnDeleteAccount.Click += btnDeleteAccount_Click;
             // 
             // btnBooked
             // 
@@ -138,6 +139,7 @@
             btnBooked.TabIndex = 14;
             btnBooked.Text = "забронированные";
             btnBooked.UseVisualStyleBackColor = false;
+            btnBooked.Click += btnBooked_Click;
             // 
             // txtPriceTo
             // 

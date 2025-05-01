@@ -21,7 +21,7 @@ namespace Hotels_app
                 first_name = "Иван",
                 last_name = "Иванов",
                 patronymic = "Иванович",
-                username = "ivan212fкаeаrуk34f4",
+                username = "ivan2frwпRkR3еf4",
                 password_hash = "hashed_password_1", // Хэшированный пароль
                 phone_number = "+79001234567"
             };

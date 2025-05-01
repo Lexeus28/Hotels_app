@@ -9,10 +9,14 @@ namespace Hotels_app
     public partial class BookedRoomsForm : Form
     {
         private List<Room> bookedRooms;
+        private readonly User _currentUser;
+        private readonly ApplicationDbContext _context;
 
-        public BookedRoomsForm()
+        public BookedRoomsForm(User currentUser, ApplicationDbContext context)
         {
             InitializeComponent();
+            _currentUser = currentUser;
+            _context = context;
             LoadBookedRooms();
         }
 

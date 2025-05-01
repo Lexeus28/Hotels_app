@@ -59,6 +59,11 @@ namespace Hotels_app
 
             MessageBox.Show("Анкета успешно сохранена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+            if (Owner is HotelListingForm hotelListingForm)
+            {
+                hotelListingForm.ReloadHotels();
+            }
+
             // Закрытие формы после сохранения
             this.Close();
         }

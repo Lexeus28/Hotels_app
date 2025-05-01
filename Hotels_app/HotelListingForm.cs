@@ -29,6 +29,10 @@ namespace Hotels_app
             LoadCities();     // Загружаем города
             LoadStars();      // Загружаем количество звезд
 
+            // Устанавливаем начальные значения
+            cmbCity.SelectedIndex = 0; // Пустой вариант
+            cmbStars.SelectedIndex = 0; // Пустой вариант
+
             // Подписываемся на события изменения значений в ComboBox
             cmbCity.SelectedIndexChanged += (sender, e) => FilterHotels();
             cmbStars.SelectedIndexChanged += (sender, e) => FilterHotels();
@@ -42,13 +46,26 @@ namespace Hotels_app
             {
                 FilterHotels();
             };
+
+            cmbCity.TextChanged += (sender, e) =>
+            {
+                FilterHotels();
+            };
+            if (!_currentUser.isfirstlogin)
+            {
+                FilterHotels(); // Применяем фильтры и рекомендации
+            }
         }
 
         private void LoadHotelsData()
         {
             hotels = _context.Hotels.ToList(); // Загружаем данные из базы данных
         }
-
+        public void ReloadHotels()
+        {
+            LoadHotelsData(); // Загружаем актуальные данные об отелях
+            FilterHotels();   // Применяем фильтры и рекомендации
+        }
         private void LoadHotels(List<Hotel> filteredHotels = null)
         {
             panelHotels.Controls.Clear();
@@ -56,9 +73,14 @@ namespace Hotels_app
 
             var hotelsToDisplay = filteredHotels ?? hotels;
 
+            // Сортировка отелей по оценке соответствия
+            var sortedHotels = hotelsToDisplay
+                .OrderByDescending(h => CalculateMatchScore(h, _currentUser))
+                .ToList();
+
             int verticalOffset = 13;
 
-            foreach (var hotel in hotelsToDisplay)
+            foreach (var hotel in sortedHotels)
             {
                 var hotelPanel = CreateHotelPanel(hotel);
 
@@ -98,8 +120,8 @@ namespace Hotels_app
             };
             roomsButton.Click += (sender, e) =>
             {
-                MessageBox.Show($"Просмотр номеров отеля: {hotel.hotel_name}", "Номера");
-                // Здесь можно открыть новую форму с номерами отеля
+                var roomListingForm = new RoomListingForm(hotel, _context);
+                roomListingForm.Show();
             };
             hotelPanel.Controls.Add(roomsButton);
 
@@ -168,12 +190,14 @@ namespace Hotels_app
         {
             var cities = _context.Hotels.Select(h => h.city).Distinct().ToList();
             cmbCity.Items.Clear();
+            cmbCity.Items.Add("");
             cmbCity.Items.AddRange(cities.ToArray());
         }
 
         private void LoadStars()
         {
             cmbStars.Items.Clear();
+            cmbStars.Items.Add("");
             for (int i = 1; i <= 5; i++)
             {
                 cmbStars.Items.Add(i.ToString());
@@ -182,18 +206,22 @@ namespace Hotels_app
 
         private void BtnOpenQuestionnaire_Click(object sender, EventArgs e)
         {
-            var questionnaireForm = new QuestionForm(_currentUser, _context);
+            var questionnaireForm = new QuestionForm(_currentUser, _context)
+            {
+                Owner = this // Передаем ссылку на текущую форму
+            };
             questionnaireForm.ShowDialog();
         }
 
         private void FilterHotels()
         {
+            // Начинаем с полного списка отелей
             var filteredHotels = hotels;
 
             // Фильтр по городу
-            if (cmbCity.SelectedItem != null)
+            if (!string.IsNullOrWhiteSpace(cmbCity.Text))
             {
-                string selectedCity = cmbCity.SelectedItem.ToString();
+                string selectedCity = cmbCity.Text.Trim();
                 filteredHotels = filteredHotels.Where(h => h.city.Equals(selectedCity, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
@@ -217,6 +245,60 @@ namespace Hotels_app
 
             // Обновление отображения
             LoadHotels(filteredHotels);
+        }
+
+        private int CalculateMatchScore(Hotel hotel, User user)
+        {
+            int score = 0;
+
+            // Проверка предпочтений пользователя
+            if (user.prefers_sea.HasValue && user.prefers_sea.Value && hotel.has_sea_access) score++;
+            if (user.prefers_sea.HasValue && !user.prefers_sea.Value && hotel.has_mountain_view) score++;
+
+            if (user.prefers_historical_places.HasValue && user.prefers_historical_places.Value && hotel.has_historical_sites) score++;
+            if (user.prefers_active_rest.HasValue && user.prefers_active_rest.Value && hotel.offers_active_recreation) score++;
+
+            if (user.prefers_asian_cuisine.HasValue && user.prefers_asian_cuisine.Value && hotel.has_asian_cuisine) score++;
+            if (user.prefers_asian_cuisine.HasValue && !user.prefers_asian_cuisine.Value && hotel.has_european_cuisine) score++;
+
+            if (user.prefers_quiet_place.HasValue && user.prefers_quiet_place.Value && hotel.is_quiet_location) score++;
+            if (user.prefers_quiet_place.HasValue && !user.prefers_quiet_place.Value && hotel.is_city_center) score++;
+
+            return score;
+        }
+
+        private void btnDeleteAccount_Click(object sender, EventArgs e)
+        {
+            // Показываем диалоговое окно с предупреждением
+            DialogResult result = MessageBox.Show(
+                "Вы уверены, что хотите удалить свой аккаунт? Это действие нельзя отменить.",
+                "Подтверждение удаления",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                // Удаляем аккаунт из базы данных
+                _context.Users.Remove(_currentUser);
+                _context.SaveChanges();
+
+                MessageBox.Show("Аккаунт успешно удален.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Перенаправляем пользователя на форму авторизации
+                AutorizationForm autorizationForm = new AutorizationForm();
+                autorizationForm.Show();
+                this.Hide(); // Скрываем текущую форму
+            }
+
+        }
+        private void btnBooked_Click(object sender, EventArgs e)
+        {
+
+            // Создаем экземпляр формы BookedRoomsForm
+            var bookedRoomsForm = new BookedRoomsForm(_currentUser, _context);
+
+            // Показываем форму
+            bookedRoomsForm.Show();
         }
     }
 }

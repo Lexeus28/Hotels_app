@@ -10,8 +10,10 @@ namespace Hotels_app
     {
         private List<Room> rooms;
         private int currentTab = 1; // 1-комнатные активны по умолчанию
+        private readonly Hotel _hotel;
+        private readonly ApplicationDbContext _context;
 
-        public RoomListingForm()
+        public RoomListingForm(Hotel hotel, ApplicationDbContext context)
         {
             InitializeComponent();
             InitializeRooms();
