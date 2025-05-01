@@ -23,29 +23,16 @@ namespace Hotels_app
                 title = "Пермь"
             };
 
-            // Создаем нового пользователя
-            User user = new User
-            {
-                user_id = Guid.NewGuid(), // Генерируем уникальный идентификатор
-                first_name = "Иван",
-                last_name = "Иванов",
-                patronymic = "Иванович",
-                username = "ivaУавеfоfеf4",
-                password_hash = "hashed_password_1", // Хэшированный пароль
-                phone_number = "+79001234567"
-            };
-
-            // Создаем отель, передавая объект Kazan
+            // Создаем отель, передавая объект city
             Hotel hotel = CreateHotel1(city);
 
             // Добавляем данные в базу данных
             context.Cities.Add(city); // Добавляем город
             context.Hotels.Add(hotel); // Добавляем отель
-            context.Users.Add(user);  // Добавляем пользователя
             context.SaveChanges();
 
             // Запускаем форму
-            Application.Run(new HotelListingForm(user, context));
+            Application.Run(new AuthorizationForm());
         }
 
         private static Hotel CreateHotel1(City city)

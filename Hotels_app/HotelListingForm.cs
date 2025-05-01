@@ -13,11 +13,12 @@ namespace Hotels_app
         private List<Hotel> hotels;
         private readonly ApplicationDbContext _context;
         private readonly User _currentUser;
+        private readonly AuthorizationForm _authorization;
 
-        public HotelListingForm(User currentUser, ApplicationDbContext context)
+        public HotelListingForm(User currentUser, ApplicationDbContext context, AuthorizationForm authorization)
         {
             InitializeComponent();
-
+            _authorization = authorization;
             _context = context;
             _currentUser = currentUser;
 
@@ -56,6 +57,7 @@ namespace Hotels_app
             {
                 FilterHotels(); // Применяем фильтры и рекомендации
             }
+
         }
 
         private void LoadHotelsData()
@@ -288,8 +290,7 @@ namespace Hotels_app
                 MessageBox.Show("Аккаунт успешно удален.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Перенаправляем пользователя на форму авторизации
-                AutorizationForm autorizationForm = new AutorizationForm();
-                autorizationForm.Show();
+                _authorization.Show();
                 this.Hide(); // Скрываем текущую форму
             }
 

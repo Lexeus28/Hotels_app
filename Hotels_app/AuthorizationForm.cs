@@ -88,7 +88,7 @@ namespace Hotels_app
                 if (user.isfirstlogin)
                 {
                     // Открываем форму HotelListingForm
-                    var hotelListingForm = new HotelListingForm(_context);
+                    var hotelListingForm = new HotelListingForm(user, _context, this);
 
                     // Предлагаем пройти анкету
                     var result = MessageBox.Show(
@@ -110,10 +110,11 @@ namespace Hotels_app
                 }
 
                 // Открываем форму HotelListingForm
-                var hotelListing = new HotelListingForm(_context);
+                var hotelListing = new HotelListingForm(user, _context, this);
                 hotelListing.Show();
 
-                this.Close();
+                this.Hide();
+                ClearFormFields();
             }
         }
 
