@@ -9,7 +9,6 @@ namespace Hotels_app.classes
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,7 +27,6 @@ namespace Hotels_app.classes
             modelBuilder.Entity<Hotel>().ToTable("hotels");
             modelBuilder.Entity<Room>().ToTable("rooms");
             modelBuilder.Entity<Booking>().ToTable("bookings");
-            modelBuilder.Entity<Country>().ToTable("countries");
             modelBuilder.Entity<City>().ToTable("cities");
 
             // Автомаппинг выполняется автоматически, так как имена полей совпадают.

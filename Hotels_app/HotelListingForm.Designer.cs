@@ -24,8 +24,6 @@ namespace Hotels_app
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -35,6 +33,7 @@ namespace Hotels_app
             panelMain = new Panel();
             panelHotels = new Panel();
             panelProfile = new Panel();
+            BtnOpenQuestionnaire = new RoundButton();
             btnDeleteAccount = new RoundButton();
             btnBooked = new RoundButton();
             txtPriceTo = new TextBox();
@@ -42,9 +41,9 @@ namespace Hotels_app
             txtPriceFrom = new TextBox();
             lblFrom = new Label();
             lblPrice = new Label();
-            txtStars = new TextBox();
+            cmbStars = new ComboBox();
             lblStars = new Label();
-            txtCity = new TextBox();
+            cmbCity = new ComboBox();
             lblCity = new Label();
             txtName = new TextBox();
             lblName = new Label();
@@ -62,7 +61,6 @@ namespace Hotels_app
             panelMain.Controls.Add(panelProfile);
             panelMain.Dock = DockStyle.Fill;
             panelMain.Location = new Point(0, 0);
-            panelMain.Margin = new Padding(4, 3, 4, 3);
             panelMain.Name = "panelMain";
             panelMain.Size = new Size(1050, 594);
             panelMain.TabIndex = 0;
@@ -72,7 +70,6 @@ namespace Hotels_app
             panelHotels.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelHotels.AutoScroll = true;
             panelHotels.Location = new Point(14, 14);
-            panelHotels.Margin = new Padding(4, 3, 4, 3);
             panelHotels.Name = "panelHotels";
             panelHotels.Size = new Size(779, 567);
             panelHotels.TabIndex = 0;
@@ -81,6 +78,7 @@ namespace Hotels_app
             // 
             panelProfile.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             panelProfile.BackColor = Color.FromArgb(158, 157, 189);
+            panelProfile.Controls.Add(BtnOpenQuestionnaire);
             panelProfile.Controls.Add(btnDeleteAccount);
             panelProfile.Controls.Add(btnBooked);
             panelProfile.Controls.Add(txtPriceTo);
@@ -88,9 +86,9 @@ namespace Hotels_app
             panelProfile.Controls.Add(txtPriceFrom);
             panelProfile.Controls.Add(lblFrom);
             panelProfile.Controls.Add(lblPrice);
-            panelProfile.Controls.Add(txtStars);
+            panelProfile.Controls.Add(cmbStars);
             panelProfile.Controls.Add(lblStars);
-            panelProfile.Controls.Add(txtCity);
+            panelProfile.Controls.Add(cmbCity);
             panelProfile.Controls.Add(lblCity);
             panelProfile.Controls.Add(txtName);
             panelProfile.Controls.Add(lblName);
@@ -98,10 +96,29 @@ namespace Hotels_app
             panelProfile.Controls.Add(lblSurname);
             panelProfile.Controls.Add(lblProfile);
             panelProfile.Location = new Point(800, 14);
-            panelProfile.Margin = new Padding(4, 3, 4, 3);
             panelProfile.Name = "panelProfile";
             panelProfile.Size = new Size(236, 567);
             panelProfile.TabIndex = 1;
+            // 
+            // BtnOpenQuestionnaire
+            // 
+            BtnOpenQuestionnaire.BackColor = Color.FromArgb(231, 143, 174);
+            BtnOpenQuestionnaire.BorderColor = Color.Transparent;
+            BtnOpenQuestionnaire.BorderRadius = 15;
+            BtnOpenQuestionnaire.FlatAppearance.BorderSize = 0;
+            BtnOpenQuestionnaire.FlatStyle = FlatStyle.Flat;
+            BtnOpenQuestionnaire.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            BtnOpenQuestionnaire.ForeColor = Color.FromArgb(243, 200, 220);
+            BtnOpenQuestionnaire.HoverColor = Color.FromArgb(213, 140, 176);
+            BtnOpenQuestionnaire.Location = new Point(120, 11);
+            BtnOpenQuestionnaire.MinimumSize = new Size(100, 46);
+            BtnOpenQuestionnaire.Name = "BtnOpenQuestionnaire";
+            BtnOpenQuestionnaire.PressColor = Color.FromArgb(132, 49, 90);
+            BtnOpenQuestionnaire.PressDepth = 0.15F;
+            BtnOpenQuestionnaire.Size = new Size(100, 46);
+            BtnOpenQuestionnaire.TabIndex = 1;
+            BtnOpenQuestionnaire.Text = "Анкета";
+            BtnOpenQuestionnaire.UseVisualStyleBackColor = false;
             // 
             // btnDeleteAccount
             // 
@@ -114,7 +131,6 @@ namespace Hotels_app
             btnDeleteAccount.ForeColor = Color.FromArgb(243, 200, 220);
             btnDeleteAccount.HoverColor = Color.FromArgb(100, 30, 70);
             btnDeleteAccount.Location = new Point(22, 442);
-            btnDeleteAccount.Margin = new Padding(4, 3, 4, 3);
             btnDeleteAccount.MinimumSize = new Size(117, 53);
             btnDeleteAccount.Name = "btnDeleteAccount";
             btnDeleteAccount.PressColor = Color.FromArgb(60, 10, 40);
@@ -136,7 +152,6 @@ namespace Hotels_app
             btnBooked.ForeColor = Color.FromArgb(243, 200, 220);
             btnBooked.HoverColor = Color.FromArgb(213, 140, 176);
             btnBooked.Location = new Point(23, 501);
-            btnBooked.Margin = new Padding(4, 3, 4, 3);
             btnBooked.MinimumSize = new Size(117, 53);
             btnBooked.Name = "btnBooked";
             btnBooked.PressColor = Color.FromArgb(132, 49, 90);
@@ -145,12 +160,13 @@ namespace Hotels_app
             btnBooked.TabIndex = 14;
             btnBooked.Text = "забронированные";
             btnBooked.UseVisualStyleBackColor = false;
+            btnBooked.Click += btnBooked_Click;
             // 
             // txtPriceTo
             // 
             txtPriceTo.BackColor = Color.FromArgb(243, 200, 220);
+            txtPriceTo.ForeColor = Color.FromArgb(64, 0, 64);
             txtPriceTo.Location = new Point(139, 401);
-            txtPriceTo.Margin = new Padding(4, 3, 4, 3);
             txtPriceTo.Name = "txtPriceTo";
             txtPriceTo.Size = new Size(81, 23);
             txtPriceTo.TabIndex = 13;
@@ -160,7 +176,6 @@ namespace Hotels_app
             lblTo.AutoSize = true;
             lblTo.ForeColor = Color.FromArgb(64, 0, 64);
             lblTo.Location = new Point(111, 404);
-            lblTo.Margin = new Padding(4, 0, 4, 0);
             lblTo.Name = "lblTo";
             lblTo.Size = new Size(20, 15);
             lblTo.TabIndex = 12;
@@ -169,8 +184,8 @@ namespace Hotels_app
             // txtPriceFrom
             // 
             txtPriceFrom.BackColor = Color.FromArgb(243, 200, 220);
+            txtPriceFrom.ForeColor = Color.FromArgb(64, 0, 64);
             txtPriceFrom.Location = new Point(139, 360);
-            txtPriceFrom.Margin = new Padding(4, 3, 4, 3);
             txtPriceFrom.Name = "txtPriceFrom";
             txtPriceFrom.Size = new Size(81, 23);
             txtPriceFrom.TabIndex = 11;
@@ -180,7 +195,6 @@ namespace Hotels_app
             lblFrom.AutoSize = true;
             lblFrom.ForeColor = Color.FromArgb(64, 0, 64);
             lblFrom.Location = new Point(112, 363);
-            lblFrom.Margin = new Padding(4, 0, 4, 0);
             lblFrom.Name = "lblFrom";
             lblFrom.Size = new Size(19, 15);
             lblFrom.TabIndex = 10;
@@ -192,47 +206,51 @@ namespace Hotels_app
             lblPrice.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
             lblPrice.ForeColor = Color.FromArgb(64, 0, 64);
             lblPrice.Location = new Point(166, 335);
-            lblPrice.Margin = new Padding(4, 0, 4, 0);
             lblPrice.Name = "lblPrice";
             lblPrice.Size = new Size(43, 17);
             lblPrice.TabIndex = 9;
             lblPrice.Text = "Цена";
             // 
-            // txtStars
+            // cmbStars
             // 
-            txtStars.BackColor = Color.FromArgb(243, 200, 220);
-            txtStars.Location = new Point(23, 277);
-            txtStars.Margin = new Padding(4, 3, 4, 3);
-            txtStars.Name = "txtStars";
-            txtStars.Size = new Size(186, 23);
-            txtStars.TabIndex = 8;
+            cmbStars.BackColor = Color.FromArgb(243, 200, 220);
+            cmbStars.DrawMode = DrawMode.OwnerDrawFixed;
+            cmbStars.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbStars.ForeColor = Color.FromArgb(64, 0, 64);
+            cmbStars.FormattingEnabled = true;
+            cmbStars.Location = new Point(23, 277);
+            cmbStars.Name = "cmbStars";
+            cmbStars.Size = new Size(186, 24);
+            cmbStars.TabIndex = 8;
+            cmbStars.DrawItem += CmbStars_DrawItem;
             // 
             // lblStars
             // 
             lblStars.AutoSize = true;
             lblStars.ForeColor = Color.FromArgb(64, 0, 64);
             lblStars.Location = new Point(20, 304);
-            lblStars.Margin = new Padding(4, 0, 4, 0);
             lblStars.Name = "lblStars";
             lblStars.Size = new Size(102, 15);
             lblStars.TabIndex = 7;
             lblStars.Text = "количество звезд";
             // 
-            // txtCity
+            // cmbCity
             // 
-            txtCity.BackColor = Color.FromArgb(243, 200, 220);
-            txtCity.Location = new Point(23, 219);
-            txtCity.Margin = new Padding(4, 3, 4, 3);
-            txtCity.Name = "txtCity";
-            txtCity.Size = new Size(186, 23);
-            txtCity.TabIndex = 6;
+            cmbCity.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cmbCity.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cmbCity.BackColor = Color.FromArgb(243, 200, 220);
+            cmbCity.ForeColor = Color.FromArgb(64, 0, 64);
+            cmbCity.FormattingEnabled = true;
+            cmbCity.Location = new Point(23, 219);
+            cmbCity.Name = "cmbCity";
+            cmbCity.Size = new Size(186, 23);
+            cmbCity.TabIndex = 6;
             // 
             // lblCity
             // 
             lblCity.AutoSize = true;
             lblCity.ForeColor = Color.FromArgb(64, 0, 64);
             lblCity.Location = new Point(23, 245);
-            lblCity.Margin = new Padding(4, 0, 4, 0);
             lblCity.Name = "lblCity";
             lblCity.Size = new Size(39, 15);
             lblCity.TabIndex = 5;
@@ -241,9 +259,10 @@ namespace Hotels_app
             // txtName
             // 
             txtName.BackColor = Color.FromArgb(243, 200, 220);
+            txtName.ForeColor = Color.FromArgb(64, 0, 64);
             txtName.Location = new Point(23, 162);
-            txtName.Margin = new Padding(4, 3, 4, 3);
             txtName.Name = "txtName";
+            txtName.ReadOnly = true;
             txtName.Size = new Size(186, 23);
             txtName.TabIndex = 4;
             // 
@@ -252,7 +271,6 @@ namespace Hotels_app
             lblName.AutoSize = true;
             lblName.ForeColor = Color.FromArgb(64, 0, 64);
             lblName.Location = new Point(23, 188);
-            lblName.Margin = new Padding(4, 0, 4, 0);
             lblName.Name = "lblName";
             lblName.Size = new Size(29, 15);
             lblName.TabIndex = 3;
@@ -261,9 +279,10 @@ namespace Hotels_app
             // txtSurname
             // 
             txtSurname.BackColor = Color.FromArgb(243, 200, 220);
+            txtSurname.ForeColor = Color.FromArgb(64, 0, 64);
             txtSurname.Location = new Point(23, 104);
-            txtSurname.Margin = new Padding(4, 3, 4, 3);
             txtSurname.Name = "txtSurname";
+            txtSurname.ReadOnly = true;
             txtSurname.Size = new Size(186, 23);
             txtSurname.TabIndex = 2;
             // 
@@ -272,7 +291,6 @@ namespace Hotels_app
             lblSurname.AutoSize = true;
             lblSurname.ForeColor = Color.FromArgb(64, 0, 64);
             lblSurname.Location = new Point(20, 130);
-            lblSurname.Margin = new Padding(4, 0, 4, 0);
             lblSurname.Name = "lblSurname";
             lblSurname.Size = new Size(58, 15);
             lblSurname.TabIndex = 1;
@@ -284,7 +302,6 @@ namespace Hotels_app
             lblProfile.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             lblProfile.ForeColor = Color.FromArgb(64, 0, 64);
             lblProfile.Location = new Point(64, 60);
-            lblProfile.Margin = new Padding(4, 0, 4, 0);
             lblProfile.Name = "lblProfile";
             lblProfile.Size = new Size(92, 20);
             lblProfile.TabIndex = 0;
@@ -296,7 +313,6 @@ namespace Hotels_app
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1050, 594);
             Controls.Add(panelMain);
-            Margin = new Padding(4, 3, 4, 3);
             Name = "HotelListingForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Список отелей";
@@ -305,8 +321,29 @@ namespace Hotels_app
             panelProfile.PerformLayout();
             ResumeLayout(false);
         }
+        // Метод для пользовательской отрисовки
+        private void CmbStars_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0) return;
 
-        #endregion
+            // Получаем ComboBox
+            var comboBox = sender as ComboBox;
+
+            // Очищаем фон
+            e.DrawBackground();
+
+            // Задаем цвет фона и текста
+            using (var brush = new SolidBrush(comboBox.BackColor))
+            {
+                e.Graphics.FillRectangle(brush, e.Bounds);
+            }
+
+            using (var textBrush = new SolidBrush(comboBox.ForeColor))
+            {
+                // Рисуем текст
+                e.Graphics.DrawString(comboBox.Items[e.Index].ToString(), e.Font, textBrush, e.Bounds);
+            }
+        }
 
         private Panel panelMain;
         private Panel panelHotels;
@@ -318,14 +355,16 @@ namespace Hotels_app
         private TextBox txtPriceFrom;
         private Label lblFrom;
         private Label lblPrice;
-        private TextBox txtStars;
+        private ComboBox cmbStars;
         private Label lblStars;
-        private TextBox txtCity;
+        private ComboBox cmbCity;
         private Label lblCity;
         private TextBox txtName;
         private Label lblName;
         private TextBox txtSurname;
         private Label lblSurname;
         private Label lblProfile;
+        private RoundButton BtnOpenQuestionnaire;
     }
+
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,8 @@ namespace Hotels_app.classes
     {
         private Guid _cityId;
         private string _title;
-        private Guid _countryId;
 
+        [Key]
         public Guid city_id
         {
             get { return _cityId; }
@@ -22,12 +23,6 @@ namespace Hotels_app.classes
         {
             get { return _title; }
             set { _title = value; }
-        }
-
-        public Guid country_id
-        {
-            get { return _countryId; }
-            set { _countryId = value; }
         }
     }
 }
