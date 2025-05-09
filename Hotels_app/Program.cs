@@ -22,6 +22,8 @@ namespace Hotels_app
                 role = Role.Admin, // Устанавливаем роль администратора
                 isfirstlogin = false // Первый вход выполнен
             };
+            context.users.add(admin);
+            context.savechanges();
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
