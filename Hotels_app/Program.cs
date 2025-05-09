@@ -17,19 +17,19 @@ namespace Hotels_app
             ApplicationDbContext context = new ApplicationDbContext();
 
             // Создаем новый город
-            City city = new City
-            {
-                city_id = Guid.NewGuid(),
-                title = "Пермь"
-            };
+            //City city = new City
+            //{
+            //    city_id = Guid.NewGuid(),
+            //    title = "qwdqwd"
+            //};
 
             // Создаем отель, передавая объект city
-            Hotel hotel = CreateHotel1(city);
+            //Hotel hotel = CreateHotel1(city);
 
             // Добавляем данные в базу данных
-            context.Cities.Add(city); // Добавляем город
-            context.Hotels.Add(hotel); // Добавляем отель
-            context.SaveChanges();
+            /*context.Cities.Add(city);*/ // Добавляем город
+           /* context.Hotels.Add(hotel);*/ // Добавляем отель
+            //context.SaveChanges();
 
             // Запускаем форму
             Application.Run(new AuthorizationForm());
@@ -40,7 +40,7 @@ namespace Hotels_app
             return new Hotel
             {
                 hotel_id = Guid.NewGuid(),
-                hotel_name = "Гранд Перм",
+                hotel_name = "4* Tetris Resort",
                 city = city, // Используем переданный объект города
                 stars = 4,
                 image = Properties.Resources.кама,
@@ -54,7 +54,6 @@ namespace Hotels_app
                 offers_active_recreation = true,
                 has_asian_cuisine = false,
                 has_european_cuisine = true,   
-                is_quiet_location = false,
                 is_city_center = true
             };
         }

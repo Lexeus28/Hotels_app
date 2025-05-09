@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Hotels_app.classes
 {
@@ -17,8 +14,9 @@ namespace Hotels_app.classes
         private int _capacity;
         private string _description;
         private Image _image;
+        private byte[]? _imageByte;
         [Key]
-        public Guid RoomId
+        public Guid room_id
         {
             get { return _roomId; }
             set { _roomId = value; }
@@ -35,6 +33,7 @@ namespace Hotels_app.classes
             get { return _roomNumber; }
             set { _roomNumber = value; }
         }
+
         public decimal price_per_night
         {
             get { return _pricePerNight; }
@@ -47,16 +46,41 @@ namespace Hotels_app.classes
             set { _capacity = value; }
         }
 
-        public string description
+        public string room_description
         {
             get { return _description; }
             set { _description = value; }
         }
+
         [NotMapped]
         public Image image
         {
-            get { return _image; }
-            set { _image = value; }
+            get
+            {
+                if (_image == null && _imageByte != null)
+                {
+                    _image = Hotel.ByteArrayToImage(_imageByte); // Используем метод из класса Hotel
+                }
+                return _image;
+            }
+            set
+            {
+                _image = value;
+                if (value != null)
+                {
+                    _imageByte = Hotel.ImageToByteArray(value); // Используем метод из класса Hotel
+                }
+                else
+                {
+                    _imageByte = null;
+                }
+            }
+        }
+
+        public byte[]? image_byte
+        {
+            get { return _imageByte; }
+            set { _imageByte = value; }
         }
     }
 }

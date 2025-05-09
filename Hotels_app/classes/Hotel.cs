@@ -9,8 +9,8 @@ public class Hotel
     private Guid _hotelId;
     private string _hotelName;
     private City _city;
-    private byte _stars;
-    private byte[] _image_byte;
+    private byte? _stars;
+    private byte[]? _image_byte;
     private Image _image;
     private decimal? _mnPrice; // Nullable, так как в таблице может быть NULL
     private decimal? _mxPrice; // Nullable, так как в таблице может быть NULL
@@ -22,8 +22,8 @@ public class Hotel
     private bool _offersActiveRecreation;
     private bool _hasAsianCuisine;
     private bool _hasEuropeanCuisine;
-    private bool _isQuietLocation;
     private bool _isCityCenter;
+
 
     // Конструктор по умолчанию
     public Hotel()
@@ -51,12 +51,12 @@ public class Hotel
         set { _city = value; }
     }
 
-    public byte stars
+    public byte? stars
     {
         get { return _stars; }
         set { _stars = value; }
     }
-    public byte[] image_byte
+    public byte[]? image_byte
     {
         get { return _image_byte; }
         set { _image_byte = value; }
@@ -151,12 +151,6 @@ public class Hotel
     {
         get { return _hasEuropeanCuisine; }
         set { _hasEuropeanCuisine = value; }
-    }
-
-    public bool is_quiet_location
-    {
-        get { return _isQuietLocation; }
-        set { _isQuietLocation = value; }
     }
 
     public bool is_city_center
