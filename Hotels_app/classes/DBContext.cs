@@ -37,7 +37,7 @@ namespace Hotels_app.classes
             // Если имена таблиц не совпадают с именами классов, можно явно указать их:
             modelBuilder.Entity<User>().ToTable("users");
             modelBuilder.Entity<Hotel>().ToTable("hotels");
-            modelBuilder.Entity<UserHotelLike>().ToTable("Likes");
+            modelBuilder.Entity<UserHotelLike>().ToTable("likes");
             modelBuilder.Entity<Room>().ToTable("rooms");
             modelBuilder.Entity<Booking>().ToTable("bookings");
             modelBuilder.Entity<City>().ToTable("cities");

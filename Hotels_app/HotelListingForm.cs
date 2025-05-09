@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Hotels_app
 {
@@ -141,31 +143,35 @@ namespace Hotels_app
             };
             hotelPanel.Controls.Add(priceLabel);
             // Кнопка "Лайк"
-            var likeButton = new Button
+            var likeButton = new RoundButton
             {
-                BackColor = Color.FromArgb(113, 85, 123), // Фон кнопки
-                FlatStyle = FlatStyle.Flat,
-                FlatAppearance = { BorderSize = 0 }, // Убираем границы
-                Size = new Size(50, 50), // Размер кнопки
-                Location = Location = new Point(priceLabel.Location.X+15, priceLabel.Bottom + 20), // Позиция
-                Tag = hotel.hotel_id, // Привязываем ID отеля к кнопке
-                Font = new Font("Segoe UI Emoji", 16F, FontStyle.Bold) // Шрифт для эмодзи
+                BackColor = Color.FromArgb(243, 200, 220), // Стандартный цвет фона
+                ForeColor = Color.Black,         // Цвет текста
+                FlatStyle = FlatStyle.Flat,      // Плоский стиль
+                Font = new Font("Segoe UI Emoji", 16F, FontStyle.Bold),
+                MinimumSize = new Size(10, 20),
+                Size = new Size(40, 40),         // Размер кнопки
+                Location = new Point(priceLabel.Location.X + 15, priceLabel.Bottom + 20),    // Позиция кнопки
+                Text = "👍",                     // Эмодзи для лайка
+                Tag = hotel                      // Привязываем объект Hotel к кнопке
             };
-            likeButton.Paint += LikeButton_Paint;
             likeButton.Click += LikeButton_Click; // Обработчик события
             hotelPanel.Controls.Add(likeButton);
+
             // Кнопка "Дизлайк"
-            var dislikeButton = new Button
+            var dislikeButton = new RoundButton
             {
-                BackColor = Color.FromArgb(113, 85, 123),
-                FlatStyle = FlatStyle.Flat,
-                FlatAppearance = { BorderSize = 0 },
-                Size = new Size(50, 50),
-                Location = new Point(likeButton.Right + 15, priceLabel.Bottom + 20),
-                Tag = hotel.hotel_id,
-                Font = new Font("Segoe UI Emoji", 16F, FontStyle.Bold)
+                BackColor = Color.FromArgb(243, 200, 220), // Стандартный цвет фона
+                ForeColor = Color.Black,         // Цвет текста
+                FlatStyle = FlatStyle.Flat,      // Плоский стиль
+                Font = new Font("Segoe UI Emoji", 16F, FontStyle.Bold),
+                MinimumSize = new Size(10, 20),
+                Size = new Size(40, 40),         // Размер кнопки
+                Location = new Point(likeButton.Right + 10, priceLabel.Bottom + 20),
+                // Позиция кнопки
+                Text = "👎",                     // Эмодзи для дизлайка
+                Tag = hotel                      // Привязываем объект Hotel к кнопке
             };
-            dislikeButton.Paint += DislikeButton_Paint;
             dislikeButton.Click += DislikeButton_Click; // Обработчик события
             hotelPanel.Controls.Add(dislikeButton);
 
@@ -189,36 +195,40 @@ namespace Hotels_app
                 Size = new Size(230, 90)
             };
 
-            // Адрес
+            // Адрес (вверху справа)
             var addressLabel = new Label
             {
                 Font = new Font("Microsoft Sans Serif", 10F),
                 ForeColor = Color.FromArgb(230, 174, 207),
-                Location = new Point(0, 5),
-                Size = new Size(455, 20),
+                AutoSize = true, // Автоматическая ширина текста
+                Anchor = AnchorStyles.Top | AnchorStyles.Right, // Привязка к верху и правому краю
+                Location = new Point(infoPanel.Width - 200, 5), // Отступ от правого края
                 Text = hotel.address,
                 TextAlign = ContentAlignment.MiddleRight
             };
             infoPanel.Controls.Add(addressLabel);
 
-            // Описание
+            // Описание (между адресом и городом)
             var descLabel = new Label
             {
                 Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Italic),
                 ForeColor = Color.FromArgb(230, 174, 207),
-                Location = new Point(0, 25),
-                Size = new Size(455, 20),
+                AutoSize = true, // Автоматическая ширина текста
+                Anchor = AnchorStyles.Top | AnchorStyles.Right, // Привязка к верху и правому краю
+                Location = new Point(infoPanel.Width - 200, addressLabel.Bottom + 5), // Под адресом с отступом
                 Text = hotel.hotel_description,
                 TextAlign = ContentAlignment.MiddleRight
             };
             infoPanel.Controls.Add(descLabel);
-            // Лейбл для города
+
+            // Лейбл для города (внизу справа)
             var cityLabel = new Label
             {
                 Font = new Font("Microsoft Sans Serif", 14F),
                 ForeColor = Color.FromArgb(230, 174, 207),
-                Location = new Point(infoPanel.Width - 200, infoPanel.Height - 25),
-                Size = new Size(150, 25),
+                AutoSize = true, // Автоматическая ширина текста
+                Anchor = AnchorStyles.Bottom | AnchorStyles.Right, // Привязка к низу и правому краю
+                Location = new Point(infoPanel.Width - 200, infoPanel.Height - 30), // Отступ от нижнего края
                 Text = $"г. {hotel.city.title}",
                 TextAlign = ContentAlignment.MiddleRight
             };
@@ -237,46 +247,9 @@ namespace Hotels_app
                 BackColor = Color.Transparent
             };
             hotelPanel.Controls.Add(pictureBox);
-
+            // Загружаем состояние лайков/дизлайков из базы данных
+            LoadHotelLikes(hotelPanel, hotel);
             return hotelPanel;
-        }
-        private void LikeButton_Paint(object sender, PaintEventArgs e)
-        {
-            var button = sender as Button;
-            if (button == null) return;
-
-            // Текст для отрисовки
-            string likeSymbol = "👍";
-
-            // Вычисляем позицию текста для центрирования
-            var textSize = TextRenderer.MeasureText(likeSymbol, button.Font);
-            int x = (button.Width - textSize.Width) / 2;
-            int y = (button.Height - textSize.Height) / 2;
-
-            // Рисуем текст
-            using (var brush = new SolidBrush(Color.LightGreen))
-            {
-                e.Graphics.DrawString(likeSymbol, button.Font, brush, x, y);
-            }
-        }
-        private void DislikeButton_Paint(object sender, PaintEventArgs e)
-        {
-            var button = sender as Button;
-            if (button == null) return;
-
-            // Текст для отрисовки
-            string dislikeSymbol = "👎";
-
-            // Вычисляем позицию текста для центрирования
-            var textSize = TextRenderer.MeasureText(dislikeSymbol, button.Font);
-            int x = (button.Width - textSize.Width) / 2;
-            int y = (button.Height - textSize.Height) / 2;
-
-            // Рисуем текст
-            using (var brush = new SolidBrush(Color.Red))
-            {
-                e.Graphics.DrawString(dislikeSymbol, button.Font, brush, x, y);
-            }
         }
         private void LoadCities()
         {
@@ -293,6 +266,20 @@ namespace Hotels_app
             for (int i = 1; i <= 5; i++)
             {
                 cmbStars.Items.Add(i.ToString());
+            }
+        }
+        private void LoadHotelLikes(Control container, Hotel hotel)
+        {
+            var user = _currentUser;
+
+            // Проверяем, существует ли запись в таблице UserHotelLikes
+            var likeRecord = _context.Likes
+                .FirstOrDefault(like => like.user_id == user.user_id && like.hotel_id == hotel.hotel_id);
+
+            if (likeRecord != null)
+            {
+                // Обновляем стили кнопок на основе состояния из базы данных
+                UpdateButtonStyles(container, hotel, likeRecord.liked);
             }
         }
 
@@ -373,33 +360,80 @@ namespace Hotels_app
         private void LikeButton_Click(object sender, EventArgs e)
         {
             var button = sender as Button;
-            if (button?.Tag is Guid _hotel_id)
-            {
-                var userHotelLike = new UserHotelLike
-                {
-                    user_id = _currentUser.user_id,
-                    hotel_id = _hotel_id,
-                    liked = true
-                };
+            if (button == null || button.Tag == null) return;
 
-                _context.Likes.Add(userHotelLike);
-                _context.SaveChanges();
-            }
+            var hotel = button.Tag as Hotel; // Получаем объект Hotel из свойства Tag
+            var container = button.Parent;  // Получаем родительский контейнер (например, панель)
+
+            // Переключаем состояние лайка
+            ToggleLike(container, hotel, true); // true = Лайк
         }
         private void DislikeButton_Click(object sender, EventArgs e)
         {
             var button = sender as Button;
-            if (button?.Tag is Guid _hotel_id)
-            {
-                var userHotelLike = new UserHotelLike
-                {
-                    user_id = _currentUser.user_id,
-                    hotel_id = _hotel_id,
-                    liked = false
-                };
+            if (button == null || button.Tag == null) return;
 
-                _context.Likes.Add(userHotelLike);
-                _context.SaveChanges();
+            var hotel = button.Tag as Hotel; // Получаем объект Hotel из свойства Tag
+            var container = button.Parent;  // Получаем родительский контейнер (например, панель)
+
+            // Переключаем состояние дизлайка
+            ToggleLike(container, hotel, false); // false = Дизлайк
+        }
+        private void ToggleLike(Control container, Hotel hotel, bool? isLike)
+        {
+            var user = _currentUser;
+
+            // Проверяем, существует ли запись в таблице UserHotelLikes
+            var likeRecord = _context.Likes
+                .FirstOrDefault(like => like.user_id == user.user_id && like.hotel_id == hotel.hotel_id);
+
+            if (likeRecord != null)
+            {
+                // Если запись уже существует и её состояние совпадает с текущим действием,
+                // удаляем запись (отменяем действие).
+                if (likeRecord.liked == isLike)
+                {
+                    _context.Likes.Remove(likeRecord);
+                    isLike = null; // Сбрасываем состояние
+                }
+                else
+                {
+                    // Если запись существует, но состояние отличается, обновляем его.
+                    likeRecord.liked = (bool)isLike;
+                }
+            }
+            else
+            {
+                // Если записи не существует, создаем новую.
+                var newLike = new UserHotelLike
+                {
+                    user_id = user.user_id,
+                    hotel_id = hotel.hotel_id,
+                    liked = (bool)isLike
+                };
+                _context.Likes.Add(newLike);
+            }
+
+            _context.SaveChanges();
+
+            // Обновляем стили кнопок
+            UpdateButtonStyles(container, hotel, isLike);
+        }
+        private void UpdateButtonStyles(Control container, Hotel hotel, bool? isLike)
+        {
+            var likeButton = container.Controls.OfType<RoundButton>()
+                .FirstOrDefault(btn => btn.Tag as Hotel == hotel && btn.Text == "👍");
+            var dislikeButton = container.Controls.OfType<RoundButton>()
+                .FirstOrDefault(btn => btn.Tag as Hotel == hotel && btn.Text == "👎");
+
+            if (likeButton != null)
+            {
+                likeButton.BackColor = isLike == true ? Color.LightBlue : Color.FromArgb(243, 200, 220);
+            }
+
+            if (dislikeButton != null)
+            {
+                dislikeButton.BackColor = isLike == false ? Color.LightBlue : Color.FromArgb(243, 200, 220);
             }
         }
 
