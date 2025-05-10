@@ -17,20 +17,18 @@ namespace Hotels_app
                 first_name = "Admin",
                 last_name = "Adminov",
                 username = "admin",
-                password_hash = "hashed_password", // Замените на реальный хэш пароля
+                password_hash = PasswordHasher.HashPasswordAsync("123").Result,
                 phone_number = "1234567890",
-                role = Role.Admin, // Устанавливаем роль администратора
-                isfirstlogin = false // Первый вход выполнен
+                role = Role.Admin,
+                isfirstlogin = false
             };
             context.Users.Add(admin);
             context.SaveChanges();
+            //после первого запуска закомментируй всё что выше
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-
-            // Создаем контекст базы данных
-            ApplicationDbContext context = new ApplicationDbContext();
 
             // Запускаем форму
             Application.Run(new AuthorizationForm());

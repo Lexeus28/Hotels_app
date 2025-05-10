@@ -15,10 +15,11 @@ namespace Hotels_app
         private Guid _userId;
         private string _firstName;
         private string _lastName;
-        private string _patronymic;
+        private string? _patronymic;
         private string _username;
         private string _passwordHash;
         private string _phone_number;
+
         // Ответы на анкету
         public bool? prefers_sea { get; set; }               // Море (true) или Горы (false)
         public bool? prefers_historical_places { get; set; }  // Исторические места (true) или Нет (false)
@@ -48,7 +49,7 @@ namespace Hotels_app
             set { _lastName = value; }
         }
 
-        public string patronymic
+        public string? patronymic
         {
             get { return _patronymic; }
             set { _patronymic = value; }
