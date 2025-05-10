@@ -1,4 +1,5 @@
 using Hotels_app.classes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hotels_app
 {
@@ -10,27 +11,36 @@ namespace Hotels_app
         [STAThread]
         static void Main()
         {
-            ApplicationDbContext context = new ApplicationDbContext();
-            var admin = new User
+            // Инициализация контекста базы данных
+            using (var context = new ApplicationDbContext())
             {
-                user_id = Guid.NewGuid(),
-                first_name = "Admin",
-                last_name = "Adminov",
-                username = "admin",
-                password_hash = PasswordHasher.HashPasswordAsync("123").Result,
-                phone_number = "1234567890",
-                role = Role.Admin,
-                isfirstlogin = false
-            };
-            context.Users.Add(admin);
-            context.SaveChanges();
-            //после первого запуска закомментируй всё что выше
+                // Проверяем, существует ли уже администратор
+                var adminExists = context.Users.Any(u => u.role == Role.Admin);
 
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+                if (!adminExists)
+                {
+                    // Создаем администратора, если его нет
+                    var admin = new User
+                    {
+                        user_id = Guid.NewGuid(),
+                        first_name = "Admin",
+                        last_name = "Adminov",
+                        username = "admin",
+                        password_hash = PasswordHasher.HashPasswordAsync("123").Result,
+                        phone_number = "1234567890",
+                        role = Role.Admin,
+                        isfirstlogin = false
+                    };
+
+                    context.Users.Add(admin);
+                    context.SaveChanges();
+                }
+            }
+
+            // Инициализация конфигурации приложения
             ApplicationConfiguration.Initialize();
 
-            // Запускаем форму
+            // Запуск основной формы авторизации
             Application.Run(new AuthorizationForm());
         }
     }
