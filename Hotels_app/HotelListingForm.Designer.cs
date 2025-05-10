@@ -19,7 +19,7 @@
             panelHotels = new Panel();
             panelProfile = new Panel();
             BtnOpenQuestionnaire = new RoundButton();
-            btnDeleteAccount = new RoundButton();
+            btnEditAccount = new RoundButton();
             btnBooked = new RoundButton();
             txtPriceTo = new TextBox();
             lblTo = new Label();
@@ -64,7 +64,7 @@
             panelProfile.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             panelProfile.BackColor = Color.FromArgb(158, 157, 189);
             panelProfile.Controls.Add(BtnOpenQuestionnaire);
-            panelProfile.Controls.Add(btnDeleteAccount);
+            panelProfile.Controls.Add(btnEditAccount);
             panelProfile.Controls.Add(btnBooked);
             panelProfile.Controls.Add(txtPriceTo);
             panelProfile.Controls.Add(lblTo);
@@ -87,45 +87,45 @@
             // 
             // BtnOpenQuestionnaire
             // 
-            BtnOpenQuestionnaire.BackColor = Color.FromArgb(231, 143, 174);
+            BtnOpenQuestionnaire.BackColor = Color.FromArgb(58, 51, 92);
             BtnOpenQuestionnaire.BorderColor = Color.Transparent;
             BtnOpenQuestionnaire.BorderRadius = 15;
             BtnOpenQuestionnaire.FlatAppearance.BorderSize = 0;
             BtnOpenQuestionnaire.FlatStyle = FlatStyle.Flat;
-            BtnOpenQuestionnaire.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            BtnOpenQuestionnaire.Font = new Font("Segoe UI", 10F);
             BtnOpenQuestionnaire.ForeColor = Color.FromArgb(243, 200, 220);
             BtnOpenQuestionnaire.HoverColor = Color.FromArgb(213, 140, 176);
-            BtnOpenQuestionnaire.Location = new Point(120, 11);
-            BtnOpenQuestionnaire.MinimumSize = new Size(100, 46);
+            BtnOpenQuestionnaire.Location = new Point(111, 25);
+            BtnOpenQuestionnaire.MinimumSize = new Size(25, 20);
             BtnOpenQuestionnaire.Name = "BtnOpenQuestionnaire";
             BtnOpenQuestionnaire.PressColor = Color.FromArgb(132, 49, 90);
             BtnOpenQuestionnaire.PressDepth = 0.15F;
-            BtnOpenQuestionnaire.Size = new Size(100, 46);
+            BtnOpenQuestionnaire.Size = new Size(109, 32);
             BtnOpenQuestionnaire.TabIndex = 1;
-            BtnOpenQuestionnaire.Text = "Анкета";
+            BtnOpenQuestionnaire.Text = "пройти анкету";
             BtnOpenQuestionnaire.UseVisualStyleBackColor = false;
             BtnOpenQuestionnaire.Click += BtnOpenQuestionnaire_Click;
             // 
-            // btnDeleteAccount
+            // btnEditAccount
             // 
-            btnDeleteAccount.BackColor = Color.FromArgb(75, 21, 53);
-            btnDeleteAccount.BorderColor = Color.FromArgb(223, 150, 161);
-            btnDeleteAccount.BorderRadius = 15;
-            btnDeleteAccount.FlatAppearance.BorderSize = 0;
-            btnDeleteAccount.FlatStyle = FlatStyle.Flat;
-            btnDeleteAccount.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            btnDeleteAccount.ForeColor = Color.FromArgb(243, 200, 220);
-            btnDeleteAccount.HoverColor = Color.FromArgb(100, 30, 70);
-            btnDeleteAccount.Location = new Point(22, 442);
-            btnDeleteAccount.MinimumSize = new Size(117, 53);
-            btnDeleteAccount.Name = "btnDeleteAccount";
-            btnDeleteAccount.PressColor = Color.FromArgb(60, 10, 40);
-            btnDeleteAccount.PressDepth = 0.15F;
-            btnDeleteAccount.Size = new Size(187, 53);
-            btnDeleteAccount.TabIndex = 15;
-            btnDeleteAccount.Text = "удалить аккаунт";
-            btnDeleteAccount.UseVisualStyleBackColor = false;
-            btnDeleteAccount.Click += btnDeleteAccount_Click;
+            btnEditAccount.BackColor = Color.FromArgb(75, 21, 53);
+            btnEditAccount.BorderColor = Color.FromArgb(223, 150, 161);
+            btnEditAccount.BorderRadius = 15;
+            btnEditAccount.FlatAppearance.BorderSize = 0;
+            btnEditAccount.FlatStyle = FlatStyle.Flat;
+            btnEditAccount.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            btnEditAccount.ForeColor = Color.FromArgb(243, 200, 220);
+            btnEditAccount.HoverColor = Color.FromArgb(100, 30, 70);
+            btnEditAccount.Location = new Point(22, 442);
+            btnEditAccount.MinimumSize = new Size(117, 53);
+            btnEditAccount.Name = "btnEditAccount";
+            btnEditAccount.PressColor = Color.FromArgb(60, 10, 40);
+            btnEditAccount.PressDepth = 0.15F;
+            btnEditAccount.Size = new Size(187, 53);
+            btnEditAccount.TabIndex = 15;
+            btnEditAccount.Text = "редактировать\nаккаунт";
+            btnEditAccount.UseVisualStyleBackColor = false;
+            btnEditAccount.Click += btnEditAccount_Click;
             // 
             // btnBooked
             // 
@@ -336,7 +336,7 @@
         private Panel panelHotels;
         private Panel panelProfile;
         private RoundButton btnBooked;
-        private RoundButton btnDeleteAccount;
+        private RoundButton btnEditAccount;
         private TextBox txtPriceTo;
         private Label lblTo;
         private TextBox txtPriceFrom;

@@ -15,7 +15,7 @@ namespace Hotels_app.classes
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Строка подключения к PostgreSQL
-            var connectionString = "Host=localhost;Port=5432;Database=hotels_db;Username=postgres;Password=THEWORLD;SslMode=Prefer;";
+            var connectionString = Properties.Resources.ConnectionString; ;
             optionsBuilder.UseNpgsql(connectionString);
         }
 

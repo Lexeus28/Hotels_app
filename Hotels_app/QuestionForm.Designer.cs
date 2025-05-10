@@ -306,22 +306,23 @@
             // 
             // btnSave
             // 
-            btnSave.AutoSize = true;
-            btnSave.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnSave.BackColor = Color.FromArgb(231, 143, 174);
+            btnSave.BackColor = Color.FromArgb(209, 131, 170);
             btnSave.BorderColor = Color.Transparent;
             btnSave.BorderRadius = 15;
+            btnSave.FlatAppearance.BorderSize = 0;
             btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnSave.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
             btnSave.ForeColor = Color.FromArgb(243, 200, 220);
-            btnSave.HoverColor = Color.FromArgb(213, 140, 176);
-            btnSave.Location = new Point(385, 304);
-            btnSave.MinimumSize = new Size(100, 46);
+            btnSave.HoverColor = Color.FromArgb(225, 147, 186);
+            btnSave.Location = new Point(361, 306);
+            btnSave.Margin = new Padding(4, 3, 4, 3);
+            btnSave.MinimumSize = new Size(50, 20);
             btnSave.Name = "btnSave";
+            btnSave.Padding = new Padding(10);
             btnSave.PressColor = Color.FromArgb(132, 49, 90);
             btnSave.PressDepth = 0.15F;
-            btnSave.Size = new Size(107, 46);
-            btnSave.TabIndex = 16;
+            btnSave.Size = new Size(106, 38);
+            btnSave.TabIndex = 5;
             btnSave.Text = "СОХРАНИТЬ";
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;

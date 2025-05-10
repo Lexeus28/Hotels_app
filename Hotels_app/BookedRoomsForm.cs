@@ -27,8 +27,8 @@ namespace Hotels_app
             // например, с базы данных или из памяти.
             bookedRooms = new List<Room>
             {
-                new Room { room_number = "1", capacity = 1, price_per_night = 5000, room_description = "Уютный 1-комнатный номер", image = Properties.Resources.super_room },
-                new Room { room_number = "2", capacity = 2, price_per_night = 8000, room_description = "Просторный 2-комнатный номер", image = Properties.Resources.super_room },
+                new Room { room_number = "1", capacity = 1, price_per_night = 5000, room_description = "Уютный 1-комнатный номер", image = null },
+                new Room { room_number = "2", capacity = 2, price_per_night = 8000, room_description = "Просторный 2-комнатный номер", image = null },
             };
 
             // Отображаем номера

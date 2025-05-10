@@ -57,7 +57,7 @@ namespace Hotels_app
             };
             if (!_currentUser.isfirstlogin)
             {
-                FilterHotels(); // Применяем фильтры и рекомендации
+                FilterHotels();
             }
 
         }
@@ -65,13 +65,13 @@ namespace Hotels_app
         private void LoadHotelsData()
         {
             hotels = _context.Hotels
-                .Include(h => h.city) // Загружаем связанные данные о городах
+                .Include(h => h.city)
                 .ToList();
         }
         public void ReloadHotels()
         {
-            LoadHotelsData(); // Загружаем актуальные данные об отелях
-            FilterHotels();   // Применяем фильтры и рекомендации
+            LoadHotelsData();
+            FilterHotels();
         }
         private void LoadHotels(List<Hotel> filteredHotels = null)
         {
@@ -80,20 +80,49 @@ namespace Hotels_app
 
             var hotelsToDisplay = filteredHotels ?? hotels;
 
-            // Сортировка отелей по оценке соответствия
-            var sortedHotels = hotelsToDisplay
-                .OrderByDescending(h => CalculateMatchScore(h, _currentUser))
+            // Получаем рекомендованные отели, но только из отфильтрованного списка
+            var recommendedHotels = GetRecommendedHotels(_currentUser)
+                .Where(h => hotelsToDisplay.Contains(h)) // Берем только те, которые прошли фильтры
                 .ToList();
 
-            int verticalOffset = 13;
+            // Добавляем случайность для рекомендованных отелей
+            var random = new Random();
+            var boostedRecommendedHotels = recommendedHotels
+                .Where(h => random.Next(0, 4) == 0) // Поднимаем только 25% рекомендованных отелей (1 из 4)
+                .ToList();
+
+            // Объединяем отели: сначала случайные рекомендованные, затем остальные
+            var sortedHotels = boostedRecommendedHotels
+                .Concat(hotelsToDisplay.Where(h => !boostedRecommendedHotels.Contains(h))) // Остальные отели
+                .OrderByDescending(h => CalculateMatchScore(h, _currentUser)) // Сортируем по соответствию
+                .ToList();
+
+            int verticalOffset = 13; // Вертикальный отступ
 
             foreach (var hotel in sortedHotels)
             {
-                var hotelPanel = CreateHotelPanel(hotel);
+                var isBoosted = boostedRecommendedHotels.Contains(hotel);
 
+                // Если отель был поднят выше, добавляем метку "Нравится пользователям с похожими предпочтениями"
+                if (isBoosted)
+                {
+                    var recommendationLabel = new Label
+                    {
+                        Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular),
+                        ForeColor = Color.FromArgb(64, 0, 64),
+                        AutoSize = true,
+                        Location = new Point(10, verticalOffset),
+                        Text = "Нравится пользователям с похожими предпочтениями",
+                        TextAlign = ContentAlignment.MiddleLeft
+                    };
+                    panelHotels.Controls.Add(recommendationLabel);
+                    verticalOffset += recommendationLabel.Height + 5;
+                }
+
+                // Создаем панель отеля
+                var hotelPanel = CreateHotelPanel(hotel);
                 hotelPanel.Location = new Point(4, verticalOffset);
                 panelHotels.Controls.Add(hotelPanel);
-
                 verticalOffset += hotelPanel.Height + 7;
             }
         }
@@ -136,7 +165,7 @@ namespace Hotels_app
             {
                 Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Regular),
                 ForeColor = Color.FromArgb(243, 200, 220),
-                Location = new Point(roomsButton.Location.X+10, roomsButton.Bottom + 15),
+                Location = new Point(roomsButton.Location.X + 10, roomsButton.Bottom + 15),
                 Size = new Size(150, 25),
                 Text = $"от {hotel.mn_price:C0}",
                 TextAlign = ContentAlignment.MiddleLeft
@@ -145,34 +174,34 @@ namespace Hotels_app
             // Кнопка "Лайк"
             var likeButton = new RoundButton
             {
-                BackColor = Color.FromArgb(243, 200, 220), // Стандартный цвет фона
-                ForeColor = Color.Black,         // Цвет текста
-                FlatStyle = FlatStyle.Flat,      // Плоский стиль
+                BackColor = Color.FromArgb(243, 200, 220),
+                ForeColor = Color.Black,
+                FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI Emoji", 16F, FontStyle.Bold),
                 MinimumSize = new Size(10, 20),
-                Size = new Size(40, 40),         // Размер кнопки
-                Location = new Point(priceLabel.Location.X + 15, priceLabel.Bottom + 20),    // Позиция кнопки
-                Text = "👍",                     // Эмодзи для лайка
-                Tag = hotel                      // Привязываем объект Hotel к кнопке
+                Size = new Size(40, 40),
+                Location = new Point(priceLabel.Location.X + 15, priceLabel.Bottom + 20),
+                Text = "👍",
+                Tag = hotel
             };
-            likeButton.Click += LikeButton_Click; // Обработчик события
+            likeButton.Click += LikeButton_Click;
             hotelPanel.Controls.Add(likeButton);
 
             // Кнопка "Дизлайк"
             var dislikeButton = new RoundButton
             {
-                BackColor = Color.FromArgb(243, 200, 220), // Стандартный цвет фона
-                ForeColor = Color.Black,         // Цвет текста
-                FlatStyle = FlatStyle.Flat,      // Плоский стиль
+                BackColor = Color.FromArgb(243, 200, 220),
+                ForeColor = Color.Black,
+                FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI Emoji", 16F, FontStyle.Bold),
                 MinimumSize = new Size(10, 20),
-                Size = new Size(40, 40),         // Размер кнопки
+                Size = new Size(40, 40),
                 Location = new Point(likeButton.Right + 10, priceLabel.Bottom + 20),
                 // Позиция кнопки
-                Text = "👎",                     // Эмодзи для дизлайка
-                Tag = hotel                      // Привязываем объект Hotel к кнопке
+                Text = "👎",
+                Tag = hotel
             };
-            dislikeButton.Click += DislikeButton_Click; // Обработчик события
+            dislikeButton.Click += DislikeButton_Click;
             hotelPanel.Controls.Add(dislikeButton);
 
             // Название отеля
@@ -180,9 +209,9 @@ namespace Hotels_app
             {
                 Font = new Font("Microsoft Sans Serif", 23F, FontStyle.Regular),
                 ForeColor = Color.FromArgb(243, 200, 220),
-                Location = new Point(250, 20),
-                Size = new Size(243, 40),
-                Text = hotel.hotel_name,
+                Location = new Point(200, 20),
+                Size = new Size(293, 40),
+                Text = $"{hotel.stars}* {hotel.hotel_name}",
                 TextAlign = ContentAlignment.MiddleLeft
             };
             hotelPanel.Controls.Add(nameLabel);
@@ -191,33 +220,32 @@ namespace Hotels_app
             var infoPanel = new Panel
             {
                 BackColor = Color.FromArgb(77, 67, 126),
-                Location = new Point(250, 72),
-                Size = new Size(230, 90)
+                Location = new Point(200, 72),
+                Size = new Size(280, 90)
             };
-
-            // Адрес (вверху справа)
+            // Адрес (вверху слева)
             var addressLabel = new Label
             {
                 Font = new Font("Microsoft Sans Serif", 10F),
                 ForeColor = Color.FromArgb(230, 174, 207),
-                AutoSize = true, // Автоматическая ширина текста
-                Anchor = AnchorStyles.Top | AnchorStyles.Right, // Привязка к верху и правому краю
-                Location = new Point(infoPanel.Width - 200, 5), // Отступ от правого края
+                AutoSize = true,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left,
+                Location = new Point(10, 5),
                 Text = hotel.address,
-                TextAlign = ContentAlignment.MiddleRight
+                TextAlign = ContentAlignment.MiddleLeft
             };
             infoPanel.Controls.Add(addressLabel);
 
             // Описание (между адресом и городом)
             var descLabel = new Label
             {
-                Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Italic),
+                Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular),
                 ForeColor = Color.FromArgb(230, 174, 207),
-                AutoSize = true, // Автоматическая ширина текста
-                Anchor = AnchorStyles.Top | AnchorStyles.Right, // Привязка к верху и правому краю
-                Location = new Point(infoPanel.Width - 200, addressLabel.Bottom + 5), // Под адресом с отступом
+                AutoSize = true,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left,
+                Location = new Point(10, addressLabel.Bottom + 5),
                 Text = hotel.hotel_description,
-                TextAlign = ContentAlignment.MiddleRight
+                TextAlign = ContentAlignment.MiddleLeft
             };
             infoPanel.Controls.Add(descLabel);
 
@@ -226,9 +254,9 @@ namespace Hotels_app
             {
                 Font = new Font("Microsoft Sans Serif", 14F),
                 ForeColor = Color.FromArgb(230, 174, 207),
-                AutoSize = true, // Автоматическая ширина текста
-                Anchor = AnchorStyles.Bottom | AnchorStyles.Right, // Привязка к низу и правому краю
-                Location = new Point(infoPanel.Width - 200, infoPanel.Height - 30), // Отступ от нижнего края
+                AutoSize = true,
+                Anchor = AnchorStyles.Bottom | AnchorStyles.Right,
+                Location = new Point(infoPanel.Width - 200, infoPanel.Height - 30),
                 Text = $"г. {hotel.city.title}",
                 TextAlign = ContentAlignment.MiddleRight
             };
@@ -294,7 +322,7 @@ namespace Hotels_app
 
         private void FilterHotels()
         {
-            var filteredHotels = hotels.AsQueryable(); // Преобразуем в IQueryable
+            var filteredHotels = hotels.AsQueryable();
 
             // Фильтр по городу
             if (!string.IsNullOrWhiteSpace(cmbCity.Text))
@@ -428,37 +456,13 @@ namespace Hotels_app
 
             if (likeButton != null)
             {
-                likeButton.BackColor = isLike == true ? Color.LightBlue : Color.FromArgb(243, 200, 220);
+                likeButton.BackColor = isLike == true ? Color.FromArgb(209, 131, 170) : Color.FromArgb(243, 200, 220);
             }
 
             if (dislikeButton != null)
             {
-                dislikeButton.BackColor = isLike == false ? Color.LightBlue : Color.FromArgb(243, 200, 220);
+                dislikeButton.BackColor = isLike == false ? Color.FromArgb(209, 131, 170) : Color.FromArgb(243, 200, 220);
             }
-        }
-
-        private void btnDeleteAccount_Click(object sender, EventArgs e)
-        {
-            // Показываем диалоговое окно с предупреждением
-            DialogResult result = MessageBox.Show(
-                "Вы уверены, что хотите удалить свой аккаунт? Это действие нельзя отменить.",
-                "Подтверждение удаления",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
-
-            if (result == DialogResult.Yes)
-            {
-                // Удаляем аккаунт из базы данных
-                _context.Users.Remove(_currentUser);
-                _context.SaveChanges();
-
-                MessageBox.Show("Аккаунт успешно удален.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Перенаправляем пользователя на форму авторизации
-                _authorization.Show();
-                this.Hide(); // Скрываем текущую форму
-            }
-
         }
         private void btnBooked_Click(object sender, EventArgs e)
         {
@@ -468,6 +472,48 @@ namespace Hotels_app
 
             // Показываем форму
             bookedRoomsForm.Show();
+        }
+        private List<User> FindSimilarUsers(User currentUser)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                return context.Users
+                    .Where(user => user.user_id != currentUser.user_id &&
+                           ((user.prefers_sea.HasValue && currentUser.prefers_sea.HasValue && user.prefers_sea == currentUser.prefers_sea) ? 1 : 0) +
+                           ((user.prefers_historical_places.HasValue && currentUser.prefers_historical_places.HasValue && user.prefers_historical_places == currentUser.prefers_historical_places) ? 1 : 0) +
+                           ((user.prefers_active_rest.HasValue && currentUser.prefers_active_rest.HasValue && user.prefers_active_rest == currentUser.prefers_active_rest) ? 1 : 0) +
+                           ((user.prefers_asian_cuisine.HasValue && currentUser.prefers_asian_cuisine.HasValue && user.prefers_asian_cuisine == currentUser.prefers_asian_cuisine) ? 1 : 0) +
+                           ((user.prefers_quiet_place.HasValue && currentUser.prefers_quiet_place.HasValue && user.prefers_quiet_place == currentUser.prefers_quiet_place) ? 1 : 0) >= 3)
+                    .ToList();
+            }
+        }
+        private List<Hotel> GetRecommendedHotels(User currentUser)
+        {
+            var similarUsers = FindSimilarUsers(currentUser);
+
+            if (similarUsers.Count == 0)
+            {
+                return new List<Hotel>(); // Если нет похожих пользователей, возвращаем пустой список
+            }
+
+            var recommendedHotelIds = _context.Likes
+                .Where(like => like.liked == true && similarUsers.Select(u => u.user_id).Contains(like.user_id))
+                .Select(like => like.hotel_id)
+                .Distinct()
+                .ToList();
+
+            return _context.Hotels
+                .Where(hotel => recommendedHotelIds.Contains(hotel.hotel_id))
+                .ToList();
+        }
+
+        private void btnEditAccount_Click(object sender, EventArgs e)
+        {
+            var editForm = new UserEditForm(_currentUser, _context, _authorization)
+            {
+                Owner = this
+            };
+            editForm.ShowDialog();
         }
     }
 }

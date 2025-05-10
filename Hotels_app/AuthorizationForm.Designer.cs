@@ -35,6 +35,7 @@
             txtLogin = new TextBox();
             lblHeader = new Label();
             btnClose = new Button();
+            btntogglePassword = new PasswordToggleButton(txtPassword);
             panelMain.SuspendLayout();
             SuspendLayout();
             // 
@@ -47,6 +48,7 @@
             panelMain.Controls.Add(txtLogin);
             panelMain.Controls.Add(lblHeader);
             panelMain.Controls.Add(btnClose);
+            panelMain.Controls.Add(btntogglePassword);
             panelMain.Dock = DockStyle.Fill;
             panelMain.Location = new Point(0, 0);
             panelMain.Margin = new Padding(4, 3, 4, 3);
@@ -61,7 +63,7 @@
             btnRegister.BorderRadius = 15;
             btnRegister.FlatAppearance.BorderSize = 0;
             btnRegister.FlatStyle = FlatStyle.Flat;
-            btnRegister.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            btnRegister.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             btnRegister.ForeColor = Color.FromArgb(243, 200, 220);
             btnRegister.HoverColor = Color.FromArgb(225, 147, 186);
             btnRegister.Location = new Point(329, 223);
@@ -84,7 +86,7 @@
             btnLogin.BorderRadius = 15;
             btnLogin.FlatAppearance.BorderSize = 0;
             btnLogin.FlatStyle = FlatStyle.Flat;
-            btnLogin.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            btnLogin.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             btnLogin.ForeColor = Color.FromArgb(243, 200, 220);
             btnLogin.HoverColor = Color.FromArgb(78, 71, 112);
             btnLogin.Location = new Point(93, 223);
@@ -98,7 +100,7 @@
             btnLogin.TabIndex = 4;
             btnLogin.Text = "ВОЙТИ";
             btnLogin.UseVisualStyleBackColor = false;
-            btnLogin.Click += this.btnLogin_Click;
+            btnLogin.Click += btnLogin_Click;
             // 
             // txtPassword
             // 
@@ -155,6 +157,16 @@
             btnClose.Text = "×";
             btnClose.UseVisualStyleBackColor = false;
             // 
+            // btntogglePassword
+            // 
+            btntogglePassword.BackColor = Color.FromArgb(158, 157, 189);
+            btntogglePassword.FlatStyle = FlatStyle.Flat;
+            btntogglePassword.Location = new Point(560, 158);
+            btntogglePassword.Name = "btntogglePassword";
+            btntogglePassword.Size = new Size(30, 30);
+            btntogglePassword.TabIndex = 6;
+            btntogglePassword.UseVisualStyleBackColor = false;
+            // 
             // AuthorizationForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -181,5 +193,6 @@
         private System.Windows.Forms.TextBox txtPassword;
         private Hotels_app.RoundButton btnLogin;
         private Hotels_app.RoundButton btnRegister;
+        private PasswordToggleButton btntogglePassword;
     }
 }

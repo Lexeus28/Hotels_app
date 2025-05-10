@@ -1,6 +1,6 @@
 ﻿namespace Hotels_app
 {
-    partial class RegistrationForm
+    partial class UserEditForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,22 +29,24 @@
         private void InitializeComponent()
         {
             panelMain = new Panel();
+            btnDeleteAccount = new RoundButton();
             txtPhoneNumber = new TextBox();
             lblPhoneNumber = new Label();
-            btnRegister = new RoundButton();
+            btnSave = new RoundButton();
             txtPatronymic = new TextBox();
             lblPatronymic = new Label();
             txtFirstName = new TextBox();
             lblFirstName = new Label();
             txtLastName = new TextBox();
             lblLastName = new Label();
-            txtPassword = new TextBox();
-            lblPassword = new Label();
-            txtLogin = new TextBox();
-            lblLogin = new Label();
+            txtNewPassword = new TextBox();
+            lblNewPassword = new Label();
+            txtOldPassword = new TextBox();
+            lblOldPassword = new Label();
             lblTitle = new Label();
             btnClose = new Button();
-            btntogglePassword = new PasswordToggleButton(txtPassword);
+            btntoggleNewPassword = new PasswordToggleButton(txtNewPassword);
+            btntoggleOldPassword = new PasswordToggleButton(txtOldPassword);
             panelMain.SuspendLayout();
             SuspendLayout();
             // 
@@ -52,27 +54,51 @@
             // 
             panelMain.BackColor = Color.FromArgb(158, 157, 189);
             panelMain.BorderStyle = BorderStyle.FixedSingle;
+            panelMain.Controls.Add(btnDeleteAccount);
             panelMain.Controls.Add(txtPhoneNumber);
             panelMain.Controls.Add(lblPhoneNumber);
-            panelMain.Controls.Add(btnRegister);
+            panelMain.Controls.Add(btnSave);
             panelMain.Controls.Add(txtPatronymic);
             panelMain.Controls.Add(lblPatronymic);
             panelMain.Controls.Add(txtFirstName);
             panelMain.Controls.Add(lblFirstName);
             panelMain.Controls.Add(txtLastName);
             panelMain.Controls.Add(lblLastName);
-            panelMain.Controls.Add(txtPassword);
-            panelMain.Controls.Add(lblPassword);
-            panelMain.Controls.Add(txtLogin);
-            panelMain.Controls.Add(lblLogin);
+            panelMain.Controls.Add(txtNewPassword);
+            panelMain.Controls.Add(lblNewPassword);
+            panelMain.Controls.Add(txtOldPassword);
+            panelMain.Controls.Add(lblOldPassword);
             panelMain.Controls.Add(lblTitle);
             panelMain.Controls.Add(btnClose);
-            panelMain.Controls.Add(btntogglePassword);
+            panelMain.Controls.Add(btntoggleOldPassword);
+            panelMain.Controls.Add(btntoggleNewPassword);
             panelMain.Dock = DockStyle.Fill;
             panelMain.Location = new Point(0, 0);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(396, 368);
+            panelMain.Size = new Size(414, 381);
             panelMain.TabIndex = 0;
+            panelMain.MouseDown += Panel_MouseDown;
+            // 
+            // btnDeleteAccount
+            // 
+            btnDeleteAccount.BackColor = Color.FromArgb(75, 21, 53);
+            btnDeleteAccount.BorderColor = Color.FromArgb(223, 150, 161);
+            btnDeleteAccount.BorderRadius = 15;
+            btnDeleteAccount.FlatAppearance.BorderSize = 0;
+            btnDeleteAccount.FlatStyle = FlatStyle.Flat;
+            btnDeleteAccount.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            btnDeleteAccount.ForeColor = Color.FromArgb(243, 200, 220);
+            btnDeleteAccount.HoverColor = Color.FromArgb(100, 30, 70);
+            btnDeleteAccount.Location = new Point(50, 330);
+            btnDeleteAccount.MinimumSize = new Size(50, 20);
+            btnDeleteAccount.Name = "btnDeleteAccount";
+            btnDeleteAccount.PressColor = Color.FromArgb(60, 10, 40);
+            btnDeleteAccount.PressDepth = 0.15F;
+            btnDeleteAccount.Size = new Size(153, 38);
+            btnDeleteAccount.TabIndex = 16;
+            btnDeleteAccount.Text = "УДАЛИТЬ АККАУНТ";
+            btnDeleteAccount.UseVisualStyleBackColor = false;
+            btnDeleteAccount.Click += btnDeleteAccount_Click;
             // 
             // txtPhoneNumber
             // 
@@ -95,27 +121,28 @@
             lblPhoneNumber.TabIndex = 12;
             lblPhoneNumber.Text = "номер телефона";
             // 
-            // btnRegister
+            // btnSave
             // 
-            btnRegister.BackColor = Color.FromArgb(209, 131, 170);
-            btnRegister.BorderColor = Color.Transparent;
-            btnRegister.BorderRadius = 15;
-            btnRegister.FlatAppearance.BorderSize = 0;
-            btnRegister.FlatStyle = FlatStyle.Flat;
-            btnRegister.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            btnRegister.ForeColor = Color.FromArgb(243, 200, 220);
-            btnRegister.HoverColor = Color.FromArgb(225, 147, 186);
-            btnRegister.Location = new Point(170, 310);
-            btnRegister.Margin = new Padding(4, 3, 4, 3);
-            btnRegister.MinimumSize = new Size(50, 23);
-            btnRegister.Name = "btnRegister";
-            btnRegister.Padding = new Padding(10);
-            btnRegister.PressColor = Color.FromArgb(132, 49, 90);
-            btnRegister.PressDepth = 0.15F;
-            btnRegister.Size = new Size(182, 39);
-            btnRegister.TabIndex = 5;
-            btnRegister.Text = "ЗАРЕГИСТРИРОВАТЬСЯ";
-            btnRegister.UseVisualStyleBackColor = false;
+            btnSave.BackColor = Color.FromArgb(209, 131, 170);
+            btnSave.BorderColor = Color.Transparent;
+            btnSave.BorderRadius = 15;
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            btnSave.ForeColor = Color.FromArgb(243, 200, 220);
+            btnSave.HoverColor = Color.FromArgb(225, 147, 186);
+            btnSave.Location = new Point(225, 330);
+            btnSave.Margin = new Padding(4, 3, 4, 3);
+            btnSave.MinimumSize = new Size(50, 20);
+            btnSave.Name = "btnSave";
+            btnSave.Padding = new Padding(10);
+            btnSave.PressColor = Color.FromArgb(132, 49, 90);
+            btnSave.PressDepth = 0.15F;
+            btnSave.Size = new Size(127, 38);
+            btnSave.TabIndex = 5;
+            btnSave.Text = "СОХРАНИТЬ";
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
             // 
             // txtPatronymic
             // 
@@ -180,48 +207,48 @@
             lblLastName.TabIndex = 6;
             lblLastName.Text = "фамилия";
             // 
-            // txtPassword
+            // txtNewPassword
             // 
-            txtPassword.BackColor = Color.FromArgb(243, 200, 220);
-            txtPassword.BorderStyle = BorderStyle.None;
-            txtPassword.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPassword.Location = new Point(199, 114);
-            txtPassword.Name = "txtPassword";
-            txtPassword.PasswordChar = '•';
-            txtPassword.Size = new Size(153, 19);
-            txtPassword.TabIndex = 5;
+            txtNewPassword.BackColor = Color.FromArgb(243, 200, 220);
+            txtNewPassword.BorderStyle = BorderStyle.None;
+            txtNewPassword.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtNewPassword.Location = new Point(199, 114);
+            txtNewPassword.Name = "txtNewPassword";
+            txtNewPassword.PasswordChar = '•';
+            txtNewPassword.Size = new Size(153, 19);
+            txtNewPassword.TabIndex = 5;
             // 
-            // lblPassword
+            // lblNewPassword
             // 
-            lblPassword.AutoSize = true;
-            lblPassword.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblPassword.ForeColor = Color.FromArgb(64, 0, 64);
-            lblPassword.Location = new Point(50, 103);
-            lblPassword.Name = "lblPassword";
-            lblPassword.Size = new Size(136, 30);
-            lblPassword.TabIndex = 4;
-            lblPassword.Text = "пароль\n(минимум 6 символов)";
+            lblNewPassword.AutoSize = true;
+            lblNewPassword.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblNewPassword.ForeColor = Color.FromArgb(64, 0, 64);
+            lblNewPassword.Location = new Point(50, 103);
+            lblNewPassword.Name = "lblNewPassword";
+            lblNewPassword.Size = new Size(136, 30);
+            lblNewPassword.TabIndex = 4;
+            lblNewPassword.Text = "новый пароль\n(минимум 6 символов)";
             // 
-            // txtLogin
+            // txtOldPassword
             // 
-            txtLogin.BackColor = Color.FromArgb(243, 200, 220);
-            txtLogin.BorderStyle = BorderStyle.None;
-            txtLogin.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtLogin.Location = new Point(199, 78);
-            txtLogin.Name = "txtLogin";
-            txtLogin.Size = new Size(153, 19);
-            txtLogin.TabIndex = 3;
+            txtOldPassword.BackColor = Color.FromArgb(243, 200, 220);
+            txtOldPassword.BorderStyle = BorderStyle.None;
+            txtOldPassword.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtOldPassword.Location = new Point(199, 78);
+            txtOldPassword.Name = "txtOldPassword";
+            txtOldPassword.Size = new Size(153, 19);
+            txtOldPassword.TabIndex = 3;
             // 
-            // lblLogin
+            // lblOldPassword
             // 
-            lblLogin.AutoSize = true;
-            lblLogin.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblLogin.ForeColor = Color.FromArgb(64, 0, 64);
-            lblLogin.Location = new Point(50, 67);
-            lblLogin.Name = "lblLogin";
-            lblLogin.Size = new Size(136, 30);
-            lblLogin.TabIndex = 2;
-            lblLogin.Text = "логин\n(минимум 6 символов)";
+            lblOldPassword.AutoSize = true;
+            lblOldPassword.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblOldPassword.ForeColor = Color.FromArgb(64, 0, 64);
+            lblOldPassword.Location = new Point(50, 67);
+            lblOldPassword.Name = "lblOldPassword";
+            lblOldPassword.Size = new Size(92, 30);
+            lblOldPassword.TabIndex = 2;
+            lblOldPassword.Text = "введите старый\nпароль";
             // 
             // lblTitle
             // 
@@ -230,9 +257,9 @@
             lblTitle.ForeColor = Color.FromArgb(64, 0, 64);
             lblTitle.Location = new Point(133, 25);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(116, 21);
+            lblTitle.Size = new Size(144, 21);
             lblTitle.TabIndex = 1;
-            lblTitle.Text = "✓ регистрация";
+            lblTitle.Text = "✓ редактирование";
             // 
             // btnClose
             // 
@@ -241,31 +268,32 @@
             btnClose.FlatStyle = FlatStyle.Flat;
             btnClose.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnClose.ForeColor = Color.FromArgb(64, 0, 64);
-            btnClose.Location = new Point(365, -1);
+            btnClose.Location = new Point(383, -1);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(30, 32);
             btnClose.TabIndex = 0;
             btnClose.Text = "×";
             btnClose.UseVisualStyleBackColor = false;
+            btnClose.Click += btnClose_Click;
             // 
-            // btntogglePassword
+            // btntoggleOldPassword
             // 
-            btntogglePassword.BackColor = Color.FromArgb(158, 157, 189);
-            btntogglePassword.FlatStyle = FlatStyle.Flat;
-            btntogglePassword.Location = new Point(358, 109);
-            btntogglePassword.Name = "btntogglePassword";
-            btntogglePassword.Size = new Size(30, 30);
-            btntogglePassword.TabIndex = 14;
-            btntogglePassword.UseVisualStyleBackColor = false;
+            btntoggleOldPassword.Location = new Point(txtOldPassword.Right + 5, txtOldPassword.Top - 5);
+            btntoggleOldPassword.Name = "btntoggleOldPassword";
             // 
-            // RegistrationForm
+            // btntoggleNewPassword
+            // 
+            btntoggleNewPassword.Location = new Point(txtNewPassword.Right + 5, txtNewPassword.Top - 5);
+            btntoggleNewPassword.Name = "btntoggleNewPassword";
+            // 
+            // UserEditForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(396, 368);
+            ClientSize = new Size(414, 381);
             Controls.Add(panelMain);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "RegistrationForm";
+            Name = "UserEditForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Registration";
             panelMain.ResumeLayout(false);
@@ -278,19 +306,21 @@
         private System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.TextBox txtLogin;
-        private System.Windows.Forms.Label lblLogin;
-        private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.Label lblPassword;
+        private System.Windows.Forms.TextBox txtOldPassword;
+        private System.Windows.Forms.Label lblOldPassword;
+        private System.Windows.Forms.TextBox txtNewPassword;
+        private System.Windows.Forms.Label lblNewPassword;
         private System.Windows.Forms.TextBox txtLastName;
         private System.Windows.Forms.Label lblLastName;
         private System.Windows.Forms.TextBox txtFirstName;
         private System.Windows.Forms.Label lblFirstName;
         private System.Windows.Forms.TextBox txtPatronymic;
         private System.Windows.Forms.Label lblPatronymic;
-        private Hotels_app.RoundButton btnRegister;
+        private Hotels_app.RoundButton btnSave;
         private System.Windows.Forms.TextBox txtPhoneNumber;
         private System.Windows.Forms.Label lblPhoneNumber;
-        private PasswordToggleButton btntogglePassword;
+        private RoundButton btnDeleteAccount;
+        private PasswordToggleButton btntoggleNewPassword;
+        private PasswordToggleButton btntoggleOldPassword;
     }
 }

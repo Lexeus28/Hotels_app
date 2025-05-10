@@ -61,22 +61,11 @@ namespace Hotels_app.Properties {
         }
         
         /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        ///   Ищет локализованную строку, похожую на Host=localhost;Port=5432;Database=hotels_db;Username=postgres;Password=THEWORLD;SslMode=Prefer;.
         /// </summary>
-        internal static System.Drawing.Bitmap super_room {
+        internal static string ConnectionString {
             get {
-                object obj = ResourceManager.GetObject("super_room", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap кама {
-            get {
-                object obj = ResourceManager.GetObject("кама", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("ConnectionString", resourceCulture);
             }
         }
     }
