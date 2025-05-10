@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Hotels_app.classes
 {
-    public class Country
+    public class City
     {
-        private Guid _countryId;
+        private Guid _cityId;
         private string _title;
 
-        public Guid сountry_id
+        [Key]
+        public Guid city_id
         {
-            get { return _countryId; }
-            set { _countryId = value; }
+            get { return _cityId; }
+            set { _cityId = value; }
         }
 
         public string title

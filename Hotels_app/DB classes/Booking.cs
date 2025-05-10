@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hotels_app.classes
 {
@@ -12,6 +13,7 @@ namespace Hotels_app.classes
         private DateTime _checkOutDate;
 
         // Свойства с методами доступа
+        [Key]
         public Guid booking_id
         {
             get { return _bookingId; }

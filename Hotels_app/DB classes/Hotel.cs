@@ -1,13 +1,17 @@
-﻿using System;
+﻿using Hotels_app.classes;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class Hotel
 {
     // Приватные поля
     private Guid _hotelId;
     private string _hotelName;
-    private string _country;
-    private string _city;
-    private byte _stars;
+    private City _city;
+    private byte? _stars;
+    private byte[]? _image_byte;
+    private Image _image;
     private decimal? _mnPrice; // Nullable, так как в таблице может быть NULL
     private decimal? _mxPrice; // Nullable, так как в таблице может быть NULL
     private string _hotelDescription;
@@ -18,8 +22,8 @@ public class Hotel
     private bool _offersActiveRecreation;
     private bool _hasAsianCuisine;
     private bool _hasEuropeanCuisine;
-    private bool _isQuietLocation;
     private bool _isCityCenter;
+
 
     // Конструктор по умолчанию
     public Hotel()
@@ -28,7 +32,7 @@ public class Hotel
     }
 
     // Свойства с открытым чтением и записью
-
+    [Key]
     public Guid hotel_id
     {
         get { return _hotelId; }
@@ -41,22 +45,52 @@ public class Hotel
         set { _hotelName = value; }
     }
 
-    public string country
-    {
-        get { return _country; }
-        set { _country = value; }
-    }
-
-    public string city
+    public City city
     {
         get { return _city; }
         set { _city = value; }
     }
 
-    public byte stars
+    public byte? stars
     {
         get { return _stars; }
         set { _stars = value; }
+    }
+    public byte[]? image_byte
+    {
+        get { return _image_byte; }
+        set { _image_byte = value; }
+    }
+    [NotMapped]
+    public Image image
+    {
+        get
+        {
+            if (_image == null && _image_byte != null)
+            {
+                using (var stream = new MemoryStream(_image_byte))
+                {
+                    _image = Image.FromStream(stream);
+                }
+            }
+            return _image;
+        }
+        set
+        {
+            _image = value;
+            if (value != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    value.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg); // Сохраняем в формате JPEG
+                    _image_byte = stream.ToArray(); // Преобразуем в массив байтов
+                }
+            }
+            else
+            {
+                _image_byte = null;
+            }
+        }
     }
 
     public decimal? mn_price
@@ -83,51 +117,64 @@ public class Hotel
         set { _address = value; }
     }
 
-    public bool hasSeaAccess
+    public bool has_sea_access
     {
         get { return _hasSeaAccess; }
         set { _hasSeaAccess = value; }
     }
 
-    public bool hasMountainView
+    public bool has_mountain_view
     {
         get { return _hasMountainView; }
         set { _hasMountainView = value; }
     }
 
-    public bool hasHistoricalSites
+    public bool has_historical_sites
     {
         get { return _hasHistoricalSites; }
         set { _hasHistoricalSites = value; }
     }
 
-    public bool offersActiveRecreation
+    public bool offers_active_recreation
     {
         get { return _offersActiveRecreation; }
         set { _offersActiveRecreation = value; }
     }
 
-    public bool hasAsianCuisine
+    public bool has_asian_cuisine
     {
         get { return _hasAsianCuisine; }
         set { _hasAsianCuisine = value; }
     }
 
-    public bool hasEuropeanCuisine
+    public bool has_european_cuisine
     {
         get { return _hasEuropeanCuisine; }
         set { _hasEuropeanCuisine = value; }
     }
 
-    public bool isQuietLocation
-    {
-        get { return _isQuietLocation; }
-        set { _isQuietLocation = value; }
-    }
-
-    public bool isCityCenter
+    public bool is_city_center
     {
         get { return _isCityCenter; }
         set { _isCityCenter = value; }
+    }
+    public static byte[] ImageToByteArray(Image image)
+    {
+        if (image == null) return null;
+
+        using (var stream = new MemoryStream())
+        {
+            image.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg); // Или другой формат
+            return stream.ToArray();
+        }
+    }
+    public static Image ByteArrayToImage(byte[] byteArray)
+    {
+        if (byteArray == null || byteArray.Length == 0) return null;
+
+        using (var stream = new MemoryStream(byteArray))
+        {
+            return Image.FromStream(stream);
+        }
     }
 }

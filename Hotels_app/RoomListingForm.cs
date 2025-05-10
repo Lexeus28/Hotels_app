@@ -1,19 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Hotels_app.classes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hotels_app
 {
     public partial class RoomListingForm : Form
     {
+        private readonly ApplicationDbContext _context;
+        private readonly Hotel _hotel;
         private List<Room> rooms;
         private int currentTab = 1; // 1-комнатные активны по умолчанию
 
-        public RoomListingForm()
+        public RoomListingForm(Hotel hotel, ApplicationDbContext context)
         {
             InitializeComponent();
+
+            _context = context;
+            _hotel = hotel;
+
             InitializeRooms();
             UpdateTabHighlight();
             LoadRooms();
@@ -21,14 +29,10 @@ namespace Hotels_app
 
         private void InitializeRooms()
         {
-            rooms = new List<Room>
-            {
-                new Room { room_number = "1", capacity = 1, price_per_night = 5000, description = "Уютный 1-комнатный номер", image = Properties.Resources.super_room },
-                new Room { room_number = "2", capacity = 1, price_per_night = 5200, description = "Уютный 1-комнатный номер", image = Properties.Resources.super_room },
-                new Room { room_number = "3", capacity = 2, price_per_night = 8000, description = "Просторный 2-комнатный номер", image = Properties.Resources.super_room },
-                new Room { room_number = "4", capacity = 2, price_per_night = 8500, description = "Просторный 2-комнатный номер", image = Properties.Resources.super_room },
-                new Room { room_number = "5", capacity = 3, price_per_night = 12000, description = "Семейный номер", image = Properties.Resources.super_room },
-            };
+            // Загружаем комнаты из базы данных для данного отеля
+            rooms = _context.Rooms
+                .Where(r => r.hotel.hotel_id == _hotel.hotel_id)
+                .ToList();
         }
 
         private void LoadRooms()
@@ -101,7 +105,7 @@ namespace Hotels_app
             // Текст описания (выравнивание по правому краю)
             var descLabel = new Label
             {
-                Text = room.description,
+                Text = room.room_description,
                 Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Italic),
                 ForeColor = Color.FromArgb(230, 174, 207),
                 Dock = DockStyle.Fill,
@@ -114,7 +118,7 @@ namespace Hotels_app
             // Картинка (сдвинута левее)
             var pictureBox = new PictureBox
             {
-                Image = room.image,
+                Image = room.image, // Предполагается, что image хранится как Image
                 SizeMode = PictureBoxSizeMode.StretchImage,
                 Size = new Size(230, 150),
                 Location = new Point(330, 12),
@@ -161,6 +165,4 @@ namespace Hotels_app
             familyRoomLabel.ForeColor = currentTab == 4 ? activeColor : inactiveColor;
         }
     }
-
-
 }
