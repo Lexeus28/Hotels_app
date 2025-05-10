@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hotels_app.classes;
 
 namespace Hotels_app
 {
@@ -23,6 +26,9 @@ namespace Hotels_app
         public bool? prefers_asian_cuisine { get; set; }      // Азиатская кухня (true) или Европейская (false)
         public bool? prefers_quiet_place { get; set; }        // Тихая местность (true) или Шумный город (false)
         public bool isfirstlogin { get; set; } = true;
+        [Column(TypeName = "varchar(50)")] // Храним роль как строку
+        public Role role { get; set; } = Role.User;
+
         [Key]
         public Guid user_id
         {
