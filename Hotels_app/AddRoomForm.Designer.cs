@@ -46,15 +46,20 @@ namespace Hotels_app
             lblPrice = new Label();
             panelRight = new Panel();
             btnAddRoom = new RoundButton();
+            numericAmount = new NumericUpDown();
+            lblAmount = new Label();
             panelLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericCapacity).BeginInit();
             panelRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericAmount).BeginInit();
             SuspendLayout();
             // 
             // panelLeft
             // 
             panelLeft.BackColor = Color.FromArgb(196, 171, 195);
+            panelLeft.Controls.Add(lblAmount);
+            panelLeft.Controls.Add(numericAmount);
             panelLeft.Controls.Add(txtPrice);
             panelLeft.Controls.Add(pictureBox);
             panelLeft.Controls.Add(btnDeleteImage);
@@ -77,7 +82,7 @@ namespace Hotels_app
             // 
             txtPrice.BackColor = Color.FromArgb(243, 200, 220);
             txtPrice.BorderStyle = BorderStyle.FixedSingle;
-            txtPrice.Location = new Point(22, 186);
+            txtPrice.Location = new Point(22, 206);
             txtPrice.Margin = new Padding(4, 3, 4, 3);
             txtPrice.Name = "txtPrice";
             txtPrice.Size = new Size(77, 23);
@@ -90,10 +95,10 @@ namespace Hotels_app
             pictureBox.Margin = new Padding(4, 3, 4, 3);
             pictureBox.Name = "pictureBox";
             pictureBox.Size = new Size(214, 112);
+            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox.TabIndex = 5;
             pictureBox.TabStop = false;
             pictureBox.Paint += pictureBox_Paint;
-            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             // 
             // btnDeleteImage
             // 
@@ -156,9 +161,9 @@ namespace Hotels_app
             lblName.Location = new Point(22, 100);
             lblName.Margin = new Padding(4, 0, 4, 0);
             lblName.Name = "lblName";
-            lblName.Size = new Size(43, 15);
+            lblName.Size = new Size(57, 15);
             lblName.TabIndex = 1;
-            lblName.Text = "номер";
+            lblName.Text = "название";
             // 
             // txtName
             // 
@@ -196,7 +201,7 @@ namespace Hotels_app
             // 
             lblDescription.AutoSize = true;
             lblDescription.ForeColor = Color.FromArgb(64, 0, 64);
-            lblDescription.Location = new Point(22, 484);
+            lblDescription.Location = new Point(22, 496);
             lblDescription.Margin = new Padding(4, 0, 4, 0);
             lblDescription.Name = "lblDescription";
             lblDescription.Size = new Size(60, 15);
@@ -207,7 +212,7 @@ namespace Hotels_app
             // 
             txtDescription.BackColor = Color.FromArgb(243, 200, 220);
             txtDescription.BorderStyle = BorderStyle.None;
-            txtDescription.Location = new Point(22, 269);
+            txtDescription.Location = new Point(22, 281);
             txtDescription.Margin = new Padding(4, 3, 4, 3);
             txtDescription.Multiline = true;
             txtDescription.Name = "txtDescription";
@@ -219,7 +224,7 @@ namespace Hotels_app
             lblPrice.AutoSize = true;
             lblPrice.Font = new Font("Segoe UI", 9F);
             lblPrice.ForeColor = Color.FromArgb(64, 0, 64);
-            lblPrice.Location = new Point(22, 213);
+            lblPrice.Location = new Point(22, 232);
             lblPrice.Margin = new Padding(4, 0, 4, 0);
             lblPrice.Name = "lblPrice";
             lblPrice.Size = new Size(33, 15);
@@ -257,6 +262,29 @@ namespace Hotels_app
             btnAddRoom.UseVisualStyleBackColor = false;
             btnAddRoom.Click += btnAddRoom_Click;
             // 
+            // numericAmount
+            // 
+            numericAmount.BackColor = Color.FromArgb(243, 200, 220);
+            numericAmount.BorderStyle = BorderStyle.FixedSingle;
+            numericAmount.Location = new Point(22, 163);
+            numericAmount.Margin = new Padding(4, 3, 4, 3);
+            numericAmount.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericAmount.Name = "numericAmount";
+            numericAmount.Size = new Size(171, 23);
+            numericAmount.TabIndex = 25;
+            numericAmount.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // lblAmount
+            // 
+            lblAmount.AutoSize = true;
+            lblAmount.ForeColor = Color.FromArgb(64, 0, 64);
+            lblAmount.Location = new Point(22, 189);
+            lblAmount.Margin = new Padding(4, 0, 4, 0);
+            lblAmount.Name = "lblAmount";
+            lblAmount.Size = new Size(114, 15);
+            lblAmount.TabIndex = 26;
+            lblAmount.Text = "количество комнат";
+            // 
             // AddRoomForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -272,6 +300,7 @@ namespace Hotels_app
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericCapacity).EndInit();
             panelRight.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)numericAmount).EndInit();
             ResumeLayout(false);
         }
 
@@ -294,5 +323,7 @@ namespace Hotels_app
         private RoundButton btnUploadImage;
         private System.Windows.Forms.PictureBox pictureBox;
         private RoundButton btnDeleteImage;
+        private Label lblAmount;
+        private NumericUpDown numericAmount;
     }
 }
