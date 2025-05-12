@@ -154,7 +154,7 @@ namespace Hotels_app
             };
             roomsButton.Click += (sender, e) =>
             {
-                var roomListingForm = new RoomListingForm(hotel, _context);
+                var roomListingForm = new RoomListingForm(_currentUser ,hotel, _context);
                 roomListingForm.Show();
             };
             hotelPanel.Controls.Add(roomsButton);
