@@ -43,10 +43,9 @@ namespace Hotels_app
                 }
             }
         }
-        private bool IsRoomNumberUnique(string roomNumber)
+        private bool IsRoomNameUnique(string roomName)
         {
-            // Проверяем, есть ли в коллекции _temporaryRooms комната с таким же номером
-            return !TemporaryRooms.Any(room => room.room_number.Equals(roomNumber, StringComparison.OrdinalIgnoreCase));
+            return !TemporaryRooms.Any(room => room.name.Equals(roomName, StringComparison.OrdinalIgnoreCase));
         }
         private void btnAddRoom_Click(object sender, EventArgs e)
         {
@@ -55,17 +54,17 @@ namespace Hotels_app
                 // Проверка обязательных полей
                 if (string.IsNullOrWhiteSpace(txtName.Text) ||
                     string.IsNullOrWhiteSpace(txtPrice.Text) ||
-                    numericCapacity.Value <= 0)
+                    numericCapacity.Value <= 0 ||
+                    numericAmount.Value <= 0)
                 {
                     MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 // Проверка уникальности номера комнаты
                 string roomNumber = txtName.Text.Trim();
-                if (!IsRoomNumberUnique(roomNumber))
+                if (!IsRoomNameUnique(roomNumber))
                 {
-                    MessageBox.Show("Комната с таким номером уже существует.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Комната с таким названием уже существует.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -73,9 +72,10 @@ namespace Hotels_app
                 var room = new Room
                 {
                     hotel = _hotel,
-                    room_number = roomNumber,
+                    name = txtName.Text,
                     price_per_night = Convert.ToDecimal(txtPrice.Text),
                     capacity = (int)numericCapacity.Value,
+                    amount = (int)numericAmount.Value,
                     room_description = txtDescription.Text.Trim()
                 };
 
@@ -133,16 +133,6 @@ namespace Hotels_app
 
         private void btnDeleteImage_Click(object sender, EventArgs e)
         {
-            pictureBox.Image = null;
-        }
-
-        private void ClearForm()
-        {
-            CreatedRoom = new Room();
-            txtName.Clear();
-            txtPrice.Clear();
-            numericCapacity.Value = 1;
-            txtDescription.Clear();
             pictureBox.Image = null;
         }
     }
