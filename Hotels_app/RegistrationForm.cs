@@ -70,11 +70,6 @@ namespace Hotels_app
                 MessageBox.Show("Пользователь с таким логином уже существует!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (!Regex.IsMatch(phoneNumber, @"^\+?\d{10,15}$"))
-            {
-                MessageBox.Show("Некорректный формат номера телефона!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
 
 
             // Создание нового пользователя
