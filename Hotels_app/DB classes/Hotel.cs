@@ -42,7 +42,14 @@ public class Hotel
     public string hotel_name
     {
         get { return _hotelName; }
-        set { _hotelName = value; }
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Название отеля не может быть пустым.");
+            if (value.Length > 10)
+                throw new ArgumentException("Название отеля не должно превышать 100 символов.");
+            _hotelName = value;
+        }
     }
 
     public City city
@@ -108,13 +115,23 @@ public class Hotel
     public string hotel_description
     {
         get { return _hotelDescription; }
-        set { _hotelDescription = value; }
+        set
+        {
+            if (value != null && value.Length > 200)
+                throw new ArgumentException("Описание отеля не должно превышать 200 символов.");
+            _hotelDescription = value;
+        }
     }
 
     public string address
     {
         get { return _address; }
-        set { _address = value; }
+        set
+        {
+            if (value != null && value.Length > 50)
+                throw new ArgumentException("Название адреса не должно превышать 50 символов.");
+            _hotelDescription = value;
+        }
     }
 
     public bool has_sea_access
