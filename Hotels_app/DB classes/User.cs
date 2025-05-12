@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Hotels_app.classes;
 
@@ -40,37 +41,81 @@ namespace Hotels_app
         public string first_name
         {
             get { return _firstName; }
-            set { _firstName = value; }
+            set 
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Имя не может быть пустым.", nameof(value));
+                if (value.Length > 50)
+                    throw new ArgumentException("Имя не должно превышать 50 символов.", nameof(value));
+                if (!Regex.IsMatch(value, @"^[А-ЯЁ][а-яё]*$"))
+                    throw new ArgumentException("Имя должно начинаться с заглавной буквы и содержать только буквы.", nameof(value));
+                _firstName = value;
+            }
         }
 
         public string last_name
         {
             get { return _lastName; }
-            set { _lastName = value; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Фамилия не может быть пустой.", nameof(value));
+                if (value.Length > 50)
+                    throw new ArgumentException("Фамилия не должна превышать 50 символов.", nameof(value));
+                if (!Regex.IsMatch(value, @"^[А-ЯЁ][а-яё]*$"))
+                    throw new ArgumentException("Фамилия должна начинаться с заглавной буквы и содержать только буквы.", nameof(value));
+                _lastName = value;
+            }
         }
 
         public string? patronymic
         {
             get { return _patronymic; }
-            set { _patronymic = value; }
+            set
+            {
+                if (value != null && !Regex.IsMatch(value, @"^[А-ЯЁ][а-яё]*$"))
+                    throw new ArgumentException("Отчество должно начинаться с заглавной буквы и содержать только буквы.", nameof(value));
+                if (value?.Length > 50)
+                    throw new ArgumentException("Отчество не должно превышать 50 символов.", nameof(value));
+                _patronymic = value;
+            }
         }
 
         public string username
         {
             get { return _username; }
-            set { _username = value; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Логин не может быть пустым.", nameof(value));
+                if (value.Length > 50)
+                    throw new ArgumentException("Логин не должен превышать 50 символов.", nameof(value));
+                _username = value;
+            }
         }
 
         public string password_hash
         {
             get { return _passwordHash; }
-            set { _passwordHash = value; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Пароль не может быть пустым.");
+                _passwordHash = value;
+            }
         }
 
         public string phone_number
         {
             get { return _phone_number; }
-            set { _phone_number = value; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Номер телефона не может быть пустым.", nameof(value));
+                if (!Regex.IsMatch(value, @"^[0-9]{1,15}$"))
+                    throw new ArgumentException("Номер телефона должен содержать цифры (1-15).", nameof(value));
+                _phone_number = value;
+            }
         }
     }
 }

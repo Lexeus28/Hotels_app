@@ -25,11 +25,11 @@ namespace Hotels_app
         {
             rooms = new List<Room>
             {
-                new Room { room_number = "1", capacity = 1, price_per_night = 5000, room_description = "Уютный 1-комнатный номер", image = null },
-                new Room { room_number = "2", capacity = 1, price_per_night = 5200, room_description = "Уютный 1-комнатный номер", image = null },
-                new Room { room_number = "3", capacity = 2, price_per_night = 8000, room_description = "Просторный 2-комнатный номер", image = null },
-                new Room { room_number = "4", capacity = 2, price_per_night = 8500, room_description = "Просторный 2-комнатный номер", image = null },
-                new Room { room_number = "5", capacity = 3, price_per_night = 12000, room_description = "Семейный номер", image = null },
+                new Room { name = "1", capacity = 1, price_per_night = 5000, room_description = "Уютный 1-комнатный номер", image = null },
+                new Room { name = "2", capacity = 1, price_per_night = 5200, room_description = "Уютный 1-комнатный номер", image = null },
+                new Room { name = "3", capacity = 2, price_per_night = 8000, room_description = "Просторный 2-комнатный номер", image = null },
+                new Room { name = "4", capacity = 2, price_per_night = 8500, room_description = "Просторный 2-комнатный номер", image = null },
+                new Room { name = "5", capacity = 3, price_per_night = 12000, room_description = "Семейный номер", image = null },
             };
         }
 

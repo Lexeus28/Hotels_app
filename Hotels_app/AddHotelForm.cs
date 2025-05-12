@@ -249,7 +249,7 @@ namespace Hotels_app
 
             // Очищаем форму для нового ввода
             ClearForm();
-            this.Close ();
+            this.Close();
             _hotelListingForm.ReloadHotels();
 
         }
@@ -340,7 +340,7 @@ namespace Hotels_app
             listBoxRooms.Items.Clear();
             foreach (var room in _temporaryRooms)
             {
-                listBoxRooms.Items.Add(room.room_number); // Отображаем номер комнаты
+                listBoxRooms.Items.Add(room.name); // Отображаем номер комнаты
             }
         }
         private void RadioButton_Click(object sender, EventArgs e)
@@ -383,7 +383,7 @@ namespace Hotels_app
             string selectedRoomNumber = listBoxRooms.SelectedItem.ToString();
 
             // Находим объект Room в коллекции _temporaryRooms по номеру комнаты
-            var roomToRemove = _temporaryRooms.FirstOrDefault(room => room.room_number == selectedRoomNumber);
+            var roomToRemove = _temporaryRooms.FirstOrDefault(room => room.name == selectedRoomNumber);
 
             if (roomToRemove == null)
             {
@@ -438,6 +438,6 @@ namespace Hotels_app
             this.Close();
             _hotelListingForm.ReloadHotels();
         }
-        
+
     }
 }
