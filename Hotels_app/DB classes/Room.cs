@@ -9,9 +9,10 @@ namespace Hotels_app.classes
     {
         private Guid _roomId;
         private Hotel _hotel;
-        private string _roomNumber;
+        private string _name;
         private decimal _pricePerNight;
         private int _capacity;
+        private int _amount;
         private string _description;
         private Image _image;
         private byte[]? _imageByte;
@@ -28,10 +29,10 @@ namespace Hotels_app.classes
             set { _hotel = value; }
         }
 
-        public string room_number
+        public string name
         {
-            get { return _roomNumber; }
-            set { _roomNumber = value; }
+            get { return _name; }
+            set { _name = value; }
         }
 
         public decimal price_per_night
@@ -44,6 +45,11 @@ namespace Hotels_app.classes
         {
             get { return _capacity; }
             set { _capacity = value; }
+        }
+        public int amount
+        {
+            get { return _amount; }
+            set { _amount = value; }
         }
 
         public string room_description
