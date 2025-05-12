@@ -68,6 +68,23 @@ namespace Hotels_app
                 Margin = new Padding(0, 0, 0, 10),
                 Tag = room // Привязываем объект Room к панели
             };
+            // Лейбл с названием комнаты
+            var nameLabel = new Label
+            {
+                Text = room.name,
+                Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Regular),
+                ForeColor = Color.FromArgb(243, 200, 220),
+                AutoSize = false,
+                MaximumSize = new Size(500, 50),
+                Location = new Point(200, 10), 
+                TextAlign = ContentAlignment.MiddleLeft,
+                Padding = new Padding(0, 0, 0, 5)
+            };
+
+            // Обрезаем текст до двух строк
+            nameLabel.Text = TruncateTextToTwoLines(nameLabel, room.name);
+
+            roomPanel.Controls.Add(nameLabel);
 
             // Кнопка выбора
             var selectButton = new RoundButton
@@ -164,6 +181,38 @@ namespace Hotels_app
             selectedRoom = room;
             roomPanel.BackColor = Color.FromArgb(140, 110, 160); // Меняем цвет фона для выделения
         }
+        private string TruncateTextToTwoLines(Label label, string text)
+        {
+            using (var g = label.CreateGraphics())
+            {
+                var originalFontSize = label.Font.Size;
+                var maxWidth = label.MaximumSize.Width;
+                var maxHeight = label.MaximumSize.Height;
+
+                // Разбиваем текст на слова
+                var words = text.Split(' ');
+                var result = string.Empty;
+
+                foreach (var word in words)
+                {
+                    var testString = result.Length > 0 ? $"{result} {word}" : word;
+
+                    // Измеряем размер текста
+                    var textSize = g.MeasureString(testString, label.Font);
+
+                    if (textSize.Height > maxHeight || textSize.Width > maxWidth)
+                    {
+                        // Если текст не помещается, добавляем многоточие и завершаем
+                        return result.Length > 0 ? $"{result}..." : "...";
+                    }
+
+                    result = testString;
+                }
+
+                return result;
+            }
+        }
+
 
         /// <summary>
         /// Находит панель, соответствующую выбранному номеру
