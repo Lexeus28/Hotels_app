@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Xml.Linq;
 
 public class Hotel
 {
@@ -45,9 +46,13 @@ public class Hotel
         set
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Название отеля не может быть пустым.");
+            {
+                throw new ArgumentException("Название отеля не может быть пустым.", nameof(value));
+            }
             if (value.Length > 10)
-                throw new ArgumentException("Название отеля не должно превышать 100 символов.");
+            {
+                throw new ArgumentException("Название отеля не должно превышать 10  символов.", nameof(value));
+            }
             _hotelName = value;
         }
     }
@@ -118,7 +123,7 @@ public class Hotel
         set
         {
             if (value != null && value.Length > 200)
-                throw new ArgumentException("Описание отеля не должно превышать 200 символов.");
+                throw new ArgumentException("Описание отеля не должно превышать 200 символов.", nameof(hotel_description));
             _hotelDescription = value;
         }
     }
@@ -130,7 +135,7 @@ public class Hotel
         {
             if (value != null && value.Length > 50)
                 throw new ArgumentException("Название адреса не должно превышать 50 символов.");
-            _hotelDescription = value;
+            _address = value;
         }
     }
 
