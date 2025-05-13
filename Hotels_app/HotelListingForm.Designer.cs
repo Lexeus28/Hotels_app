@@ -58,7 +58,7 @@ namespace Hotels_app
             // 
             // panelMain
             // 
-            panelMain.BackColor = Color.FromArgb(196, 181, 196);
+            panelMain.BackColor = Color.FromArgb(196, 171, 195);
             panelMain.Controls.Add(panelHotels);
             panelMain.Controls.Add(panelProfile);
             panelMain.Dock = DockStyle.Fill;
@@ -163,7 +163,7 @@ namespace Hotels_app
             btnBooked.TabIndex = 14;
             btnBooked.Text = "забронированные";
             btnBooked.UseVisualStyleBackColor = false;
-            //btnBooked.Click += btnBooked_Click;
+            btnBooked.Click += btnBooked_Click;
             // 
             // txtPriceTo
             // 

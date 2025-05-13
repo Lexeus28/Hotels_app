@@ -56,8 +56,17 @@ namespace Hotels_app
 
                 verticalOffset += roomPanel.Height + 15;
             }
-        }
 
+            // После загрузки комнат проверяем, есть ли ранее выбранный номер
+            if (selectedRoom != null)
+            {
+                var selectedPanel = GetRoomPanelByRoom(selectedRoom);
+                if (selectedPanel != null)
+                {
+                    selectedPanel.BackColor = Color.FromArgb(140, 110, 160); // Выделяем панель
+                }
+            }
+        }
         private Panel CreateRoomPanel(Room room)
         {
             var roomPanel = new Panel
@@ -75,14 +84,15 @@ namespace Hotels_app
                 Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Regular),
                 ForeColor = Color.FromArgb(243, 200, 220),
                 AutoSize = false,
-                MaximumSize = new Size(500, 50),
-                Location = new Point(200, 10), 
+                Size = new Size(290, 70),
+                Location = new Point(200, 10),
                 TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(0, 0, 0, 5)
+                Padding = new Padding(0, 0, 0, 5),
+                UseCompatibleTextRendering = true
             };
 
             // Обрезаем текст до двух строк
-            nameLabel.Text = TruncateTextToTwoLines(nameLabel, room.name);
+            nameLabel.Text = TruncateText(nameLabel, room.name);
 
             roomPanel.Controls.Add(nameLabel);
 
@@ -164,8 +174,13 @@ namespace Hotels_app
         /// <param name="roomPanel">Панель, соответствующая номеру</param>
         private void HandleRoomSelection(Room room, Panel roomPanel)
         {
-            // Если уже выбран этот номер, ничего не делаем
-            if (selectedRoom == room) return;
+            // Если уже выбран этот номер, сбрасываем выбор
+            if (selectedRoom == room)
+            {
+                selectedRoom = null; // Сбрасываем выбранный номер
+                roomPanel.BackColor = Color.FromArgb(113, 85, 123); // Возвращаем цвет фона к исходному
+                return;
+            }
 
             // Обнуляем выделение предыдущего номера
             if (selectedRoom != null)
@@ -181,35 +196,35 @@ namespace Hotels_app
             selectedRoom = room;
             roomPanel.BackColor = Color.FromArgb(140, 110, 160); // Меняем цвет фона для выделения
         }
-        private string TruncateTextToTwoLines(Label label, string text)
+        private string TruncateText(Label label, string text)
         {
             using (var g = label.CreateGraphics())
             {
-                var originalFontSize = label.Font.Size;
-                var maxWidth = label.MaximumSize.Width;
-                var maxHeight = label.MaximumSize.Height;
+                var textSize = g.MeasureString(text, label.Font, label.Size.Width);
 
-                // Разбиваем текст на слова
-                var words = text.Split(' ');
-                var result = string.Empty;
-
-                foreach (var word in words)
+                if (textSize.Height > label.Size.Height)
                 {
-                    var testString = result.Length > 0 ? $"{result} {word}" : word;
+                    // Обрезаем текст до двух строк с многоточием
+                    var words = text.Split(' ');
+                    var result = string.Empty;
 
-                    // Измеряем размер текста
-                    var textSize = g.MeasureString(testString, label.Font);
-
-                    if (textSize.Height > maxHeight || textSize.Width > maxWidth)
+                    foreach (var word in words)
                     {
-                        // Если текст не помещается, добавляем многоточие и завершаем
-                        return result.Length > 0 ? $"{result}..." : "...";
+                        var testString = result.Length > 0 ? $"{result} {word}" : word;
+                        var testSize = g.MeasureString(testString, label.Font, label.Size.Width);
+
+                        if (testSize.Height > label.Size.Height)
+                        {
+                            return result.Length > 0 ? $"{result}..." : "...";
+                        }
+
+                        result = testString;
                     }
 
-                    result = testString;
+                    return result;
                 }
 
-                return result;
+                return text;
             }
         }
 
@@ -265,6 +280,7 @@ namespace Hotels_app
             oneRoomLabel.ForeColor = currentTab == 1 ? activeColor : inactiveColor;
             twoRoomLabel.ForeColor = currentTab == 2 ? activeColor : inactiveColor;
             familyRoomLabel.ForeColor = currentTab == 4 ? activeColor : inactiveColor;
+
         }
 
         private void BookButton_Click(object sender, EventArgs e)
@@ -283,24 +299,67 @@ namespace Hotels_app
                 return;
             }
 
-            // Создаем новую запись в таблице Bookings
-            var booking = new Booking(
-                selectedRoom.room_id,
-                _currentUser.user_id, // Предполагается, что _currentUser существует
-                fromDatePicker.Value,
-                toDatePicker.Value
-            );
+            // Преобразуем даты в локальное время
+            var checkInDate = fromDatePicker.Value.Date; // Только дата (без времени)
+            var checkOutDate = toDatePicker.Value.Date;
 
-            try
+            // Проверяем, что дата заезда не в прошлом (сегодняшняя дата разрешена)
+            if (checkInDate < DateTime.Today)
             {
-                _context.Bookings.Add(booking);
-                _context.SaveChanges();
-                MessageBox.Show("Номер успешно забронирован!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Нельзя выбрать дату заезда в прошлом.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            catch (Exception ex)
+
+            // Проверяем, что дата выезда больше или равна дате заезда
+            if (checkOutDate < checkInDate)
             {
-                MessageBox.Show($"Ошибка при бронировании: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Дата выезда должна быть больше или равна дате заезда.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            // Проверяем, что бронирование не превышает 2 года вперёд
+            var maxBookingDate = DateTime.Today.AddYears(2);
+            if (checkOutDate > maxBookingDate)
+            {
+                MessageBox.Show("Бронирование доступно только на срок до 2 лет вперёд.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Преобразуем даты в UTC для сохранения в базу данных
+            var checkInDateUtc = checkInDate.ToUniversalTime();
+            var checkOutDateUtc = checkOutDate.ToUniversalTime();
+
+            // Проверяем количество бронирований для выбранной комнаты на указанные даты
+            var overlappingBookings = _context.Bookings.Where(b => b.room_id == selectedRoom.room_id &&
+                (
+                    // Пересечение диапазонов дат
+                    (b.check_in_date < checkOutDateUtc && b.check_out_date > checkInDateUtc) ||
+                    // Полное включение одного диапазона в другой
+                    (b.check_in_date >= checkInDateUtc && b.check_in_date < checkOutDateUtc) ||
+                    (b.check_out_date > checkInDateUtc && b.check_out_date <= checkOutDateUtc) ||
+                    // Заезд и выезд в один день
+                    (checkInDateUtc.Date == checkOutDateUtc.Date && b.check_in_date.Date <= checkInDateUtc.Date && b.check_out_date.Date >= checkInDateUtc.Date)
+                )).ToList();
+
+            // Проверяем, не превышено ли количество бронирований
+            if (overlappingBookings.Count >= selectedRoom.amount)
+            {
+                MessageBox.Show("Номер уже полностью забронирован на выбранные даты.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Создаем новую запись в таблице Bookings
+            var booking = new Booking
+            {
+                room_id = selectedRoom.room_id,
+                user_id = _currentUser.user_id,
+                check_in_date = checkInDateUtc,
+                check_out_date = checkOutDateUtc
+            };
+            _context.Bookings.Add(booking);
+            _context.SaveChanges();
+            MessageBox.Show("Номер успешно забронирован!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
         }
     }
 }

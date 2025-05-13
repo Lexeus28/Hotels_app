@@ -13,7 +13,6 @@ namespace Hotels_app
         private System.Windows.Forms.Label familyRoomLabel;
         private System.Windows.Forms.Label twoRoomLabel;
         private System.Windows.Forms.Label oneRoomLabel;
-        private System.Windows.Forms.Panel roomListingPanel;
         private System.Windows.Forms.Label selectDateLabel;
         private System.Windows.Forms.Panel fromDatePanel;
         private System.Windows.Forms.Label fromLabel;
@@ -58,7 +57,6 @@ namespace Hotels_app
             oneRoomLabel = new Label();
             twoRoomLabel = new Label();
             familyRoomLabel = new Label();
-            roomListingPanel = new Panel();
             mainPanel.SuspendLayout();
             rightPanel.SuspendLayout();
             toDatePanel.SuspendLayout();
@@ -69,7 +67,7 @@ namespace Hotels_app
             // 
             // mainPanel
             // 
-            mainPanel.BackColor = Color.FromArgb(196, 181, 196);
+            mainPanel.BackColor = Color.FromArgb(196, 171, 195);
             mainPanel.Controls.Add(rightPanel);
             mainPanel.Controls.Add(leftPanel);
             mainPanel.Dock = DockStyle.Fill;
@@ -218,7 +216,7 @@ namespace Hotels_app
             oneRoomLabel.Name = "oneRoomLabel";
             oneRoomLabel.Size = new Size(150, 31);
             oneRoomLabel.TabIndex = 0;
-            oneRoomLabel.Text = "1-комнатные";
+            oneRoomLabel.Text = "одноместные";
             oneRoomLabel.Click += oneRoomLabel_Click;
             // 
             // twoRoomLabel
@@ -231,7 +229,7 @@ namespace Hotels_app
             twoRoomLabel.Name = "twoRoomLabel";
             twoRoomLabel.Size = new Size(150, 31);
             twoRoomLabel.TabIndex = 1;
-            twoRoomLabel.Text = "2-комнатные";
+            twoRoomLabel.Text = "двуместные";
             twoRoomLabel.Click += twoRoomLabel_Click;
             // 
             // familyRoomLabel
@@ -246,13 +244,6 @@ namespace Hotels_app
             familyRoomLabel.TabIndex = 2;
             familyRoomLabel.Text = "семейные";
             familyRoomLabel.Click += familyRoomLabel_Click;
-            // 
-            // roomListingPanel
-            // 
-            roomListingPanel.Location = new Point(0, 0);
-            roomListingPanel.Name = "roomListingPanel";
-            roomListingPanel.Size = new Size(200, 100);
-            roomListingPanel.TabIndex = 0;
             // 
             // RoomListingForm
             // 

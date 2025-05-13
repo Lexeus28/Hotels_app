@@ -381,6 +381,22 @@ namespace Hotels_app
                     score -= 2; // Дизлайк вычитает -2 балла
             }
 
+            // Учет схожести с ранее забронированными отелями
+            var bookedHotels = _context.Bookings
+                .Where(b => b.user_id == user.user_id)
+                .Select(b => b.room.hotel)
+                .Distinct()
+                .ToList();
+
+            foreach (var bookedHotel in bookedHotels)
+            {
+                int similarityScore = GetSimilarityScore(hotel, bookedHotel);
+                if (similarityScore >= 3) // Если отель совпадает минимум по 3 пунктам
+                {
+                    score += 2; // Добавляем 2 балла за схожесть
+                }
+            }
+
             return score;
         }
         private void LikeButton_Click(object sender, EventArgs e)
@@ -462,15 +478,28 @@ namespace Hotels_app
                 dislikeButton.BackColor = isLike == false ? Color.FromArgb(209, 131, 170) : Color.FromArgb(243, 200, 220);
             }
         }
-        //private void btnBooked_Click(object sender, EventArgs e)
-        //{
 
-        //    // Создаем экземпляр формы BookedRoomsForm
-        //    var bookedRoomsForm = new BookedRoomsForm();
+        private void btnBooked_Click(object sender, EventArgs e)
+        {
+            // Получаем все бронирования текущего пользователя
+            var userBookings = _context.Bookings
+                .Where(b => b.user_id == _currentUser.user_id)
+                .Include(b => b.room) // Подключаем связанные данные о номерах
+                .ToList();
 
-        //    // Показываем форму
-        //    bookedRoomsForm.Show();
-        //}
+            // Проверяем, есть ли у пользователя бронирования
+            if (userBookings.Count == 0)
+            {
+                MessageBox.Show("У вас нет забронированных номеров.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return; // Завершаем выполнение, если бронирований нет
+            }
+
+            // Создаем экземпляр формы BookedRoomsForm и передаем список бронирований
+            var bookedRoomsForm = new BookedRoomsForm(userBookings, _currentUser, _context);
+
+            // Показываем форму
+            bookedRoomsForm.Show();
+        }
         private List<User> FindSimilarUsers(User currentUser)
         {
             using (var context = new ApplicationDbContext())
@@ -484,6 +513,20 @@ namespace Hotels_app
                            ((user.prefers_quiet_place.HasValue && currentUser.prefers_quiet_place.HasValue && user.prefers_quiet_place == currentUser.prefers_quiet_place) ? 1 : 0) >= 3)
                     .ToList();
             }
+        }
+        private int GetSimilarityScore(Hotel hotel1, Hotel hotel2)
+        {
+            int similarityScore = 0;
+
+            if (hotel1.has_sea_access == hotel2.has_sea_access) similarityScore++;
+            if (hotel1.has_mountain_view == hotel2.has_mountain_view) similarityScore++;
+            if (hotel1.has_historical_sites == hotel2.has_historical_sites) similarityScore++;
+            if (hotel1.offers_active_recreation == hotel2.offers_active_recreation) similarityScore++;
+            if (hotel1.has_asian_cuisine == hotel2.has_asian_cuisine) similarityScore++;
+            if (hotel1.has_european_cuisine == hotel2.has_european_cuisine) similarityScore++;
+            if (hotel1.is_city_center == hotel2.is_city_center) similarityScore++;
+
+            return similarityScore;
         }
         private List<Hotel> GetRecommendedHotels(User currentUser)
         {

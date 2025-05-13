@@ -9,6 +9,7 @@ namespace Hotels_app.classes
     {
         private Guid _roomId;
         private Hotel _hotel;
+        public ICollection<Booking> _bookings;
         private string _name;
         private decimal _pricePerNight;
         private int _capacity;
@@ -27,6 +28,11 @@ namespace Hotels_app.classes
         {
             get { return _hotel; }
             set { _hotel = value; }
+        }
+        public ICollection<Booking> bookings
+        {
+            get { return _bookings; }
+            set { _bookings = value; }
         }
 
         public string name
