@@ -138,16 +138,24 @@ namespace Hotels_app
                 // Если отель был поднят выше, добавляем метку "Нравится пользователям с похожими предпочтениями"
                 if (isBoosted)
                 {
+                    var recomendationPanel = new Panel
+                    {
+                        Size = new Size(772, 25),
+                        BackColor = Color.FromArgb(58, 51, 92),
+                        Location = new Point(4, verticalOffset),
+                        Padding = new Padding(10, 5, 10, 5)
+                    };
                     var recommendationLabel = new Label
                     {
                         Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular),
-                        ForeColor = Color.FromArgb(64, 0, 64),
+                        ForeColor = Color.FromArgb(243, 200, 220),
                         AutoSize = true,
-                        Location = new Point(10, verticalOffset),
+                        Location = new Point(0,5),
                         Text = "Нравится пользователям с похожими предпочтениями",
                         TextAlign = ContentAlignment.MiddleLeft
                     };
-                    panelHotels.Controls.Add(recommendationLabel);
+                    recomendationPanel.Controls.Add(recommendationLabel);
+                    panelHotels.Controls.Add(recomendationPanel);
                     verticalOffset += recommendationLabel.Height + 5;
                 }
 
@@ -219,7 +227,7 @@ namespace Hotels_app
 
                 roomsButton.Click += (sender, e) =>
                 {
-                    var roomListingForm = new RoomListingForm(hotel, _context);
+                    var roomListingForm = new RoomListingForm(_currentUser ,hotel, _context);
                     roomListingForm.Show();
                 };
 
@@ -447,6 +455,22 @@ namespace Hotels_app
                     score -= 2; // Дизлайк вычитает -2 балла
             }
 
+            // Учет схожести с ранее забронированными отелями
+            var bookedHotels = _context.Bookings
+                .Where(b => b.user_id == user.user_id)
+                .Select(b => b.room.hotel)
+                .Distinct()
+                .ToList();
+
+            foreach (var bookedHotel in bookedHotels)
+            {
+                int similarityScore = GetSimilarityScore(hotel, bookedHotel);
+                if (similarityScore >= 3) // Если отель совпадает минимум по 3 пунктам
+                {
+                    score += 2; // Добавляем 2 балла за схожесть
+                }
+            }
+
             return score;
         }
         private void LikeButton_Click(object sender, EventArgs e)
@@ -530,9 +554,21 @@ namespace Hotels_app
         }
         private void btnBooked_Click(object sender, EventArgs e)
         {
+            // Получаем все бронирования текущего пользователя
+            var userBookings = _context.Bookings
+                .Where(b => b.user_id == _currentUser.user_id)
+                .Include(b => b.room) // Подключаем связанные данные о номерах
+                .ToList();
 
-            // Создаем экземпляр формы BookedRoomsForm
-            var bookedRoomsForm = new BookedRoomsForm(_currentUser, _context);
+            // Проверяем, есть ли у пользователя бронирования
+            if (userBookings.Count == 0)
+            {
+                MessageBox.Show("У вас нет забронированных номеров.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return; // Завершаем выполнение, если бронирований нет
+            }
+
+            // Создаем экземпляр формы BookedRoomsForm и передаем список бронирований
+            var bookedRoomsForm = new BookedRoomsForm(userBookings, _currentUser, _context);
 
             // Показываем форму
             bookedRoomsForm.Show();
@@ -550,6 +586,20 @@ namespace Hotels_app
                            ((user.prefers_quiet_place.HasValue && currentUser.prefers_quiet_place.HasValue && user.prefers_quiet_place == currentUser.prefers_quiet_place) ? 1 : 0) >= 3)
                     .ToList();
             }
+        }
+        private int GetSimilarityScore(Hotel hotel1, Hotel hotel2)
+        {
+            int similarityScore = 0;
+
+            if (hotel1.has_sea_access == hotel2.has_sea_access) similarityScore++;
+            if (hotel1.has_mountain_view == hotel2.has_mountain_view) similarityScore++;
+            if (hotel1.has_historical_sites == hotel2.has_historical_sites) similarityScore++;
+            if (hotel1.offers_active_recreation == hotel2.offers_active_recreation) similarityScore++;
+            if (hotel1.has_asian_cuisine == hotel2.has_asian_cuisine) similarityScore++;
+            if (hotel1.has_european_cuisine == hotel2.has_european_cuisine) similarityScore++;
+            if (hotel1.is_city_center == hotel2.is_city_center) similarityScore++;
+
+            return similarityScore;
         }
         private List<Hotel> GetRecommendedHotels(User currentUser)
         {
@@ -578,14 +628,11 @@ namespace Hotels_app
                 Owner = this
             };
             editForm.ShowDialog();
+            txtName.Text = _currentUser.first_name;
+            txtSurname.Text = _currentUser.last_name;
         }
         private void AddHotelButton_Click(object sender, EventArgs e)
         {
-
-            // Создаем пустой объект Hotel
-            var emptyHotel = new Hotel();
-
-            // Открываем форму AddHotelForm с пустым отелем
             var addHotelForm = new AddHotelForm(_context, null, this); ;
             addHotelForm.ShowDialog();
         }

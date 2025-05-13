@@ -9,7 +9,6 @@ namespace Hotels_app
 {
     public partial class BookedRoomsForm : Form
     {
-        private List<Room> bookedRooms;
         private  List<Booking> _userBookings;
         private readonly User _currentUser;
         private readonly ApplicationDbContext _context;

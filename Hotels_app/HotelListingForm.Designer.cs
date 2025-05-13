@@ -142,6 +142,7 @@ namespace Hotels_app
             btnEditAccount.TabIndex = 15;
             btnEditAccount.Text = "редактировать\nаккаунт";
             btnEditAccount.UseVisualStyleBackColor = false;
+            btnEditAccount.Click += btnEditAccount_Click;
             // 
             // btnBooked
             // 
