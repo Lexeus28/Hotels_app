@@ -46,7 +46,7 @@ namespace Hotels_app
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException("Имя не может быть пустым.", nameof(value));
                 if (value.Length > 50)
-                    throw new ArgumentException("Имя не должно превышать 50 символов.", nameof(value));
+                   throw new ArgumentException("Имя не должно превышать 50 символов.", nameof(value));
                 if (!Regex.IsMatch(value, @"^[А-ЯЁ][а-яё]*$"))
                     throw new ArgumentException("Имя должно начинаться с заглавной буквы и содержать только буквы.", nameof(value));
                 _firstName = value;
