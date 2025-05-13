@@ -15,7 +15,7 @@ namespace Hotels_app.classes
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Строка подключения к PostgreSQL
-            var connectionString = Properties.Resources.ConnectionString; ;
+            var connectionString = "Host=localhost;Port=5432;Database=hotels_db;Username=postgres;Password=THEWORLD;SslMode=Prefer;";
             optionsBuilder.UseNpgsql(connectionString);
         }
 
@@ -33,6 +33,11 @@ namespace Hotels_app.classes
                 .HasOne(uhl => uhl.hotel)
                 .WithMany()
                 .HasForeignKey(uhl => uhl.hotel_id);
+            // Настройка связи между Booking и Room
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.room) // У одного бронирования есть одна комната
+                .WithMany(r => r.bookings) // У одной комнаты может быть много бронирований
+                .HasForeignKey(b => b.room_id); // Внешний ключ
 
             // Если имена таблиц не совпадают с именами классов, можно явно указать их:
             modelBuilder.Entity<User>().ToTable("users");

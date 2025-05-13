@@ -1,9 +1,20 @@
-﻿namespace Hotels_app
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace Hotels_app
 {
     partial class HotelListingForm
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,6 +23,8 @@
             }
             base.Dispose(disposing);
         }
+
+        #region Windows Form Designer generated code
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -45,7 +58,7 @@
             // 
             // panelMain
             // 
-            panelMain.BackColor = Color.FromArgb(196, 181, 196);
+            panelMain.BackColor = Color.FromArgb(196, 171, 195);
             panelMain.Controls.Add(panelHotels);
             panelMain.Controls.Add(panelProfile);
             panelMain.Dock = DockStyle.Fill;
@@ -129,7 +142,6 @@
             btnEditAccount.TabIndex = 15;
             btnEditAccount.Text = "редактировать\nаккаунт";
             btnEditAccount.UseVisualStyleBackColor = false;
-            btnEditAccount.Click += btnEditAccount_Click;
             // 
             // btnBooked
             // 
@@ -334,7 +346,8 @@
                 // Рисуем текст
                 e.Graphics.DrawString(comboBox.Items[e.Index].ToString(), e.Font, textBrush, e.Bounds);
             }
-        } 
+        }
+        #endregion
 
         private Panel panelMain;
         private Panel panelHotels;
@@ -357,5 +370,4 @@
         private Label lblProfile;
         private RoundButton BtnOpenQuestionnaire;
     }
-
 }

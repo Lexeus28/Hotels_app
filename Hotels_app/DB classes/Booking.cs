@@ -9,6 +9,7 @@ namespace Hotels_app.classes
         private Guid _bookingId;
         private Guid _roomId;
         private Guid _userId;
+        private Room _room;
         private DateTime _checkInDate;
         private DateTime _checkOutDate;
 
@@ -30,6 +31,12 @@ namespace Hotels_app.classes
         {
             get { return _userId; }
             set { _userId = value; }
+        }
+
+        public Room room
+        {
+            get { return _room; }
+            set { _room = value; }
         }
 
         public DateTime check_in_date
