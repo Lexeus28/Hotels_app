@@ -109,9 +109,9 @@ namespace Hotels_app
                 }
 
                 // Проверка пароля
-                if (string.IsNullOrWhiteSpace(password))
+                if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
                 {
-                    MessageBox.Show("Пароль не может быть пустым.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Пароль не может быть пустым и быть меньше 6 символов.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 

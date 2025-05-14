@@ -55,31 +55,38 @@ namespace Hotels_app
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
-            // Обновляем данные пользователя
-            _user.first_name = txtFirstName.Text;
-            _user.last_name = txtLastName.Text;
-            _user.patronymic = txtPatronymic.Text;
-            _user.phone_number = txtPhoneNumber.Text;
-
-            // Пытаемся сохранить пароль
             try
             {
-                await SavePassword();
+                // Обновляем данные пользователя
+                _user.first_name = txtFirstName.Text;
+                _user.last_name = txtLastName.Text;
+                _user.patronymic = txtPatronymic.Text;
+                _user.phone_number = txtPhoneNumber.Text;
+
+                // Пытаемся сохранить пароль
+                try
+                {
+                    await SavePassword();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при обработке пароля: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return; // Останавливаем выполнение, если возникла ошибка
+                }
+
+                // Сохраняем изменения в базе данных
+                _context.SaveChanges();
+
+                MessageBox.Show("Данные успешно сохранены.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Закрываем форму с результатом OK
+                DialogResult = DialogResult.OK;
+                Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при обработке пароля: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; // Останавливаем выполнение, если возникла ошибка
+                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            // Сохраняем изменения в базе данных
-            _context.SaveChanges();
-
-            MessageBox.Show("Данные успешно сохранены.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Закрываем форму с результатом OK
-            DialogResult = DialogResult.OK;
-            Close();
         }
         private async Task SavePassword()
         {

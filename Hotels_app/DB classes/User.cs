@@ -104,7 +104,7 @@ namespace Hotels_app
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException("Пароль не может быть пустым.");
                 if (value.Length < 6)
-                    throw new ArgumentException("Пароль должен быть больше 6 символов.", nameof(value));
+                    throw new ArgumentException("Пароль должен быть меньше 6 символов.", nameof(value));
                 _passwordHash = value;
             }
         }
