@@ -121,9 +121,9 @@ namespace Hotels_app
                     MessageBox.Show("Номер телефона не может быть пустым.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if (!Regex.IsMatch(phoneNumber, @"^[0-9]{1,15}$"))
+                if (!Regex.IsMatch(phoneNumber, @"^[0-9]{9,15}$"))
                 {
-                    MessageBox.Show("Номер телефона должен содержать цифры (1-15).", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Номер телефона должен содержать цифры (9-15).", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 

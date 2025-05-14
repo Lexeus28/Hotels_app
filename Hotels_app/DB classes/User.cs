@@ -90,6 +90,8 @@ namespace Hotels_app
                     throw new ArgumentException("Логин не может быть пустым.", nameof(value));
                 if (value.Length > 50)
                     throw new ArgumentException("Логин не должен превышать 50 символов.", nameof(value));
+                if (value.Length < 6)
+                    throw new ArgumentException("Логин должен быть больше 6 символов.", nameof(value));
                 _username = value;
             }
         }
@@ -101,6 +103,8 @@ namespace Hotels_app
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException("Пароль не может быть пустым.");
+                if (value.Length < 6)
+                    throw new ArgumentException("Пароль должен быть больше 6 символов.", nameof(value));
                 _passwordHash = value;
             }
         }
@@ -112,7 +116,7 @@ namespace Hotels_app
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException("Номер телефона не может быть пустым.", nameof(value));
-                if (!Regex.IsMatch(value, @"^[0-9]{1,15}$"))
+                if (!Regex.IsMatch(value, @"^[0-9]{9,15}$"))
                     throw new ArgumentException("Номер телефона должен содержать цифры (1-15).", nameof(value));
                 _phone_number = value;
             }
