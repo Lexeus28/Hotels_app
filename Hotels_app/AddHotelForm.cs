@@ -162,97 +162,104 @@ namespace Hotels_app
         }
         private void btnAddHotel_Click(object sender, EventArgs e)
         {
-            // Проверяем, заполнены ли обязательные поля
-            if (string.IsNullOrWhiteSpace(txtName.Text) || string.IsNullOrWhiteSpace(cmbCity.Text) || string.IsNullOrWhiteSpace(cmbStars.Text) || string.IsNullOrWhiteSpace(txtAddress.Text))
-            {
-                MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            try {
+                // Проверяем, заполнены ли обязательные поля
+                if (string.IsNullOrWhiteSpace(txtName.Text) || string.IsNullOrWhiteSpace(cmbCity.Text) || string.IsNullOrWhiteSpace(cmbStars.Text) || string.IsNullOrWhiteSpace(txtAddress.Text))
+                {
+                    MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-            // Проверяем, существует ли выбранный город в базе данных
-            var selectedCityTitle = cmbCity.Text.Trim();
-            var existingCity = _context.Cities.FirstOrDefault(c => c.title.ToLower() == selectedCityTitle.ToLower());
+                // Проверяем, существует ли выбранный город в базе данных
+                var selectedCityTitle = cmbCity.Text.Trim();
+                var existingCity = _context.Cities.FirstOrDefault(c => c.title.ToLower() == selectedCityTitle.ToLower());
 
-            if (existingCity == null)
-            {
-                MessageBox.Show($"Город \"{selectedCityTitle}\" не найден в базе данных. Выберите существующий город.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            // Проверяем, есть ли комнаты в списке
-            if (_temporaryRooms == null || _temporaryRooms.Count == 0)
-            {
-                MessageBox.Show("Добавьте хотя бы один номер для отеля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+                if (existingCity == null)
+                {
+                    MessageBox.Show($"Город \"{selectedCityTitle}\" не найден в базе данных. Выберите существующий город.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                // Проверяем, есть ли комнаты в списке
+                if (_temporaryRooms == null || _temporaryRooms.Count == 0)
+                {
+                    MessageBox.Show("Добавьте хотя бы один номер для отеля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-            // Находим минимальную и максимальную цены среди комнат
-            decimal minPrice = _temporaryRooms.Min(room => room.price_per_night);
-            decimal maxPrice = _temporaryRooms.Max(room => room.price_per_night);
+                // Находим минимальную и максимальную цены среди комнат
+                decimal minPrice = _temporaryRooms.Min(room => room.price_per_night);
+                decimal maxPrice = _temporaryRooms.Max(room => room.price_per_night);
 
-            // Обновляем объект Hotel
-            _hotel.hotel_name = txtName.Text.Trim();
-            if (cmbStars.SelectedItem?.ToString() == "Без звезд")
-            {
-                _hotel.stars = null; // Беззвездочный отель
-            }
-            else
-            {
-                _hotel.stars = Convert.ToByte(cmbStars.SelectedItem?.ToString());
-            }
-            _hotel.city = existingCity; // Присваиваем существующий объект City
-            _hotel.mn_price = minPrice;
-            _hotel.mx_price = maxPrice;
-            _hotel.hotel_description = txtDescription.Text.Trim();
-            _hotel.address = txtAddress.Text.Trim();
-            _hotel.has_sea_access = radioSea.Checked;
-            _hotel.has_mountain_view = radioMountains.Checked;
-            _hotel.has_historical_sites = radioYes1.Checked;
-            _hotel.offers_active_recreation = radioYes2.Checked;
-            _hotel.has_asian_cuisine = radioAsian.Checked;
-            _hotel.has_european_cuisine = radioEuropean.Checked;
-            _hotel.is_city_center = radioCity.Checked;
+                // Обновляем объект Hotel
+                _hotel.hotel_name = txtName.Text.Trim();
+                if (cmbStars.SelectedItem?.ToString() == "Без звезд")
+                {
+                    _hotel.stars = null; // Беззвездочный отель
+                }
+                else
+                {
+                    _hotel.stars = Convert.ToByte(cmbStars.SelectedItem?.ToString());
+                }
+                _hotel.city = existingCity; // Присваиваем существующий объект City
+                _hotel.mn_price = minPrice;
+                _hotel.mx_price = maxPrice;
+                _hotel.hotel_description = txtDescription.Text.Trim();
+                _hotel.address = txtAddress.Text.Trim();
+                _hotel.has_sea_access = radioSea.Checked;
+                _hotel.has_mountain_view = radioMountains.Checked;
+                _hotel.has_historical_sites = radioYes1.Checked;
+                _hotel.offers_active_recreation = radioYes2.Checked;
+                _hotel.has_asian_cuisine = radioAsian.Checked;
+                _hotel.has_european_cuisine = radioEuropean.Checked;
+                _hotel.is_city_center = radioCity.Checked;
 
-            // Добавляем или обновляем отель в базе данных
-            if (_isEditMode)
-            {
-                // Обновляем существующий отель
-                _context.Hotels.Update(_hotel);
-            }
-            else
-            {
-                // Добавляем новый отель
-                _context.Hotels.Add(_hotel);
-            }
+                // Добавляем или обновляем отель в базе данных
+                if (_isEditMode)
+                {
+                    // Обновляем существующий отель
+                    _context.Hotels.Update(_hotel);
+                }
+                else
+                {
+                    // Добавляем новый отель
+                    _context.Hotels.Add(_hotel);
+                }
 
-            // Сохраняем изменения в базе данных
-            _context.SaveChanges();
-
-            // Добавляем или обновляем комнаты
-            if (_isEditMode)
-            {
-                // Удаляем старые комнаты
-                _context.Rooms.RemoveRange(_context.Rooms
-                .Where(room => room.hotel.hotel_id == _hotel.hotel_id)
-                .ToList());
+                // Сохраняем изменения в базе данных
                 _context.SaveChanges();
-            }
 
-            foreach (var room in _temporaryRooms)
+                // Добавляем или обновляем комнаты
+                if (_isEditMode)
+                {
+                    // Удаляем старые комнаты
+                    _context.Rooms.RemoveRange(_context.Rooms
+                    .Where(room => room.hotel.hotel_id == _hotel.hotel_id)
+                    .ToList());
+                    _context.SaveChanges();
+                }
+
+                foreach (var room in _temporaryRooms)
+                {
+                    room.hotel = _hotel; // Привязываем комнату к отелю
+                    _context.Rooms.Add(room);
+                }
+
+                _context.SaveChanges();
+
+                MessageBox.Show(_isEditMode ? "Отель успешно обновлен!" : "Отель и номера успешно добавлены!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Очищаем форму для нового ввода
+                ClearForm();
+                this.Close();
+                _hotelListingForm.ReloadHotels();
+
+            }
+            catch (Exception ex)
             {
-                room.hotel = _hotel; // Привязываем комнату к отелю
-                _context.Rooms.Add(room);
+                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            _context.SaveChanges();
-
-            MessageBox.Show(_isEditMode ? "Отель успешно обновлен!" : "Отель и номера успешно добавлены!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Очищаем форму для нового ввода
-            ClearForm();
-            this.Close();
-            _hotelListingForm.ReloadHotels();
-
         }
+        
 
         private void ClearForm()
         {
