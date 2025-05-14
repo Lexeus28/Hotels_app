@@ -23,9 +23,9 @@ namespace Hotels_app
                     var admin = new User
                     {
                         user_id = Guid.NewGuid(),
-                        first_name = "Admin",
-                        last_name = "Adminov",
-                        username = "admin",
+                        first_name = "Админ",
+                        last_name = "Админов",
+                        username = "Admin",
                         password_hash = PasswordHasher.HashPasswordAsync("123").Result,
                         phone_number = "1234567890",
                         role = Role.Admin,

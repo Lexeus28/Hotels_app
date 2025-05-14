@@ -38,13 +38,28 @@ namespace Hotels_app.classes
         public string name
         {
             get { return _name; }
-            set { _name = value; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Название номера не может быть пустым.", nameof(value));
+                if (value.Length > 20)
+                    throw new ArgumentException("Название номера не должно превышать 20 символов.", nameof(value));
+                _name = value;
+            }
         }
 
         public decimal price_per_night
         {
             get { return _pricePerNight; }
-            set { _pricePerNight = value; }
+            set
+            {
+                if (!decimal.TryParse(value.ToString(), out decimal parsedValue))
+                    throw new ArgumentException("Цена за ночь должна содержать только числовые значения.");
+                if (parsedValue <= 0)
+                    throw new ArgumentException("Цена за ночь должна быть больше 0.");
+
+                _pricePerNight = parsedValue;
+            }
         }
 
         public int capacity
@@ -61,7 +76,12 @@ namespace Hotels_app.classes
         public string room_description
         {
             get { return _description; }
-            set { _description = value; }
+            set
+            {
+                if (value.Length > 500)
+                    throw new ArgumentException("Описание номера не должно превышать 500 символов.");
+                _description = value;
+            }
         }
 
         [NotMapped]
