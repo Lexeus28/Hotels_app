@@ -1,6 +1,4 @@
 ﻿using Hotels_app.Properties;
-using Microsoft.EntityFrameworkCore;
-
 namespace Hotels_app
 {
     // <summary>

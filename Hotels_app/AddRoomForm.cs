@@ -32,8 +32,8 @@
                     numericCapacity.Value <= 0 ||
                     numericAmount.Value <= 0)
                 {
-                    MessageBox.Show(Resources.Error_RequiredFields,
-                                  Resources.Error_mes,
+                    MessageBox.Show(Properties.Resources.Error_RequiredFields,
+                                  Properties.Resources.Error_mes,
                                   MessageBoxButtons.OK,
                                   MessageBoxIcon.Warning);
                     return;
@@ -42,8 +42,8 @@
                 string roomNumber = txtName.Text.Trim();
                 if (!IsRoomNameUnique(roomNumber))
                 {
-                    MessageBox.Show(Resources.Error_RoomExists,
-                                  Resources.Error_mes,
+                    MessageBox.Show(Properties.Resources.Error_RoomExists,
+                                  Properties.Resources.Error_mes,
                                   MessageBoxButtons.OK,
                                   MessageBoxIcon.Warning);
                     return;
@@ -70,8 +70,8 @@
 
                 CreatedRoom = room;
 
-                MessageBox.Show(Resources.Success_RoomAdded,
-                             Resources.Success,
+                MessageBox.Show(Properties.Resources.Success_RoomAdded,
+                             Properties.Resources.Success,
                              MessageBoxButtons.OK,
                              MessageBoxIcon.Information);
 
@@ -80,8 +80,8 @@
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format(Resources.Error_AddRoomException, ex.Message),
-                              Resources.Error_mes,
+                MessageBox.Show(string.Format(Properties.Resources.Error_AddRoomException, ex.Message),
+                              Properties.Resources.Error_mes,
                               MessageBoxButtons.OK,
                               MessageBoxIcon.Error);
             }
@@ -91,8 +91,8 @@
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = Resources.ImageFilesFilter;
-                openFileDialog.Title = Resources.SelectImageTitle;
+                openFileDialog.Filter = Properties.Resources.ImageFilesFilter;
+                openFileDialog.Title = Properties.Resources.SelectImageTitle;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -105,8 +105,8 @@
                     }
                     catch
                     {
-                        MessageBox.Show(Resources.Error_ImageUploadFailed,
-                                      Resources.Error_mes,
+                        MessageBox.Show(Properties.Resources.Error_ImageUploadFailed,
+                                      Properties.Resources.Error_mes,
                                       MessageBoxButtons.OK,
                                       MessageBoxIcon.Warning);
                     }

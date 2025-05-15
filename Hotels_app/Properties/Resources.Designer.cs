@@ -70,7 +70,7 @@ namespace Hotels_app.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=2343;SslMode=Prefer;.
+        ///   Ищет локализованную строку, похожую на Host=localhost;Port=5432;Database=hotels_db;Username=postgres;Password=THEWORLD;SslMode=Prefer;.
         /// </summary>
         internal static string ConnectionString {
             get {

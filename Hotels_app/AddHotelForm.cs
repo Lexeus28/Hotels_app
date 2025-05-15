@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System.Data;
 namespace Hotels_app
 {
     // <summary>
@@ -34,7 +31,7 @@ namespace Hotels_app
                 txtDescription.Text = _hotel.hotel_description;
                 UpdateRadioButtonsFromHotel(hotel);
                 pictureBox.Image = _hotel.image;
-                lblTitle.Text = Resources.EditHotels;
+                lblTitle.Text = Properties.Resources.EditHotels;
                 
 
                 // Загружаем список комнат
@@ -59,8 +56,8 @@ namespace Hotels_app
             {
                 var itemText = listBoxRooms.Items[e.Index]?.ToString() ?? string.Empty;
 
-                Brush textColor = new SolidBrush(Color.FromArgb(64, 0, 64));
-                Brush backColor = new SolidBrush(Color.FromArgb(243, 200, 220)); 
+                var textColor = new SolidBrush(Color.FromArgb(64, 0, 64));
+                var backColor = new SolidBrush(Color.FromArgb(243, 200, 220)); 
 
                 if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
                 {
@@ -115,7 +112,7 @@ namespace Hotels_app
                 // Проверяем, заполнены ли обязательные поля
                 if (string.IsNullOrWhiteSpace(txtName.Text) || string.IsNullOrWhiteSpace(cmbCity.Text) || string.IsNullOrWhiteSpace(cmbStars.Text) || string.IsNullOrWhiteSpace(txtAddress.Text))
                 {
-                    MessageBox.Show(Resources.Error_RequiredFields, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Properties.Resources.Error_RequiredFields, Properties.Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -125,13 +122,13 @@ namespace Hotels_app
 
                 if (existingCity == null)
                 {   
-                    MessageBox.Show(string.Format(Properties.Resources.FalseCity, selectedCityTitle), Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(string.Format(Properties.Resources.FalseCity, selectedCityTitle), Properties.Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 // Проверяем, есть ли комнаты в списке
                 if (_temporaryRooms == null || _temporaryRooms.Count == 0)
                 {
-                    MessageBox.Show(Resources.Error_AddAtLeastOneRoom, Resources.Error_mes,MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Properties.Resources.Error_AddAtLeastOneRoom, Properties.Resources.Error_mes,MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -185,8 +182,8 @@ namespace Hotels_app
 
                 _context.SaveChanges();
 
-            MessageBox.Show(_isEditMode ? Resources.Success_HotelUpdated : Resources.Success_HotelAdded,
-            Resources.Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(_isEditMode ? Properties.Resources.Success_HotelUpdated : Properties.Resources.Success_HotelAdded,
+            Properties.Resources.Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
             // Очищаем форму для нового ввода
             ClearForm();
                 this.Close();
@@ -238,7 +235,7 @@ namespace Hotels_app
                     }
                     catch
                     {
-                        MessageBox.Show(Resources.Error_ImageUploadFailed, Resources.Error_mes,
+                        MessageBox.Show(Properties.Resources.Error_ImageUploadFailed, Properties.Resources.Error_mes,
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
@@ -302,7 +299,7 @@ namespace Hotels_app
             // Проверяем, выбран ли элемент в ListBox
             if (listBoxRooms.SelectedItem == null)
             {
-                MessageBox.Show(Resources.Error_SelectRoomToDelete, Resources.Error_mes,
+                MessageBox.Show(Properties.Resources.Error_SelectRoomToDelete, Properties.Resources.Error_mes,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -315,7 +312,7 @@ namespace Hotels_app
 
             if (roomToRemove == null)
             {
-                MessageBox.Show(Resources.Error_RoomNotFound, Resources.Error_mes, 
+                MessageBox.Show(Properties.Resources.Error_RoomNotFound, Properties.Resources.Error_mes, 
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -326,7 +323,7 @@ namespace Hotels_app
             // Удаляем объект из временного списка комнат (_temporaryRooms)
             _temporaryRooms.Remove(roomToRemove);
 
-            MessageBox.Show(Resources.Success_RoomDeleted, Resources.Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Properties.Resources.Success_RoomDeleted, Properties.Resources.Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void btnDeleteHotel_Click(object sender, EventArgs e)
         {
@@ -361,7 +358,7 @@ namespace Hotels_app
             // Сохраняем изменения в базе данных
             _context.SaveChanges();
 
-            MessageBox.Show(Resources.Success_HotelDeleted, Resources.Success,
+            MessageBox.Show(Properties.Resources.Success_HotelDeleted, Properties.Resources.Success,
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Закрываем форму

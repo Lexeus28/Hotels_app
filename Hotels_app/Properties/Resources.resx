@@ -121,7 +121,7 @@
     <value>Вы уверены, что хотите удалить этот отель и все связанные с ним номера? Это действие нельзя отменить.</value>
   </data>
   <data name="ConnectionString" xml:space="preserve">
-    <value>Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=2343;SslMode=Prefer;</value>
+    <value>Host=localhost;Port=5432;Database=hotels_db;Username=postgres;Password=THEWORLD;SslMode=Prefer;</value>
     <comment>строка подключения к бд</comment>
   </data>
   <data name="EditHotels" xml:space="preserve">

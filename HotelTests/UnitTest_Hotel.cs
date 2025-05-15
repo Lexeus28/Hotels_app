@@ -1,8 +1,4 @@
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System;
-    using Hotels_app.classes;
-
-    namespace Hotels_app.Tests
+namespace Hotels_app.Tests
     {
         [TestClass]
         public class HotelTests
