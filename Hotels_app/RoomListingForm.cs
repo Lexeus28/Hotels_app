@@ -77,24 +77,28 @@ namespace Hotels_app
                 Margin = new Padding(0, 0, 0, 10),
                 Tag = room // Привязываем объект Room к панели
             };
+
+            var namePanel = new Panel
+            {
+                Size = new Size(290, 70),
+                BackColor = Color.Transparent,
+                Location = new Point(200, 10)
+            };
+            roomPanel.Controls.Add(namePanel);
             // Лейбл с названием комнаты
             var nameLabel = new Label
             {
                 Text = room.name,
                 Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Regular),
                 ForeColor = Color.FromArgb(243, 200, 220),
-                AutoSize = false,
-                Size = new Size(290, 70),
-                Location = new Point(200, 10),
+                Dock = DockStyle.Fill,
+                Location = new Point(0, 0),
                 TextAlign = ContentAlignment.MiddleLeft,
                 Padding = new Padding(0, 0, 0, 5),
                 UseCompatibleTextRendering = true
             };
 
-            // Обрезаем текст до двух строк
-            nameLabel.Text = TruncateText(nameLabel, room.name);
-
-            roomPanel.Controls.Add(nameLabel);
+            namePanel.Controls.Add(nameLabel);
 
             // Кнопка выбора
             var selectButton = new RoundButton
@@ -143,7 +147,7 @@ namespace Hotels_app
             var descLabel = new Label
             {
                 Text = room.room_description,
-                Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Italic),
+                Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular),
                 ForeColor = Color.FromArgb(230, 174, 207),
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleRight, // Выравнивание по правому краю
@@ -167,9 +171,6 @@ namespace Hotels_app
             return roomPanel;
         }
 
-        /// <summary>
-        /// Обрабатывает выбор номера
-        /// </summary>
         /// <param name="room">Выбранный номер</param>
         /// <param name="roomPanel">Панель, соответствующая номеру</param>
         private void HandleRoomSelection(Room room, Panel roomPanel)
@@ -195,37 +196,6 @@ namespace Hotels_app
             // Выбираем новый номер
             selectedRoom = room;
             roomPanel.BackColor = Color.FromArgb(140, 110, 160); // Меняем цвет фона для выделения
-        }
-        private string TruncateText(Label label, string text)
-        {
-            using (var g = label.CreateGraphics())
-            {
-                var textSize = g.MeasureString(text, label.Font, label.Size.Width);
-
-                if (textSize.Height > label.Size.Height)
-                {
-                    // Обрезаем текст до двух строк с многоточием
-                    var words = text.Split(' ');
-                    var result = string.Empty;
-
-                    foreach (var word in words)
-                    {
-                        var testString = result.Length > 0 ? $"{result} {word}" : word;
-                        var testSize = g.MeasureString(testString, label.Font, label.Size.Width);
-
-                        if (testSize.Height > label.Size.Height)
-                        {
-                            return result.Length > 0 ? $"{result}..." : "...";
-                        }
-
-                        result = testString;
-                    }
-
-                    return result;
-                }
-
-                return text;
-            }
         }
 
 

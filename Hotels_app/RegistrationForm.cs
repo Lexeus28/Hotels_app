@@ -27,7 +27,7 @@ namespace Hotels_app
         /// <summary>
         /// Обработчик нажатия на кнопку "Зарегистрироваться"
         /// </summary>
-        private async void btnRegister_Click(object sender, EventArgs e)
+        private void btnRegister_Click(object sender, EventArgs e)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace Hotels_app
                 }
 
                 // Проверка уникальности логина
-                var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.username == login);
+                var existingUser = _context.Users.FirstOrDefault(u => u.username == login);
                 if (existingUser != null)
                 {
                     MessageBox.Show("Пользователь с таким логином уже существует!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -109,9 +109,9 @@ namespace Hotels_app
                 }
 
                 // Проверка пароля
-                if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
+                if (string.IsNullOrWhiteSpace(password))
                 {
-                    MessageBox.Show("Пароль не может быть пустым и быть меньше 6 символов.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Пароль не может быть пустым.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -134,13 +134,13 @@ namespace Hotels_app
                     last_name = lastName,
                     patronymic = patronymic,
                     username = login,
-                    password_hash = await PasswordHasher.HashPasswordAsync(password),
+                    password_hash = PasswordHasher.HashPassword(password),
                     phone_number = phoneNumber
                 };
 
                 // Сохранение пользователя в базу данных
-                await _context.Users.AddAsync(newUser);
-                await _context.SaveChangesAsync();
+                _context.Users.Add(newUser);
+                _context.SaveChanges();
 
                 MessageBox.Show("Регистрация успешно завершена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -158,6 +158,7 @@ namespace Hotels_app
                 MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         /// <summary>
         /// Очистка полей формы

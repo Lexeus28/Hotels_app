@@ -24,7 +24,6 @@ namespace Hotels_app
 
         private const int WM_NCLBUTTONDOWN = 0xA1;
         private const int HT_CAPTION = 0x2;
-        private bool isPasswordVisible = false;
         private void Panel_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -33,9 +32,9 @@ namespace Hotels_app
                 SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
-        private readonly User _user; // Текущий пользователь
+        private readonly User _user;
         private readonly AuthorizationForm _authorization;
-        private readonly ApplicationDbContext _context; // Контекст базы данных
+        private readonly ApplicationDbContext _context;
 
         public UserEditForm(User user, ApplicationDbContext context, AuthorizationForm authorization)
         {
@@ -113,14 +112,14 @@ namespace Hotels_app
             }
 
             // Проверяем, что старый пароль верный
-            bool isOldPasswordCorrect = await PasswordHasher.VerifyPasswordAsync(oldPassword, _user.password_hash);
+            bool isOldPasswordCorrect = PasswordHasher.VerifyPassword(oldPassword, _user.password_hash);
             if (!isOldPasswordCorrect)
             {
                 throw new Exception("Старый пароль неверен.");
             }
 
             // Хешируем новый пароль
-            string hashedNewPassword = await PasswordHasher.HashPasswordAsync(newPassword);
+            string hashedNewPassword = PasswordHasher.HashPassword(newPassword);
 
             // Обновляем пароль пользователя
             _user.password_hash = hashedNewPassword;

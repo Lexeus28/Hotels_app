@@ -32,60 +32,25 @@ namespace Hotels_app
 
             int verticalOffset = 47; // Сдвиг для размещения под заголовком
 
-            // Группируем бронирования по отелям
-            var groupedBookings = _userBookings
-                .GroupBy(b => b.room.hotel) // Группируем по объекту Hotel
-                .OrderBy(g => g.Key.hotel_name) // Сортируем по названию отеля
-                .ToList();
-
-            foreach (var group in groupedBookings)
+            // Перебираем все бронирования пользователя
+            foreach (var booking in _userBookings)
             {
-                var hotel = group.Key; // Текущий отель
-                // Создаем панель для названия отеля 
-                var hotelPanel = new Panel
-                {
-                    Size = new Size(leftPanel.Width - 20, 50), // Ширина как у родительской панели, высота 50
-                    BackColor = Color.FromArgb(77, 67, 126), // Цвет фона для панели отеля
-                    Location = new Point(4, verticalOffset), // Отступ слева и сверху
-                    Padding = new Padding(10, 5, 10, 5) // Отступы внутри панели
-                };
+                var room = booking.room;
+                var hotel = room.hotel;
 
-                // Добавляем лейбл для отеля
-                var hotelLabel = new Label
-                {
-                    Text = hotel.hotel_name, // Название отеля
-                    Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(243, 200, 220),
-                    AutoSize = false, // Занимает всю ширину панели
-                    Dock = DockStyle.Fill, // Занимает всю панель
-                    TextAlign = ContentAlignment.MiddleLeft // Выравнивание текста слева
-                };
-                // Добавляем лейбл в панель
-                hotelPanel.Controls.Add(hotelLabel);
-                // Добавляем панель на главную панель
-                leftPanel.Controls.Add(hotelPanel);
+                // Создаем панель для отображения информации о бронировании
+                var bookingPanel = CreateBookedRoomPanel(booking, room, hotel);
 
-                verticalOffset += hotelLabel.Height + 18; // Сдвиг для следующего элемента
+                // Устанавливаем позицию панели
+                bookingPanel.Location = new Point(4, verticalOffset);
+                leftPanel.Controls.Add(bookingPanel);
 
-                // Добавляем карточки бронирований для текущего отеля
-                foreach (var booking in group)
-                {
-                    var room = booking.room;
-
-                    // Создаем панель для отображения информации о бронировании
-                    var bookingPanel = CreateBookedRoomPanel(booking, room);
-
-                    // Устанавливаем позицию панели
-                    bookingPanel.Location = new Point(4, verticalOffset);
-                    leftPanel.Controls.Add(bookingPanel);
-
-                    verticalOffset += bookingPanel.Height + 15; // Сдвиг для следующей панели
-                }
+                verticalOffset += bookingPanel.Height + 15; // Сдвиг для следующей панели
             }
         }
 
 
-        private Panel CreateBookedRoomPanel(Booking booking, Room room)
+        private Panel CreateBookedRoomPanel(Booking booking, Room room, Hotel hotel)
         {
             var bookingPanel = new Panel
             {
@@ -93,24 +58,17 @@ namespace Hotels_app
                 BackColor = Color.FromArgb(113, 85, 123),
                 Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
                 Margin = new Padding(0, 0, 0, 10),
-                Tag = booking // Привязываем объект Room к панели
+                Tag = booking
             };
-            // Лейбл с названием комнаты
             var nameLabel = new Label
             {
-                Text = room.name,
-                Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Regular),
+                Font = new Font("Microsoft Sans Serif", 23F, FontStyle.Regular),
                 ForeColor = Color.FromArgb(243, 200, 220),
-                AutoSize = false,
-                Size = new Size(290, 70),
-                Location = new Point(200, 10),
-                TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(0, 0, 0, 5),
-                UseCompatibleTextRendering = true
+                Location = new Point(190, 20),
+                Size = new Size(293, 40),
+                Text = hotel.stars != null ? $"{hotel.stars}* {hotel.hotel_name}" : hotel.hotel_name,
+                TextAlign = ContentAlignment.MiddleLeft
             };
-
-            // Обрезаем текст до двух строк
-            nameLabel.Text = TruncateText(nameLabel, room.name);
 
             bookingPanel.Controls.Add(nameLabel);
 
@@ -144,31 +102,61 @@ namespace Hotels_app
                 Text = $"{room.price_per_night} руб.",
                 Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Bold),
                 ForeColor = Color.FromArgb(243, 200, 220),
-                Location = new Point(36, 130), // Опущена до 110 (было 80)
+                Location = new Point(36, 130),
                 AutoSize = true
             };
             bookingPanel.Controls.Add(priceLabel);
 
             // Панель описания (уменьшена)
+            var infoPanel = new Panel
+            {
+                Size = new Size(240, 90), // Уменьшена ширина до 280, высота 50
+                BackColor = Color.FromArgb(77, 67, 126),
+                Location = new Point(230, 73) // Сдвинута вправо и вниз
+            };
+            bookingPanel.Controls.Add(infoPanel);
+
+            var roomPanel = new Panel
+            {
+                Size = new Size(240, 40),
+                BackColor = Color.Transparent,
+                Dock = DockStyle.Top
+            };
+            infoPanel.Controls.Add(roomPanel);
+
+            // Лейбл с названием отеля
+            var roomLabel = new Label
+            {
+                Font = new Font("Microsoft Sans Serif", 12F),
+                ForeColor = Color.FromArgb(230, 174, 207),
+                Text = room.name,
+                Dock = DockStyle.Fill,
+                Location = new Point(5, 5),
+                TextAlign = ContentAlignment.MiddleLeft,
+            };
+            roomPanel.Controls.Add(roomLabel);
+
             var descPanel = new Panel
             {
-                Size = new Size(240, 77), // Уменьшена ширина до 280, высота 50
-                BackColor = Color.FromArgb(77, 67, 126),
-                Location = new Point(230, 85) // Сдвинута вправо и вниз
+                Size = new Size(240, 50),
+                BackColor = Color.Transparent,
+                Location = new Point(0,40)
             };
+            infoPanel.Controls.Add(descPanel);
 
             // Текст описания (выравнивание по правому краю)
             var descLabel = new Label
             {
                 Text = room.room_description,
-                Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Italic),
+                Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular),
                 ForeColor = Color.FromArgb(230, 174, 207),
+                Location = new Point(5, 5),
                 Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleRight, // Выравнивание по правому краю
+                TextAlign = ContentAlignment.MiddleRight,
                 Padding = new Padding(0, 0, 10, 0) // Отступ справа 10px
             };
             descPanel.Controls.Add(descLabel);
-            bookingPanel.Controls.Add(descPanel);
+           
 
             // Картинка (сдвинута левее)
             var pictureBox = new PictureBox
@@ -227,37 +215,6 @@ namespace Hotels_app
                 }
             }
             return null;
-        }
-        private string TruncateText(Label label, string text)
-        {
-            using (var g = label.CreateGraphics())
-            {
-                var textSize = g.MeasureString(text, label.Font, label.Size.Width);
-
-                if (textSize.Height > label.Size.Height)
-                {
-                    // Обрезаем текст до двух строк с многоточием
-                    var words = text.Split(' ');
-                    var result = string.Empty;
-
-                    foreach (var word in words)
-                    {
-                        var testString = result.Length > 0 ? $"{result} {word}" : word;
-                        var testSize = g.MeasureString(testString, label.Font, label.Size.Width);
-
-                        if (testSize.Height > label.Size.Height)
-                        {
-                            return result.Length > 0 ? $"{result}..." : "...";
-                        }
-
-                        result = testString;
-                    }
-
-                    return result;
-                }
-
-                return text;
-            }
         }
 
         // Метод для обработки кнопки "Назад"

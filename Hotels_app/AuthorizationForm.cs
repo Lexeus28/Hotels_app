@@ -44,10 +44,10 @@ namespace Hotels_app
             }
         }
 
-        private async Task<bool> ValidateUserAsync(string login, string password)
+        private bool ValidateUser(string login, string password)
         {
-            // Используем общий контекст для проверки пользователя
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.username == login);
+            // Проверяем пользователя в БД
+            var user = _context.Users.FirstOrDefault(u => u.username == login);
 
             if (user == null)
             {
@@ -55,7 +55,7 @@ namespace Hotels_app
                 return false;
             }
 
-            if (await PasswordHasher.VerifyPasswordAsync(password, user.password_hash))
+            if (PasswordHasher.VerifyPassword(password, user.password_hash))
             {
                 return true;
             }
@@ -66,7 +66,7 @@ namespace Hotels_app
             }
         }
 
-        private async void btnLogin_Click(object sender, EventArgs e)
+        private void btnLogin_Click(object sender, EventArgs e)
         {
             string login = txtLogin.Text.Trim();
             string password = txtPassword.Text.Trim();
@@ -77,12 +77,12 @@ namespace Hotels_app
                 return;
             }
 
-            if (await ValidateUserAsync(login, password))
+            if (ValidateUser(login, password))
             {
                 MessageBox.Show("Авторизация успешна!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Находим пользователя по логину
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.username == login);
+                var user = _context.Users.FirstOrDefault(u => u.username == login);
 
                 // Проверяем, является ли это первым входом
                 if (user.isfirstlogin)
@@ -106,7 +106,7 @@ namespace Hotels_app
 
                     // Обновляем флаг IsFirstLogin
                     user.isfirstlogin = false;
-                    await _context.SaveChangesAsync();
+                    _context.SaveChanges();
                 }
 
                 // Открываем форму HotelListingForm
@@ -117,6 +117,7 @@ namespace Hotels_app
                 ClearFormFields();
             }
         }
+
 
         private void btnRegister_Click(object sender, EventArgs e)
         {

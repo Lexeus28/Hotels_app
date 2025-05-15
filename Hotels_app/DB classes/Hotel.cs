@@ -49,9 +49,9 @@ public class Hotel
             {
                 throw new ArgumentException("Название отеля не может быть пустым.", nameof(value));
             }
-            if (value.Length > 10)
+            if (value.Length > 35)
             {
-                throw new ArgumentException("Название отеля не должно превышать 10  символов.", nameof(value));
+                throw new ArgumentException("Название отеля не должно превышать 35  символов.", nameof(value));
             }
             _hotelName = value;
         }
@@ -122,8 +122,8 @@ public class Hotel
         get { return _hotelDescription; }
         set
         {
-            if (value != null && value.Length > 200)
-                throw new ArgumentException("Описание отеля не должно превышать 200 символов.", nameof(hotel_description));
+            if (value != null && value.Length > 90)
+                throw new ArgumentException("Описание отеля не должно превышать 90 символов.", nameof(hotel_description));
             _hotelDescription = value;
         }
     }
@@ -134,7 +134,7 @@ public class Hotel
         set
         {
             if (value != null && value.Length > 50)
-                throw new ArgumentException("Название адреса не должно превышать 50 символов.");
+                throw new ArgumentException("Название адреса не должно превышать 25 символов.");
             _address = value;
         }
     }

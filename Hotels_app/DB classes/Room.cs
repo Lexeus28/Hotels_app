@@ -42,8 +42,8 @@ namespace Hotels_app.classes
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException("Название номера не может быть пустым.", nameof(value));
-                if (value.Length > 20)
-                    throw new ArgumentException("Название номера не должно превышать 20 символов.", nameof(value));
+                if (value.Length > 35)
+                    throw new ArgumentException("Название номера не должно превышать 35 символов.", nameof(value));
                 _name = value;
             }
         }
@@ -78,8 +78,8 @@ namespace Hotels_app.classes
             get { return _description; }
             set
             {
-                if (value.Length > 500)
-                    throw new ArgumentException("Описание номера не должно превышать 500 символов.");
+                if (value.Length > 70)
+                    throw new ArgumentException("Описание номера не должно превышать 70 символов.");
                 _description = value;
             }
         }

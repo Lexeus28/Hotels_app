@@ -32,6 +32,8 @@ namespace Hotels_app
         private void InitializeComponent()
         {
             panelLeft = new Panel();
+            lblAmount = new Label();
+            numericAmount = new NumericUpDown();
             txtPrice = new TextBox();
             pictureBox = new PictureBox();
             btnDeleteImage = new RoundButton();
@@ -46,13 +48,11 @@ namespace Hotels_app
             lblPrice = new Label();
             panelRight = new Panel();
             btnAddRoom = new RoundButton();
-            numericAmount = new NumericUpDown();
-            lblAmount = new Label();
             panelLeft.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericAmount).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericCapacity).BeginInit();
             panelRight.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericAmount).BeginInit();
             SuspendLayout();
             // 
             // panelLeft
@@ -77,6 +77,29 @@ namespace Hotels_app
             panelLeft.Name = "panelLeft";
             panelLeft.Size = new Size(587, 548);
             panelLeft.TabIndex = 0;
+            // 
+            // lblAmount
+            // 
+            lblAmount.AutoSize = true;
+            lblAmount.ForeColor = Color.FromArgb(64, 0, 64);
+            lblAmount.Location = new Point(22, 189);
+            lblAmount.Margin = new Padding(4, 0, 4, 0);
+            lblAmount.Name = "lblAmount";
+            lblAmount.Size = new Size(155, 15);
+            lblAmount.TabIndex = 26;
+            lblAmount.Text = "количество таких номеров";
+            // 
+            // numericAmount
+            // 
+            numericAmount.BackColor = Color.FromArgb(243, 200, 220);
+            numericAmount.BorderStyle = BorderStyle.FixedSingle;
+            numericAmount.Location = new Point(22, 163);
+            numericAmount.Margin = new Padding(4, 3, 4, 3);
+            numericAmount.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericAmount.Name = "numericAmount";
+            numericAmount.Size = new Size(171, 23);
+            numericAmount.TabIndex = 25;
+            numericAmount.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // txtPrice
             // 
@@ -181,9 +204,9 @@ namespace Hotels_app
             lblCapacity.Location = new Point(22, 144);
             lblCapacity.Margin = new Padding(4, 0, 4, 0);
             lblCapacity.Name = "lblCapacity";
-            lblCapacity.Size = new Size(79, 15);
+            lblCapacity.Size = new Size(134, 15);
             lblCapacity.TabIndex = 5;
-            lblCapacity.Text = "вместимость";
+            lblCapacity.Text = " вместимость комнаты";
             // 
             // numericCapacity
             // 
@@ -262,29 +285,6 @@ namespace Hotels_app
             btnAddRoom.UseVisualStyleBackColor = false;
             btnAddRoom.Click += btnAddRoom_Click;
             // 
-            // numericAmount
-            // 
-            numericAmount.BackColor = Color.FromArgb(243, 200, 220);
-            numericAmount.BorderStyle = BorderStyle.FixedSingle;
-            numericAmount.Location = new Point(22, 163);
-            numericAmount.Margin = new Padding(4, 3, 4, 3);
-            numericAmount.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericAmount.Name = "numericAmount";
-            numericAmount.Size = new Size(171, 23);
-            numericAmount.TabIndex = 25;
-            numericAmount.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            // 
-            // lblAmount
-            // 
-            lblAmount.AutoSize = true;
-            lblAmount.ForeColor = Color.FromArgb(64, 0, 64);
-            lblAmount.Location = new Point(22, 189);
-            lblAmount.Margin = new Padding(4, 0, 4, 0);
-            lblAmount.Name = "lblAmount";
-            lblAmount.Size = new Size(114, 15);
-            lblAmount.TabIndex = 26;
-            lblAmount.Text = "количество комнат";
-            // 
             // AddRoomForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -297,10 +297,10 @@ namespace Hotels_app
             Text = "Добавление номеров";
             panelLeft.ResumeLayout(false);
             panelLeft.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericAmount).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericCapacity).EndInit();
             panelRight.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)numericAmount).EndInit();
             ResumeLayout(false);
         }
 

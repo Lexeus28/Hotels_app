@@ -26,7 +26,7 @@ namespace Hotels_app
                         first_name = "Админ",
                         last_name = "Админов",
                         username = "Admin",
-                        password_hash = PasswordHasher.HashPasswordAsync("123").Result,
+                        password_hash = PasswordHasher.HashPassword("123"),
                         phone_number = "1234567890",
                         role = Role.Admin,
                         isfirstlogin = false

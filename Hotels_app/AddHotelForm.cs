@@ -41,6 +41,8 @@ namespace Hotels_app
                 txtDescription.Text = _hotel.hotel_description;
                 UpdateRadioButtonsFromHotel(hotel);
                 pictureBox.Image = _hotel.image;
+                lblTitle.Text = "Редактирование отелей";
+                
 
                 // Загружаем список комнат
                 _temporaryRooms = _context.Rooms
@@ -162,7 +164,6 @@ namespace Hotels_app
         }
         private void btnAddHotel_Click(object sender, EventArgs e)
         {
-            try {
                 // Проверяем, заполнены ли обязательные поля
                 if (string.IsNullOrWhiteSpace(txtName.Text) || string.IsNullOrWhiteSpace(cmbCity.Text) || string.IsNullOrWhiteSpace(cmbStars.Text) || string.IsNullOrWhiteSpace(txtAddress.Text))
                 {
@@ -252,12 +253,6 @@ namespace Hotels_app
                 ClearForm();
                 this.Close();
                 _hotelListingForm.ReloadHotels();
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
         
 

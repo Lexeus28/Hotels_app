@@ -24,10 +24,6 @@ namespace Hotels_app
             _context = context;
             _currentUser = currentUser;
 
-            // Заполняем текстовые поля
-            txtName.Text = _currentUser.first_name;
-            txtSurname.Text = _currentUser.last_name;
-
             LoadHotelsData(); // Загружаем данные об отелях
             LoadHotels();     // Отображаем отели
             LoadCities();     // Загружаем города
@@ -45,19 +41,17 @@ namespace Hotels_app
 
                 // Меняем текст и обработчик кнопки "Забронированные"
                 btnBooked.Text = "добавить отель";
-                btnBooked.Click -= btnBooked_Click; // Удаляем старый обработчик
-                btnBooked.Click += AddHotelButton_Click; // Добавляем новый обработчик
+                btnBooked.Click -= btnBooked_Click;
+                btnBooked.Click += AddHotelButton_Click; 
                 btnEditAccount.Enabled = false;
                 btnEditAccount.BackColor = Color.FromArgb(196, 170,195);
-            }
-            else
-            // Устанавливаем начальные значения
-            cmbCity.SelectedIndex = 0; // Пустой вариант
-            cmbStars.SelectedIndex = 0; // Пустой вариант
+                txtName.Clear() ;
+                txtSurname.Text = "АДМИН";
 
-            // Подписываемся на события изменения значений в ComboBox
-            cmbCity.SelectedIndexChanged += (sender, e) => FilterHotels();
-            cmbStars.SelectedIndexChanged += (sender, e) => FilterHotels();
+            }
+            // Устанавливаем начальные значения
+            cmbCity.SelectedIndex = 0;
+            cmbStars.SelectedIndex = 0;
 
             txtPriceFrom.TextChanged += (sender, e) =>
             {
@@ -66,27 +60,16 @@ namespace Hotels_app
 
             txtPriceTo.TextChanged += (sender, e) =>
             {
-                BtnOpenQuestionnaire.Visible = true;
-                btnEditAccount.Enabled = true;
-                btnEditAccount.BackColor = Color.FromArgb(75, 21, 53);
-                btnEditAccount.BorderColor = Color.FromArgb(223, 150, 161);
+                FilterHotels();
             };
-
-            // Загружаем данные об отелях
-            LoadHotelsData();
-            LoadHotels();
-            LoadCities();
-            LoadStars();
-
-            // Устанавливаем начальные значения
-            cmbCity.SelectedIndex = 0; // Пустой вариант
-            cmbStars.SelectedIndex = 0; // Пустой вариант
-
-            // Подписываемся на события изменения значений в ComboBox
-            cmbCity.SelectedIndexChanged += (sender, e) => FilterHotels();
-            cmbStars.SelectedIndexChanged += (sender, e) => FilterHotels();
-            txtPriceFrom.TextChanged += (sender, e) => FilterHotels();
-            txtPriceTo.TextChanged += (sender, e) => FilterHotels();
+            cmbCity.SelectedIndexChanged += (sender, e) =>
+            {
+                FilterHotels();
+            };
+            cmbStars.SelectedIndexChanged += (sender, e) =>
+            {
+                FilterHotels();
+            };
         }
         bool IsAdmin()
         {
@@ -277,65 +260,94 @@ namespace Hotels_app
             };
             hotelPanel.Controls.Add(priceLabel);
 
-            // Название отеля
+
+            var namePanel = new Panel
+            {
+                Size = new Size(290, 70),
+                BackColor = Color.Transparent,
+                Location = new Point(200, 5)
+            };
+            hotelPanel.Controls.Add(namePanel);
+            // Лейбл с названием комнаты
             var nameLabel = new Label
             {
-                Font = new Font("Microsoft Sans Serif", 23F, FontStyle.Regular),
-                ForeColor = Color.FromArgb(243, 200, 220),
-                Location = new Point(190, 20),
-                Size = new Size(293, 40),
                 Text = hotel.stars != null ? $"{hotel.stars}* {hotel.hotel_name}" : hotel.hotel_name,
-                TextAlign = ContentAlignment.MiddleLeft
+                Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Regular),
+                ForeColor = Color.FromArgb(243, 200, 220),
+                Dock = DockStyle.Fill,
+                Location = new Point(0, 0),
+                TextAlign = ContentAlignment.MiddleLeft,
+                Padding = new Padding(0, 0, 0, 5),
+                UseCompatibleTextRendering = true
             };
-            hotelPanel.Controls.Add(nameLabel);
+            namePanel.Controls.Add(nameLabel);
 
             // Синяя панель информации
             var infoPanel = new Panel
             {
                 BackColor = Color.FromArgb(77, 67, 126),
-                Location = new Point(200, 72),
+                Location = new Point(200, 77),
                 Size = new Size(280, 90)
             };
+            hotelPanel.Controls.Add(infoPanel);
+            var addressPanel = new Panel
+            {
+                Size = new Size(280, 20),
+                BackColor = Color.Transparent,
+                Dock = DockStyle.Top
+            };
+            infoPanel.Controls.Add(addressPanel);
             // Адрес (вверху слева)
             var addressLabel = new Label
             {
                 Font = new Font("Microsoft Sans Serif", 10F),
                 ForeColor = Color.FromArgb(230, 174, 207),
-                AutoSize = true,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left,
+                Dock = DockStyle.Fill,
                 Location = new Point(10, 5),
                 Text = hotel.address,
                 TextAlign = ContentAlignment.MiddleLeft
             };
-            infoPanel.Controls.Add(addressLabel);
+            addressPanel.Controls.Add(addressLabel);
+
+            var descPanel = new Panel
+            {
+                Size = new Size(280, 45),
+                BackColor = Color.Transparent,
+                Location = new Point (0,20)
+            };
+            infoPanel.Controls.Add(descPanel);
 
             // Описание (между адресом и городом)
             var descLabel = new Label
             {
                 Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular),
                 ForeColor = Color.FromArgb(230, 174, 207),
-                AutoSize = true,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left,
-                Location = new Point(10, addressLabel.Bottom + 5),
+                Dock = DockStyle.Fill,
+                Location = new Point(10, 5),
                 Text = hotel.hotel_description,
                 TextAlign = ContentAlignment.MiddleLeft
             };
-            infoPanel.Controls.Add(descLabel);
+            descPanel.Controls.Add(descLabel);
+
+            var cityPanel = new Panel
+            {
+                Size = new Size(280, 25),
+                BackColor = Color.Transparent,
+                Location = new Point(0, 65)
+            };
+            infoPanel.Controls.Add(cityPanel);
 
             // Лейбл для города (внизу справа)
             var cityLabel = new Label
             {
                 Font = new Font("Microsoft Sans Serif", 14F),
                 ForeColor = Color.FromArgb(230, 174, 207),
-                AutoSize = true,
-                Anchor = AnchorStyles.Bottom | AnchorStyles.Right,
-                Location = new Point(infoPanel.Width - 200, infoPanel.Height - 30),
+                Dock = DockStyle.Fill,
+                Location = new Point(0, 8),
                 Text = $"г. {hotel.city.title}",
                 TextAlign = ContentAlignment.MiddleRight
             };
-            infoPanel.Controls.Add(cityLabel);
-
-            hotelPanel.Controls.Add(infoPanel);
+            cityPanel.Controls.Add(cityLabel);
 
             // Изображение отеля
             var pictureBox = new PictureBox
