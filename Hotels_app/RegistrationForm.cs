@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Hotels_app.classes;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hotels_app
 {
+    // <summary>
+    ///  форма регистрации
+    ///</summary>
     public partial class RegistrationForm : Form
     {
         private readonly ApplicationDbContext _context;
@@ -19,25 +18,19 @@ namespace Hotels_app
             _context = context;
             _authorizationForm = authorizationForm;
 
-            // Привязка событий
             btnRegister.Click += btnRegister_Click;
             btnClose.Click += (s, e) => this.Close();
         }
-
-        /// <summary>
-        /// Обработчик нажатия на кнопку "Зарегистрироваться"
-        /// </summary>
         private void btnRegister_Click(object sender, EventArgs e)
         {
             try
             {
-                // Сбор данных из текстовых полей
-                string firstName = txtFirstName.Text.Trim();
-                string lastName = txtLastName.Text.Trim();
-                string patronymic = txtPatronymic.Text.Trim();
-                string login = txtLogin.Text.Trim();
-                string password = txtPassword.Text.Trim();
-                string phoneNumber = txtPhoneNumber.Text.Trim();
+                var firstName = txtFirstName.Text.Trim();
+                var lastName = txtLastName.Text.Trim();
+                var patronymic = txtPatronymic.Text.Trim();
+                var login = txtLogin.Text.Trim();
+                var password = txtPassword.Text.Trim();
+                var phoneNumber = txtPhoneNumber.Text.Trim();
 
                 // Проверка имени
                 if (string.IsNullOrWhiteSpace(firstName))
@@ -137,20 +130,15 @@ namespace Hotels_app
                     password_hash = PasswordHasher.HashPassword(password),
                     phone_number = phoneNumber
                 };
-
-                // Сохранение пользователя в базу данных
                 _context.Users.Add(newUser);
                 _context.SaveChanges();
 
                 MessageBox.Show("Регистрация успешно завершена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Очистка полей после успешной регистрации
                 ClearFormFields();
 
-                // Закрыть текущую форму
                 this.Close();
 
-                // Открыть форму авторизации
                 _authorizationForm.Show();
             }
             catch (Exception ex)
@@ -158,11 +146,6 @@ namespace Hotels_app
                 MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-        /// <summary>
-        /// Очистка полей формы
-        /// </summary>
         private void ClearFormFields()
         {
             txtFirstName.Clear();

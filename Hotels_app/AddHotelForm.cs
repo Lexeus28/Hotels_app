@@ -2,18 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Hotels_app.classes;
-using Hotels_app.Properties;
-using Microsoft.EntityFrameworkCore;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
-
 namespace Hotels_app
 {
+    // <summary>
+    ///  форма для добавления отелей
+    ///</summary>
     public partial class AddHotelForm : Form
     {
         private Hotel _hotel;
@@ -34,9 +27,8 @@ namespace Hotels_app
                 _hotel = hotel;
                 _isEditMode = true;
 
-                // Заполняем поля формы данными из существующего объекта Hotel
                 txtName.Text = _hotel.hotel_name;
-                cmbCity.SelectedItem = _hotel.city?.title; // Используем название города
+                cmbCity.SelectedItem = _hotel.city?.title; 
                 cmbStars.SelectedItem = _hotel.stars?.ToString() ?? "Без звезд";
                 txtAddress.Text = _hotel.address;
                 txtDescription.Text = _hotel.hotel_description;
@@ -47,94 +39,51 @@ namespace Hotels_app
 
                 // Загружаем список комнат
                 _temporaryRooms = _context.Rooms
-                .Where(room => room.hotel.hotel_id == _hotel.hotel_id) // Фильтруем по hotel_id
+                .Where(room => room.hotel.hotel_id == _hotel.hotel_id)
                 .ToList();
                 UpdateRoomList();
-                // Делаем кнопку удаления отеля видимой
                 btnDeleteHotel.Visible = true;
             }
             else
             {
                 _hotel = new Hotel();
-                // Скрываем кнопку удаления отеля
                 btnDeleteHotel.Visible = false;
             }
 
             _hotelListingForm = hotelListingForm;
         }
-        private void pictureBox_Paint(object sender, PaintEventArgs e)
-        {
-            // Если изображение отсутствует, рисуем сетку
-            if (pictureBox.Image == null)
-            {
-                using (Pen pen = new Pen(Color.LightGray, 1))
-                {
-                    // Размер ячейки сетки
-                    int gridSize = 10;
-
-                    // Рисуем горизонтальные линии
-                    for (int y = 0; y < pictureBox.Height; y += gridSize)
-                    {
-                        e.Graphics.DrawLine(pen, 0, y, pictureBox.Width, y);
-                    }
-
-                    // Рисуем вертикальные линии
-                    for (int x = 0; x < pictureBox.Width; x += gridSize)
-                    {
-                        e.Graphics.DrawLine(pen, x, 0, x, pictureBox.Height);
-                    }
-                }
-            }
-        }
         private void ListBoxRooms_DrawItem(object sender, DrawItemEventArgs e)
         {
-            // Очищаем фон
             e.DrawBackground();
-
-            // Проверяем, что индекс элемента корректен
             if (e.Index >= 0)
             {
-                // Получаем текст элемента
-                string itemText = listBoxRooms.Items[e.Index]?.ToString() ?? string.Empty;
+                var itemText = listBoxRooms.Items[e.Index]?.ToString() ?? string.Empty;
 
-                // Определяем цвет текста и фона (используем цвета из вашего дизайна)
-                Brush textColor = new SolidBrush(Color.FromArgb(64, 0, 64)); // Цвет текста (фиолетовый)
-                Brush backColor = new SolidBrush(Color.FromArgb(243, 200, 220)); // Цвет фона (светло-розовый)
+                Brush textColor = new SolidBrush(Color.FromArgb(64, 0, 64));
+                Brush backColor = new SolidBrush(Color.FromArgb(243, 200, 220)); 
 
-                // Если элемент выбран, меняем цвета
                 if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
                 {
-                    textColor = new SolidBrush(Color.FromArgb(243, 200, 220)); // Светло-розовый текст для выделенного элемента
-                    backColor = new SolidBrush(Color.FromArgb(58, 51, 92)); // Темно-фиолетовый фон для выделенного элемента
+                    textColor = new SolidBrush(Color.FromArgb(243, 200, 220));
+                    backColor = new SolidBrush(Color.FromArgb(58, 51, 92));
                 }
 
-                // Заполняем фон элемента
                 e.Graphics.FillRectangle(backColor, e.Bounds);
-
-                // Рисуем текст элемента слева (без центрирования)
-                e.Graphics.DrawString(itemText, e.Font, textColor, e.Bounds.Left + 5, e.Bounds.Top + 5); // Отступы: 5px слева и сверху
-
-                // Рисуем горизонтальные линии (рамки) сверху и снизу
-                using (Pen pen = new Pen(Color.FromArgb(64, 0, 64), 1)) // Цвет и толщина линии
+                e.Graphics.DrawString(itemText, e.Font, textColor, e.Bounds.Left + 5, e.Bounds.Top + 5);
+                using (Pen pen = new Pen(Color.FromArgb(64, 0, 64), 1))
                 {
-                    // Линия сверху
                     e.Graphics.DrawLine(pen, e.Bounds.Left, e.Bounds.Top, e.Bounds.Right, e.Bounds.Top);
 
-                    // Линия снизу
                     e.Graphics.DrawLine(pen, e.Bounds.Left, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1);
                 }
             }
-
-            // Рисуем фокус (если элемент выбран)
             e.DrawFocusRectangle();
         }
         private void UpdateRadioButtonsFromHotel(Hotel hotel)
         {
-            // Обновляем состояние радиокнопок
             radioSea.Checked = hotel.has_sea_access;
             radioMountains.Checked = hotel.has_mountain_view;
 
-            // Для группированных радиокнопок (например, "да" и "нет")
             radioYes1.Checked = hotel.has_historical_sites;
             radioNo1.Checked = !hotel.has_historical_sites;
 
@@ -147,20 +96,18 @@ namespace Hotels_app
             radioCity.Checked = hotel.is_city_center;
         }
         private void LoadCities()
-        {
-            var cities = _context.Cities.ToList(); // Получаем список городов
-            cmbCity.DataSource = cities;          // Устанавливаем источник данных
-            cmbCity.DisplayMember = "title";      // Показываем название города
-            cmbCity.ValueMember = "city_id";     // Используем ID города как значение
+        { 
+            cmbCity.DataSource = _context.Cities.ToList();
+            cmbCity.DisplayMember = "title";
+            cmbCity.ValueMember = "city_id";
         }
-        // Метод для нормализации названий городов
         private void LoadStars()
         {
             cmbStars.Items.Clear();
             cmbStars.Items.Add("Без звезд");
-            for (int i = 1; i <= 5; i++)
+            for (var index = 1; index <= 5; index++)
             {
-                cmbStars.Items.Add(i.ToString());
+                cmbStars.Items.Add(index.ToString());
             }
         }
         private void btnAddHotel_Click(object sender, EventArgs e)
@@ -188,11 +135,10 @@ namespace Hotels_app
                     return;
                 }
 
-            // Находим минимальную и максимальную цены среди комнат
-            decimal minPrice = _temporaryRooms.Min(room => room.price_per_night);
-                decimal maxPrice = _temporaryRooms.Max(room => room.price_per_night);
+                // Находим минимальную и максимальную цены среди комнат
+                var minPrice = _temporaryRooms.Min(room => room.price_per_night);
+                var maxPrice = _temporaryRooms.Max(room => room.price_per_night);
 
-                // Обновляем объект Hotel
                 _hotel.hotel_name = txtName.Text.Trim();
                 if (cmbStars.SelectedItem?.ToString() == "Без звезд")
                 {
@@ -202,7 +148,7 @@ namespace Hotels_app
                 {
                     _hotel.stars = Convert.ToByte(cmbStars.SelectedItem?.ToString());
                 }
-                _hotel.city = existingCity; // Присваиваем существующий объект City
+                _hotel.city = existingCity;
                 _hotel.mn_price = minPrice;
                 _hotel.mx_price = maxPrice;
                 _hotel.hotel_description = txtDescription.Text.Trim();
@@ -214,26 +160,17 @@ namespace Hotels_app
                 _hotel.has_asian_cuisine = radioAsian.Checked;
                 _hotel.has_european_cuisine = radioEuropean.Checked;
                 _hotel.is_city_center = radioCity.Checked;
-
-                // Добавляем или обновляем отель в базе данных
                 if (_isEditMode)
                 {
-                    // Обновляем существующий отель
                     _context.Hotels.Update(_hotel);
                 }
                 else
                 {
-                    // Добавляем новый отель
                     _context.Hotels.Add(_hotel);
                 }
-
-                // Сохраняем изменения в базе данных
                 _context.SaveChanges();
-
-                // Добавляем или обновляем комнаты
                 if (_isEditMode)
                 {
-                    // Удаляем старые комнаты
                     _context.Rooms.RemoveRange(_context.Rooms
                     .Where(room => room.hotel.hotel_id == _hotel.hotel_id)
                     .ToList());
@@ -242,7 +179,7 @@ namespace Hotels_app
 
                 foreach (var room in _temporaryRooms)
                 {
-                    room.hotel = _hotel; // Привязываем комнату к отелю
+                    room.hotel = _hotel;
                     _context.Rooms.Add(room);
                 }
 
@@ -259,7 +196,6 @@ namespace Hotels_app
 
         private void ClearForm()
         {
-            // Очищаем основные поля формы
             _hotel = new Hotel();
             txtName.Clear();
             cmbCity.SelectedIndex = -1;
@@ -267,7 +203,6 @@ namespace Hotels_app
             txtDescription.Clear();
             txtAddress.Clear();
 
-            // Сбрасываем состояния радиокнопок
             radioSea.Checked = false;
             radioMountains.Checked = false;
             radioQuiet.Checked = false;
@@ -279,10 +214,8 @@ namespace Hotels_app
             radioAsian.Checked = false;
             radioEuropean.Checked = false;
 
-            // Очищаем временный список комнат
             _temporaryRooms.Clear();
 
-            // Очищаем ListBox и PictureBox
             listBoxRooms.Items.Clear();
             pictureBox.Image = null;
         }
@@ -295,17 +228,12 @@ namespace Hotels_app
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    string filePath = openFileDialog.FileName;
+                    var filePath = openFileDialog.FileName;
 
                     try
                     {
-                        // Загружаем изображение в PictureBox
                         pictureBox.Image = Image.FromFile(filePath);
-
-                        // Преобразуем изображение в массив байтов
-                        byte[] imageBytes = Hotel.ImageToByteArray(pictureBox.Image);
-
-                        // Сохраняем массив байтов в объект Hotel
+                        var imageBytes = Hotel.ImageToByteArray(pictureBox.Image);
                         _hotel.image_byte = imageBytes;
                     }
                     catch
@@ -331,10 +259,7 @@ namespace Hotels_app
 
             if (addRoomForm.ShowDialog() == DialogResult.OK)
             {
-                // Добавляем созданный объект Room в коллекцию
                 _temporaryRooms.Add(addRoomForm.CreatedRoom);
-
-                // Обновляем список комнат на экране
                 UpdateRoomList();
             }
         }
@@ -344,12 +269,12 @@ namespace Hotels_app
             listBoxRooms.Items.Clear();
             foreach (var room in _temporaryRooms)
             {
-                listBoxRooms.Items.Add(room.name); // Отображаем номер комнаты
+                listBoxRooms.Items.Add(room.name);
             }
         }
         private void RadioButton_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.RadioButton clickedRadioButton = sender as System.Windows.Forms.RadioButton;
+            var clickedRadioButton = sender as RadioButton;
 
             if (clickedRadioButton != null)
             {
@@ -363,13 +288,11 @@ namespace Hotels_app
                     // Если радиокнопка не активна, сбрасываем все остальные в группе
                     foreach (Control control in clickedRadioButton.Parent.Controls)
                     {
-                        if (control is System.Windows.Forms.RadioButton radioButton && radioButton != clickedRadioButton)
+                        if (control is RadioButton radioButton && radioButton != clickedRadioButton)
                         {
                             radioButton.Checked = false;
                         }
                     }
-
-                    // Активируем текущую радиокнопку
                     clickedRadioButton.Checked = true;
                 }
             }
@@ -385,7 +308,7 @@ namespace Hotels_app
             }
 
             // Получаем выбранный номер комнаты (строка из ListBox)
-            string selectedRoomNumber = listBoxRooms.SelectedItem.ToString();
+            var selectedRoomNumber = listBoxRooms.SelectedItem.ToString();
 
             // Находим объект Room в коллекции _temporaryRooms по номеру комнаты
             var roomToRemove = _temporaryRooms.FirstOrDefault(room => room.name == selectedRoomNumber);
@@ -422,7 +345,7 @@ namespace Hotels_app
             }
 
             // Находим все связанные комнаты
-            List<Room> roomsToDelete = _context.Rooms
+            var roomsToDelete = _context.Rooms
                 .Where(room => room.hotel.hotel_id == _hotel.hotel_id)
                 .ToList();
 

@@ -3,8 +3,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 
-namespace Hotels_app.classes
+namespace Hotels_app
 {
+    /// <summary>
+    /// класс комнат
+    /// </summary>
     public class Room
     {
         private Guid _roomId;
@@ -17,6 +20,9 @@ namespace Hotels_app.classes
         private string _description;
         private Image _image;
         private byte[]? _imageByte;
+        /// <summary>
+        /// Айди комнаты
+        /// </summary>
         [Key]
         public Guid room_id
         {
@@ -24,17 +30,27 @@ namespace Hotels_app.classes
             set { _roomId = value; }
         }
 
+        /// <summary>
+        /// Навигационное свойство отеля
+        /// </summary>
         public Hotel hotel
         {
             get { return _hotel; }
             set { _hotel = value; }
         }
+
+        /// <summary>
+        /// Навигационное свойство бронирований
+        /// </summary>
         public ICollection<Booking> bookings
         {
             get { return _bookings; }
             set { _bookings = value; }
         }
 
+        /// <summary>
+        /// Название комнаты
+        /// </summary>
         public string name
         {
             get { return _name; }
@@ -48,6 +64,9 @@ namespace Hotels_app.classes
             }
         }
 
+        /// <summary>
+        /// Цена за ночь
+        /// </summary>
         public decimal price_per_night
         {
             get { return _pricePerNight; }
@@ -62,17 +81,27 @@ namespace Hotels_app.classes
             }
         }
 
+        /// <summary>
+        /// Вместимость комнаты
+        /// </summary>
         public int capacity
         {
             get { return _capacity; }
             set { _capacity = value; }
         }
+
+        /// <summary>
+        /// Количество таких комнат
+        /// </summary>
         public int amount
         {
             get { return _amount; }
             set { _amount = value; }
         }
 
+        /// <summary>
+        /// Описание комнаты
+        /// </summary>
         public string room_description
         {
             get { return _description; }
@@ -84,6 +113,9 @@ namespace Hotels_app.classes
             }
         }
 
+        /// <summary>
+        /// Навигационное свойство для загрузки картинки
+        /// </summary>
         [NotMapped]
         public Image image
         {
@@ -109,6 +141,9 @@ namespace Hotels_app.classes
             }
         }
 
+        /// <summary>
+        /// Картинка, хранящаяся в массиве байтов
+        /// </summary>
         public byte[]? image_byte
         {
             get { return _imageByte; }

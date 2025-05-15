@@ -1,10 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
-namespace Hotels_app.classes
+namespace Hotels_app
 {
+    /// <summary>
+    /// класс для подключения к бд
+    /// </summary>
     public class ApplicationDbContext : DbContext
-    {
-        // DbSet для каждой таблицы
+    {   /// <summary>
+        /// DbSet для каждой таблицы
+        /// </summary>
         public DbSet<User> Users { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<UserHotelLike> Likes { get; set; }
@@ -33,21 +37,17 @@ namespace Hotels_app.classes
                 .HasOne(uhl => uhl.hotel)
                 .WithMany()
                 .HasForeignKey(uhl => uhl.hotel_id);
-            // Настройка связи между Booking и Room
             modelBuilder.Entity<Booking>()
-                .HasOne(b => b.room) // У одного бронирования есть одна комната
-                .WithMany(r => r.bookings) // У одной комнаты может быть много бронирований
-                .HasForeignKey(b => b.room_id); // Внешний ключ
+                .HasOne(b => b.room) 
+                .WithMany(r => r.bookings)
+                .HasForeignKey(b => b.room_id);
 
-            // Если имена таблиц не совпадают с именами классов, можно явно указать их:
             modelBuilder.Entity<User>().ToTable("users");
             modelBuilder.Entity<Hotel>().ToTable("hotels");
             modelBuilder.Entity<UserHotelLike>().ToTable("likes");
             modelBuilder.Entity<Room>().ToTable("rooms");
             modelBuilder.Entity<Booking>().ToTable("bookings");
             modelBuilder.Entity<City>().ToTable("cities");
-
-            // Автомаппинг выполняется автоматически, так как имена полей совпадают.
         }
     }
 }

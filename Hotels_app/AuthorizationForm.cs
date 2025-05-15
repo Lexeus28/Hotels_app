@@ -1,13 +1,12 @@
-﻿using Hotels_app.classes;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Hotels_app
 {
+    // <summary>
+    /// Форма авторизации
+    ///</summary>
     public partial class AuthorizationForm : Form
     {
         [DllImport("user32.dll")]
@@ -19,17 +18,12 @@ namespace Hotels_app
         private const int WM_NCLBUTTONDOWN = 0xA1;
         private const int HT_CAPTION = 0x2;
 
-        // Поле для хранения контекста базы данных
         private readonly ApplicationDbContext _context;
 
         public AuthorizationForm()
         {
             InitializeComponent();
-
-            // Инициализация контекста базы данных
             _context = new ApplicationDbContext();
-
-            // Подписываемся на события
             panelMain.MouseDown += Panel_MouseDown;
             lblHeader.MouseDown += Panel_MouseDown;
             btnClose.Click += (s, e) => this.Close();
@@ -46,7 +40,6 @@ namespace Hotels_app
 
         private bool ValidateUser(string login, string password)
         {
-            // Проверяем пользователя в БД
             var user = _context.Users.FirstOrDefault(u => u.username == login);
 
             if (user == null)
@@ -68,8 +61,8 @@ namespace Hotels_app
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string login = txtLogin.Text.Trim();
-            string password = txtPassword.Text.Trim();
+            var login = txtLogin.Text.Trim();
+            var password = txtPassword.Text.Trim();
 
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
             {
@@ -80,17 +73,10 @@ namespace Hotels_app
             if (ValidateUser(login, password))
             {
                 MessageBox.Show("Авторизация успешна!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Находим пользователя по логину
                 var user = _context.Users.FirstOrDefault(u => u.username == login);
-
-                // Проверяем, является ли это первым входом
                 if (user.isfirstlogin)
                 {
-                    // Открываем форму HotelListingForm
                     var hotelListingForm = new HotelListingForm(user, _context, this);
-
-                    // Предлагаем пройти анкету
                     var result = MessageBox.Show(
                         "Вы впервые авторизуетесь. Хотите пройти анкету?",
                         "Анкета",
@@ -99,17 +85,12 @@ namespace Hotels_app
 
                     if (result == DialogResult.Yes)
                     {
-                        // Открываем форму QuestionForm поверх HotelListingForm
                         var questionForm = new QuestionForm(user, _context);
-                        questionForm.ShowDialog(); // ShowDialog делает форму модальной
+                        questionForm.ShowDialog();
                     }
-
-                    // Обновляем флаг IsFirstLogin
                     user.isfirstlogin = false;
                     _context.SaveChanges();
                 }
-
-                // Открываем форму HotelListingForm
                 var hotelListing = new HotelListingForm(user, _context, this);
                 hotelListing.Show();
 
@@ -121,13 +102,14 @@ namespace Hotels_app
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            // Передаем контекст в форму регистрации
             RegistrationForm registrationForm = new RegistrationForm(this, _context);
             registrationForm.Show();
             this.Hide();
             this.ClearFormFields();
         }
-
+        // <summary>
+        ///  Метод для очистки полей формы
+        ///</summary>
         public void ClearFormFields()
         {
             txtLogin.Clear();
@@ -136,7 +118,6 @@ namespace Hotels_app
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            // Освобождаем контекст при закрытии формы
             _context.Dispose();
             base.OnFormClosed(e);
         }

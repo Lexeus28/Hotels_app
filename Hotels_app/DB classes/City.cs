@@ -5,13 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hotels_app.classes
+namespace Hotels_app
 {
+    /// <summary>
+    /// класс городов
+    /// </summary>
     public class City
     {
         private Guid _cityId;
         private string _title;
 
+        /// <summary>
+        /// Айди города
+        /// </summary>
         [Key]
         public Guid city_id
         {
@@ -19,6 +25,9 @@ namespace Hotels_app.classes
             set { _cityId = value; }
         }
 
+        /// <summary>
+        /// Название города
+        /// </summary>
         public string title
         {
             get { return _title; }

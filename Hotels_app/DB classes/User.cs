@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Hotels_app.classes;
 
 namespace Hotels_app
 {
+    /// <summary>
+    /// класс пользователей
+    /// </summary>
     public class User
     {
         private Guid _userId;
@@ -21,16 +17,24 @@ namespace Hotels_app
         private string _passwordHash;
         private string _phone_number;
 
-        // Ответы на анкету
+        /// <summary>
+        /// ответы на анкету
+        /// </summary>
         public bool? prefers_sea { get; set; }               // Море (true) или Горы (false)
         public bool? prefers_historical_places { get; set; }  // Исторические места (true) или Нет (false)
         public bool? prefers_active_rest { get; set; }        // Активный отдых (true) или Спокойный (false)
         public bool? prefers_asian_cuisine { get; set; }      // Азиатская кухня (true) или Европейская (false)
         public bool? prefers_quiet_place { get; set; }        // Тихая местность (true) или Шумный город (false)
         public bool isfirstlogin { get; set; } = true;
+        /// <summary>
+        /// Роль пользователя
+        /// </summary>
         [Column(TypeName = "varchar(50)")] // Храним роль как строку
         public Role role { get; set; } = Role.User;
 
+        /// <summary>
+        /// Айди пользователя
+        /// </summary>
         [Key]
         public Guid user_id
         {
@@ -38,6 +42,9 @@ namespace Hotels_app
             set { _userId = value; }
         }
 
+        /// <summary>
+        /// Имя пользователя
+        /// </summary>
         public string first_name
         {
             get { return _firstName; }
@@ -53,6 +60,9 @@ namespace Hotels_app
             }
         }
 
+        /// <summary>
+        /// Фамилия пользователя
+        /// </summary>
         public string last_name
         {
             get { return _lastName; }
@@ -68,6 +78,9 @@ namespace Hotels_app
             }
         }
 
+        /// <summary>
+        /// Отчество пользователя
+        /// </summary>
         public string? patronymic
         {
             get { return _patronymic; }
@@ -81,6 +94,9 @@ namespace Hotels_app
             }
         }
 
+        /// <summary>
+        /// Логин пользователя
+        /// </summary>
         public string username
         {
             get { return _username; }
@@ -96,6 +112,9 @@ namespace Hotels_app
             }
         }
 
+        /// <summary>
+        /// Хэшированный пароль пользователя
+        /// </summary>
         public string password_hash
         {
             get { return _passwordHash; }
@@ -109,6 +128,9 @@ namespace Hotels_app
             }
         }
 
+        /// <summary>
+        /// Номер телефона пользователя
+        /// </summary>
         public string phone_number
         {
             get { return _phone_number; }

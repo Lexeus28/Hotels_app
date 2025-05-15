@@ -1,16 +1,10 @@
-﻿using Hotels_app.classes;
-using Hotels_app.Properties;
+﻿using Hotels_app.Properties;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using System.Xml.Linq;
-
 namespace Hotels_app
 {
+    // <summary>
+    ///  форма просмотра отелей
+    ///</summary>
     public partial class HotelListingForm : Form
     {
         private List<Hotel> hotels;
@@ -25,22 +19,17 @@ namespace Hotels_app
             _context = context;
             _currentUser = currentUser;
 
-            LoadHotelsData(); // Загружаем данные об отелях
-            LoadHotels();     // Отображаем отели
-            LoadCities();     // Загружаем города
-            LoadStars();      // Загружаем количество звезд
+            LoadHotelsData();
+            LoadHotels();
+            LoadCities();
+            LoadStars();
 
-            // Заполняем текстовые поля
             txtName.Text = _currentUser.first_name;
             txtSurname.Text = _currentUser.last_name;
 
-            // Проверяем, является ли пользователь администратором
             if (IsAdmin())
             {
-                // Блокируем кнопку редактирования аккаунта
                 BtnOpenQuestionnaire.Visible = false;
-
-                // Меняем текст и обработчик кнопки "Забронированные"
                 btnBooked.Text = "добавить отель";
                 btnBooked.Click -= btnBooked_Click;
                 btnBooked.Click += AddHotelButton_Click; 
@@ -50,7 +39,6 @@ namespace Hotels_app
                 txtSurname.Text = "АДМИН";
 
             }
-            // Устанавливаем начальные значения
             cmbCity.SelectedIndex = 0;
             cmbStars.SelectedIndex = 0;
 
@@ -73,21 +61,20 @@ namespace Hotels_app
             };
         }
         bool IsAdmin()
-        {
-            // Логика проверки роли пользователя 
+        { 
             return _context.Users.Any(u => u.username == _currentUser.username && u.role == Role.Admin);
         }
 
         private void LoadHotelsData()
         {
             hotels = _context.Hotels
-                .Include(h => h.city) // Загружаем связанные данные о городах
+                .Include(h => h.city) 
                 .ToList();
         }
         public void ReloadHotels()
         {
-            LoadHotelsData(); // Загружаем актуальные данные об отелях
-            FilterHotels();   // Применяем фильтры и рекомендации
+            LoadHotelsData(); 
+            FilterHotels(); 
         }
         private void LoadHotels(List<Hotel> filteredHotels = null)
         {
@@ -96,30 +83,25 @@ namespace Hotels_app
 
             var hotelsToDisplay = filteredHotels ?? hotels;
 
-            // Получаем рекомендованные отели, но только из отфильтрованного списка
             var recommendedHotels = GetRecommendedHotels(_currentUser)
-                .Where(h => hotelsToDisplay.Contains(h)) // Берем только те, которые прошли фильтры
+                .Where(h => hotelsToDisplay.Contains(h))
                 .ToList();
 
-            // Добавляем случайность для рекомендованных отелей
             var random = new Random();
             var boostedRecommendedHotels = recommendedHotels
-                .Where(h => random.Next(0, 4) == 0) // Поднимаем только 25% рекомендованных отелей (1 из 4)
+                .Where(h => random.Next(0, 4) == 0)
                 .ToList();
 
-            // Объединяем отели: сначала случайные рекомендованные, затем остальные
             var sortedHotels = boostedRecommendedHotels
-                .Concat(hotelsToDisplay.Where(h => !boostedRecommendedHotels.Contains(h))) // Остальные отели
-                .OrderByDescending(h => CalculateMatchScore(h, _currentUser)) // Сортируем по соответствию
+                .Concat(hotelsToDisplay.Where(h => !boostedRecommendedHotels.Contains(h)))
+                .OrderByDescending(h => CalculateMatchScore(h, _currentUser)) 
                 .ToList();
 
-            int verticalOffset = 13; // Вертикальный отступ
+            var verticalOffset = 13;
 
             foreach (var hotel in sortedHotels)
             {
                 var isBoosted = boostedRecommendedHotels.Contains(hotel);
-
-                // Если отель был поднят выше, добавляем метку "Нравится пользователям с похожими предпочтениями"
                 if (isBoosted)
                 {
                     var recomendationPanel = new Panel
@@ -249,7 +231,6 @@ namespace Hotels_app
                 dislikeButton.Click += DislikeButton_Click;
                 hotelPanel.Controls.Add(dislikeButton);
             }
-            // Лейбл минимальной цены
             var priceLabel = new Label
             {
                 Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Regular),
@@ -261,7 +242,6 @@ namespace Hotels_app
             };
             hotelPanel.Controls.Add(priceLabel);
 
-
             var namePanel = new Panel
             {
                 Size = new Size(290, 70),
@@ -269,7 +249,7 @@ namespace Hotels_app
                 Location = new Point(200, 5)
             };
             hotelPanel.Controls.Add(namePanel);
-            // Лейбл с названием комнаты
+
             var nameLabel = new Label
             {
                 Text = hotel.stars != null ? $"{hotel.stars}* {hotel.hotel_name}" : hotel.hotel_name,
@@ -283,7 +263,6 @@ namespace Hotels_app
             };
             namePanel.Controls.Add(nameLabel);
 
-            // Синяя панель информации
             var infoPanel = new Panel
             {
                 BackColor = Color.FromArgb(77, 67, 126),
@@ -291,6 +270,7 @@ namespace Hotels_app
                 Size = new Size(280, 90)
             };
             hotelPanel.Controls.Add(infoPanel);
+
             var addressPanel = new Panel
             {
                 Size = new Size(280, 20),
@@ -298,7 +278,7 @@ namespace Hotels_app
                 Dock = DockStyle.Top
             };
             infoPanel.Controls.Add(addressPanel);
-            // Адрес (вверху слева)
+
             var addressLabel = new Label
             {
                 Font = new Font("Microsoft Sans Serif", 10F),
@@ -318,7 +298,6 @@ namespace Hotels_app
             };
             infoPanel.Controls.Add(descPanel);
 
-            // Описание (между адресом и городом)
             var descLabel = new Label
             {
                 Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular),
@@ -338,7 +317,6 @@ namespace Hotels_app
             };
             infoPanel.Controls.Add(cityPanel);
 
-            // Лейбл для города (внизу справа)
             var cityLabel = new Label
             {
                 Font = new Font("Microsoft Sans Serif", 14F),
@@ -350,7 +328,6 @@ namespace Hotels_app
             };
             cityPanel.Controls.Add(cityLabel);
 
-            // Изображение отеля
             var pictureBox = new PictureBox
             {
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
@@ -361,7 +338,6 @@ namespace Hotels_app
                 BackColor = Color.Transparent
             };
             hotelPanel.Controls.Add(pictureBox);
-            // Загружаем состояние лайков/дизлайков из базы данных
             LoadHotelLikes(hotelPanel, hotel);
             return hotelPanel;
         }
@@ -386,13 +362,11 @@ namespace Hotels_app
         {
             var user = _currentUser;
 
-            // Проверяем, существует ли запись в таблице UserHotelLikes
             var likeRecord = _context.Likes
                 .FirstOrDefault(like => like.user_id == user.user_id && like.hotel_id == hotel.hotel_id);
 
             if (likeRecord != null)
             {
-                // Обновляем стили кнопок на основе состояния из базы данных
                 UpdateButtonStyles(container, hotel, likeRecord.liked);
             }
         }
@@ -401,7 +375,7 @@ namespace Hotels_app
         {
             var questionnaireForm = new QuestionForm(_currentUser, _context)
             {
-                Owner = this // Передаем ссылку на текущую форму
+                Owner = this
             };
             questionnaireForm.ShowDialog();
         }
@@ -409,41 +383,35 @@ namespace Hotels_app
         {
             var filteredHotels = hotels.AsQueryable();
 
-            // Фильтр по городу
             if (!string.IsNullOrWhiteSpace(cmbCity.Text))
             {
-                string selectedCity = cmbCity.Text.Trim();
+                var selectedCity = cmbCity.Text.Trim();
                 filteredHotels = filteredHotels
                     .Where(h => h.city != null && h.city.title.Equals(selectedCity, StringComparison.OrdinalIgnoreCase));
             }
 
-            // Фильтр по количеству звезд
             if (int.TryParse(cmbStars.SelectedItem?.ToString(), out int stars))
             {
                 filteredHotels = filteredHotels.Where(h => h.stars == stars);
             }
 
-            // Фильтр по цене "от"
             if (!string.IsNullOrWhiteSpace(txtPriceFrom.Text) && decimal.TryParse(txtPriceFrom.Text, out decimal priceFrom))
             {
                 filteredHotels = filteredHotels.Where(h => h.mn_price >= priceFrom);
             }
 
-            // Фильтр по цене "до"
             if (!string.IsNullOrWhiteSpace(txtPriceTo.Text) && decimal.TryParse(txtPriceTo.Text, out decimal priceTo))
             {
                 filteredHotels = filteredHotels.Where(h => h.mx_price <= priceTo);
             }
 
-            // Обновление отображения
             LoadHotels(filteredHotels.ToList());
         }
 
         private int CalculateMatchScore(Hotel hotel, User user)
         {
-            int score = 0;
+            var score = 0;
 
-            // Проверка предпочтений пользователя
             if (user.prefers_sea.HasValue && user.prefers_sea.Value && hotel.has_sea_access) score++;
             if (user.prefers_sea.HasValue && !user.prefers_sea.Value && hotel.has_mountain_view) score++;
 
@@ -456,16 +424,15 @@ namespace Hotels_app
             if (user.prefers_quiet_place.HasValue && user.prefers_quiet_place.Value) score++;
             if (user.prefers_quiet_place.HasValue && !user.prefers_quiet_place.Value && hotel.is_city_center) score++;
 
-            // Учет лайков и дизлайков
             var likeRecord = _context.Likes
                 .FirstOrDefault(like => like.user_id == user.user_id && like.hotel_id == hotel.hotel_id);
 
             if (likeRecord != null)
             {
                 if (likeRecord.liked)
-                    score += 3; // Лайк добавляет +3 балла
+                    score += 3;
                 else
-                    score -= 2; // Дизлайк вычитает -2 балла
+                    score -= 2; 
             }
 
             // Учет схожести с ранее забронированными отелями
@@ -477,7 +444,7 @@ namespace Hotels_app
 
             foreach (var bookedHotel in bookedHotels)
             {
-                int similarityScore = GetSimilarityScore(hotel, bookedHotel);
+                var similarityScore = GetSimilarityScore(hotel, bookedHotel);
                 if (similarityScore >= 3) // Если отель совпадает минимум по 3 пунктам
                 {
                     score += 2; // Добавляем 2 балла за схожесть
@@ -491,10 +458,9 @@ namespace Hotels_app
             var button = sender as Button;
             if (button == null || button.Tag == null) return;
 
-            var hotel = button.Tag as Hotel; // Получаем объект Hotel из свойства Tag
-            var container = button.Parent;  // Получаем родительский контейнер (например, панель)
+            var hotel = button.Tag as Hotel;
+            var container = button.Parent; 
 
-            // Переключаем состояние лайка
             ToggleLike(container, hotel, true); // true = Лайк
         }
         private void DislikeButton_Click(object sender, EventArgs e)
@@ -502,38 +468,32 @@ namespace Hotels_app
             var button = sender as Button;
             if (button == null || button.Tag == null) return;
 
-            var hotel = button.Tag as Hotel; // Получаем объект Hotel из свойства Tag
-            var container = button.Parent;  // Получаем родительский контейнер (например, панель)
+            var hotel = button.Tag as Hotel; 
+            var container = button.Parent; 
 
-            // Переключаем состояние дизлайка
             ToggleLike(container, hotel, false); // false = Дизлайк
         }
         private void ToggleLike(Control container, Hotel hotel, bool? isLike)
         {
             var user = _currentUser;
 
-            // Проверяем, существует ли запись в таблице UserHotelLikes
             var likeRecord = _context.Likes
                 .FirstOrDefault(like => like.user_id == user.user_id && like.hotel_id == hotel.hotel_id);
 
             if (likeRecord != null)
             {
-                // Если запись уже существует и её состояние совпадает с текущим действием,
-                // удаляем запись (отменяем действие).
                 if (likeRecord.liked == isLike)
                 {
                     _context.Likes.Remove(likeRecord);
-                    isLike = null; // Сбрасываем состояние
+                    isLike = null;
                 }
                 else
                 {
-                    // Если запись существует, но состояние отличается, обновляем его.
                     likeRecord.liked = (bool)isLike;
                 }
             }
             else
             {
-                // Если записи не существует, создаем новую.
                 var newLike = new UserHotelLike
                 {
                     user_id = user.user_id,
@@ -545,7 +505,6 @@ namespace Hotels_app
 
             _context.SaveChanges();
 
-            // Обновляем стили кнопок
             UpdateButtonStyles(container, hotel, isLike);
         }
         private void UpdateButtonStyles(Control container, Hotel hotel, bool? isLike)
@@ -567,23 +526,17 @@ namespace Hotels_app
         }
         private void btnBooked_Click(object sender, EventArgs e)
         {
-            // Получаем все бронирования текущего пользователя
             var userBookings = _context.Bookings
                 .Where(b => b.user_id == _currentUser.user_id)
-                .Include(b => b.room) // Подключаем связанные данные о номерах
+                .Include(b => b.room) 
                 .ToList();
 
-            // Проверяем, есть ли у пользователя бронирования
             if (userBookings.Count == 0)
             {
                 MessageBox.Show("У вас нет забронированных номеров.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return; // Завершаем выполнение, если бронирований нет
+                return; 
             }
-
-            // Создаем экземпляр формы BookedRoomsForm и передаем список бронирований
             var bookedRoomsForm = new BookedRoomsForm(userBookings, _currentUser, _context);
-
-            // Показываем форму
             bookedRoomsForm.ShowDialog(this);
         }
         private List<User> FindSimilarUsers(User currentUser)
@@ -602,7 +555,7 @@ namespace Hotels_app
         }
         private int GetSimilarityScore(Hotel hotel1, Hotel hotel2)
         {
-            int similarityScore = 0;
+            var similarityScore = 0;
 
             if (hotel1.has_sea_access == hotel2.has_sea_access) similarityScore++;
             if (hotel1.has_mountain_view == hotel2.has_mountain_view) similarityScore++;

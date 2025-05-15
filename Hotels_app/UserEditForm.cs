@@ -1,19 +1,9 @@
-﻿using Hotels_app.classes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
-
+﻿using System.Runtime.InteropServices;
 namespace Hotels_app
 {
+    // <summary>
+    ///  форма для редактирования аккаунта
+    ///</summary>
     public partial class UserEditForm : Form
     {
         [DllImport("user32.dll")]
@@ -43,7 +33,6 @@ namespace Hotels_app
             _context = context;
             _authorization = authorization;
 
-            // Заполняем поля данными пользователя
             txtFirstName.Text = _user.first_name;
             txtLastName.Text = _user.last_name;
             txtPatronymic.Text = _user.patronymic;
@@ -51,34 +40,27 @@ namespace Hotels_app
             
             
         }
-
-        private async void btnSave_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
             try
             {
-                // Обновляем данные пользователя
                 _user.first_name = txtFirstName.Text;
                 _user.last_name = txtLastName.Text;
                 _user.patronymic = txtPatronymic.Text;
                 _user.phone_number = txtPhoneNumber.Text;
 
-                // Пытаемся сохранить пароль
                 try
                 {
-                    await SavePassword();
+                    SavePassword();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Ошибка при обработке пароля: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return; // Останавливаем выполнение, если возникла ошибка
+                    return; 
                 }
-
-                // Сохраняем изменения в базе данных
                 _context.SaveChanges();
 
                 MessageBox.Show("Данные успешно сохранены.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Закрываем форму с результатом OK
                 DialogResult = DialogResult.OK;
                 Close();
             }
@@ -87,48 +69,40 @@ namespace Hotels_app
                 MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private async Task SavePassword()
+        private void SavePassword()
         {
-            // Получаем значения из текстовых полей
-            string oldPassword = txtOldPassword.Text;
-            string newPassword = txtNewPassword.Text;
+            var oldPassword = txtOldPassword.Text;
+            var newPassword = txtNewPassword.Text;
 
-            // Если оба поля пустые, пользователь не хочет менять пароль
             if (string.IsNullOrEmpty(oldPassword) && string.IsNullOrEmpty(newPassword))
             {
-                return; // Просто выходим из метода без изменений
+                return; 
             }
 
-            // Если пользователь хочет изменить пароль, проверяем, что он ввел старый пароль
             if (string.IsNullOrEmpty(oldPassword))
             {
                 throw new Exception("Пожалуйста, введите старый пароль.");
             }
 
-            // Проверяем, что новый пароль не пустой
             if (string.IsNullOrEmpty(newPassword))
             {
                 throw new Exception("Пожалуйста, введите новый пароль.");
             }
 
-            // Проверяем, что старый пароль верный
-            bool isOldPasswordCorrect = PasswordHasher.VerifyPassword(oldPassword, _user.password_hash);
+            var isOldPasswordCorrect = PasswordHasher.VerifyPassword(oldPassword, _user.password_hash);
             if (!isOldPasswordCorrect)
             {
                 throw new Exception("Старый пароль неверен.");
             }
+            var hashedNewPassword = PasswordHasher.HashPassword(newPassword);
 
-            // Хешируем новый пароль
-            string hashedNewPassword = PasswordHasher.HashPassword(newPassword);
-
-            // Обновляем пароль пользователя
             _user.password_hash = hashedNewPassword;
 
             MessageBox.Show("Пароль успешно изменен.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
         private void btnDeleteAccount_Click(object sender, EventArgs e)
         {
-            // Показываем диалоговое окно с предупреждением
             DialogResult result = MessageBox.Show(
                 "Вы уверены, что хотите удалить свой аккаунт? Это действие нельзя отменить.",
                 "Подтверждение удаления",
@@ -137,27 +111,20 @@ namespace Hotels_app
 
             if (result == DialogResult.Yes)
             {
-                // Удаляем аккаунт из базы данных
                 _context.Users.Remove(_user);
                 _context.SaveChanges();
 
-                // Показываем сообщение об успешном удалении
                 MessageBox.Show("Аккаунт успешно удален.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Закрываем форму редактирования
                 this.Close();
 
-                // Скрываем форму HotelListing
                 var hotelListingForm = Application.OpenForms.OfType<HotelListingForm>().FirstOrDefault();
                 hotelListingForm?.Hide();
-
-                // Перенаправляем пользователя на форму авторизации
                 _authorization.Show();
             }
         }
         private void btnClose_Click(object sender, EventArgs e)
         {
-            // Закрываем форму без сохранения изменений
             DialogResult = DialogResult.Cancel;
             Close();
         }

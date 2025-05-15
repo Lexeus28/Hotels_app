@@ -1,8 +1,10 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Hotels_app.classes
+namespace Hotels_app
 {
+    /// <summary>
+    /// класс бронирований
+    /// </summary>
     public class Booking
     {
         // Приватные поля
@@ -13,7 +15,9 @@ namespace Hotels_app.classes
         private DateTime _checkInDate;
         private DateTime _checkOutDate;
 
-        // Свойства с методами доступа
+        /// <summary>
+        /// Айди бронирования
+        /// </summary>
         [Key]
         public Guid booking_id
         {
@@ -21,50 +25,49 @@ namespace Hotels_app.classes
             set { _bookingId = value; }
         }
 
+        /// <summary>
+        /// Айди комнаты
+        /// </summary>
         public Guid room_id
         {
             get { return _roomId; }
             set { _roomId = value; }
         }
 
+        /// <summary>
+        /// Айди пользователя
+        /// </summary>
         public Guid user_id
         {
             get { return _userId; }
             set { _userId = value; }
         }
 
+        /// <summary>
+        /// Навигационное свойство для связи бронирований с комнатами
+        /// </summary>
         public Room room
         {
             get { return _room; }
             set { _room = value; }
         }
 
+        /// <summary>
+        /// Дата вьезда
+        /// </summary>
         public DateTime check_in_date
         {
             get { return _checkInDate; }
             set { _checkInDate = value; }
         }
 
+        /// <summary>
+        /// Дата выезда
+        /// </summary>
         public DateTime check_out_date
         {
             get { return _checkOutDate; }
             set { _checkOutDate = value; }
-        }
-
-        // Конструктор по умолчанию
-        public Booking()
-        {
-            _bookingId = Guid.NewGuid(); // Генерация уникального ID для бронирования
-        }
-
-        // Конструктор с параметрами
-        public Booking(Guid roomId, Guid userId, DateTime checkInDate, DateTime checkOutDate)
-        {
-            _bookingId = Guid.NewGuid();
-            _roomId = roomId;
-            _userId = userId;
-            _checkInDate = checkInDate;
-            _checkOutDate = checkOutDate;
         }
     }
 }

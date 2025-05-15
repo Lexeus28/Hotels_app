@@ -1,6 +1,3 @@
-using Hotels_app.classes;
-using Microsoft.EntityFrameworkCore;
-
 namespace Hotels_app
 {
     internal static class Program

@@ -122,7 +122,6 @@ namespace Hotels_app
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox.TabIndex = 5;
             pictureBox.TabStop = false;
-            pictureBox.Paint += pictureBox_Paint;
             // 
             // btnDeleteImage
             // 

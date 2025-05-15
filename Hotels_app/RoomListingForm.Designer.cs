@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using Hotels_app.classes;
 using Hotels_app.Properties;
 namespace Hotels_app
 {
@@ -17,9 +16,9 @@ namespace Hotels_app
         private System.Windows.Forms.Label selectDateLabel;
         private System.Windows.Forms.Panel fromDatePanel;
         private System.Windows.Forms.Label fromLabel;
-        private CustomDateTimePicker fromDatePicker;
+        private DateTimePicker fromDatePicker;
         private System.Windows.Forms.Panel toDatePanel;
-        private CustomDateTimePicker toDatePicker;
+        private DateTimePicker toDatePicker;
         private System.Windows.Forms.Label toLabel;
         private RoundButton bookButton;
 
@@ -47,10 +46,10 @@ namespace Hotels_app
             rightPanel = new Panel();
             bookButton = new RoundButton();
             toDatePanel = new Panel();
-            toDatePicker = new CustomDateTimePicker();
+            toDatePicker = new DateTimePicker();
             toLabel = new Label();
             fromDatePanel = new Panel();
-            fromDatePicker = new CustomDateTimePicker();
+            fromDatePicker = new DateTimePicker();
             fromLabel = new Label();
             selectDateLabel = new Label();
             leftPanel = new Panel();
@@ -124,7 +123,6 @@ namespace Hotels_app
             // toDatePicker
             // 
             toDatePicker.BackColor = Color.FromArgb(243, 200, 220);
-            toDatePicker.CalendarBackColor = Color.FromArgb(243, 200, 220);
             toDatePicker.CalendarMonthBackground = Color.FromArgb(243, 200, 220);
             toDatePicker.Format = DateTimePickerFormat.Short;
             toDatePicker.Location = new Point(96, 8);
@@ -155,7 +153,6 @@ namespace Hotels_app
             // fromDatePicker
             // 
             fromDatePicker.BackColor = Color.FromArgb(243, 200, 220);
-            fromDatePicker.CalendarBackColor = Color.FromArgb(243, 200, 220);
             fromDatePicker.CalendarMonthBackground = Color.FromArgb(243, 200, 220);
             fromDatePicker.Format = DateTimePickerFormat.Short;
             fromDatePicker.Location = new Point(95, 8);

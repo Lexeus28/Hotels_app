@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using Hotels_app.classes;
-using Hotels_app.Properties;
+﻿using Hotels_app.Properties;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hotels_app
 {
+    // <summary>
+    ///  форма для просмотра комнат
+    ///</summary>
     public partial class RoomListingForm : Form
     {
         private readonly ApplicationDbContext _context;
@@ -32,7 +29,6 @@ namespace Hotels_app
 
         private void InitializeRooms()
         {
-            // Загружаем комнаты из базы данных для данного отеля
             rooms = _context.Rooms
                 .Where(r => r.hotel.hotel_id == _hotel.hotel_id)
                 .ToList();
@@ -43,13 +39,13 @@ namespace Hotels_app
             leftPanel.Controls.Clear();
             leftPanel.Controls.Add(roomTypePanel);
 
-            int verticalOffset = 47;
+            var verticalOffset = 47;
 
             foreach (var room in rooms)
             {
                 if (currentTab == 1 && room.capacity != 1) continue;
                 if (currentTab == 2 && room.capacity != 2) continue;
-                if (currentTab == 4 && room.capacity < 3) continue; // семейные считаем 3+ мест
+                if (currentTab == 4 && room.capacity < 3) continue;
 
                 var roomPanel = CreateRoomPanel(room);
                 roomPanel.Location = new Point(1, verticalOffset);
@@ -76,7 +72,7 @@ namespace Hotels_app
                 BackColor = Color.FromArgb(113, 85, 123),
                 Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
                 Margin = new Padding(0, 0, 0, 10),
-                Tag = room // Привязываем объект Room к панели
+                Tag = room
             };
 
             var namePanel = new Panel
@@ -86,7 +82,7 @@ namespace Hotels_app
                 Location = new Point(200, 10)
             };
             roomPanel.Controls.Add(namePanel);
-            // Лейбл с названием комнаты
+
             var nameLabel = new Label
             {
                 Text = room.name,
@@ -101,7 +97,6 @@ namespace Hotels_app
 
             namePanel.Controls.Add(nameLabel);
 
-            // Кнопка выбора
             var selectButton = new RoundButton
             {
                 Text = Resources.TextSelect,
@@ -120,44 +115,38 @@ namespace Hotels_app
                 Tag = room // Привязываем объект Room к кнопке
             };
 
-            // Обработчик клика на кнопку "ВЫБРАТЬ"
             selectButton.Click += (sender, e) => HandleRoomSelection(room, roomPanel);
-
             roomPanel.Controls.Add(selectButton);
 
-            // Цена (опущена ниже)
             var priceLabel = new Label
             {
                 Text = $"{room.price_per_night} руб.",
                 Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Bold),
                 ForeColor = Color.FromArgb(243, 200, 220),
-                Location = new Point(36, 130), // Опущена до 110 (было 80)
+                Location = new Point(36, 130),
                 AutoSize = true
             };
             roomPanel.Controls.Add(priceLabel);
 
-            // Панель описания (уменьшена)
             var descPanel = new Panel
             {
-                Size = new Size(240, 77), // Уменьшена ширина до 280, высота 50
+                Size = new Size(240, 77), 
                 BackColor = Color.FromArgb(77, 67, 126),
-                Location = new Point(230, 85) // Сдвинута вправо и вниз
+                Location = new Point(230, 85)
             };
 
-            // Текст описания (выравнивание по правому краю)
             var descLabel = new Label
             {
                 Text = room.room_description,
                 Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular),
                 ForeColor = Color.FromArgb(230, 174, 207),
                 Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleRight, // Выравнивание по правому краю
-                Padding = new Padding(0, 0, 10, 0) // Отступ справа 10px
+                TextAlign = ContentAlignment.MiddleRight,
+                Padding = new Padding(0, 0, 10, 0) 
             };
             descPanel.Controls.Add(descLabel);
             roomPanel.Controls.Add(descPanel);
 
-            // Картинка (сдвинута левее)
             var pictureBox = new PictureBox
             {
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
@@ -171,16 +160,13 @@ namespace Hotels_app
 
             return roomPanel;
         }
-
-        /// <param name="room">Выбранный номер</param>
-        /// <param name="roomPanel">Панель, соответствующая номеру</param>
         private void HandleRoomSelection(Room room, Panel roomPanel)
         {
             // Если уже выбран этот номер, сбрасываем выбор
             if (selectedRoom == room)
             {
-                selectedRoom = null; // Сбрасываем выбранный номер
-                roomPanel.BackColor = Color.FromArgb(113, 85, 123); // Возвращаем цвет фона к исходному
+                selectedRoom = null;
+                roomPanel.BackColor = Color.FromArgb(113, 85, 123);
                 return;
             }
 
@@ -190,24 +176,15 @@ namespace Hotels_app
                 var previousPanel = GetRoomPanelByRoom(selectedRoom);
                 if (previousPanel != null)
                 {
-                    previousPanel.BackColor = Color.FromArgb(113, 85, 123); // Возвращаем цвет фона
+                    previousPanel.BackColor = Color.FromArgb(113, 85, 123);
                 }
             }
-
-            // Выбираем новый номер
             selectedRoom = room;
-            roomPanel.BackColor = Color.FromArgb(140, 110, 160); // Меняем цвет фона для выделения
+            roomPanel.BackColor = Color.FromArgb(140, 110, 160);
         }
 
-
-        /// <summary>
-        /// Находит панель, соответствующую выбранному номеру
-        /// </summary>
-        /// <param name="room">Номер</param>
-        /// <returns>Панель или null, если панель не найдена</returns>
         private Panel GetRoomPanelByRoom(Room room)
         {
-            // Находим панель, соответствующую выбранной комнате
             foreach (Control control in leftPanel.Controls)
             {
                 if (control is Panel panel && panel.Tag as Room == room)
@@ -245,8 +222,8 @@ namespace Hotels_app
             twoRoomLabel.Font = new Font("Segoe UI", 17F, currentTab == 2 ? FontStyle.Bold : FontStyle.Regular);
             familyRoomLabel.Font = new Font("Segoe UI", 17F, currentTab == 4 ? FontStyle.Bold : FontStyle.Regular);
 
-            Color activeColor = Color.FromArgb(64, 0, 128);
-            Color inactiveColor = Color.FromArgb(64, 0, 64);
+            var activeColor = Color.FromArgb(64, 0, 128);
+            var inactiveColor = Color.FromArgb(64, 0, 64);
 
             oneRoomLabel.ForeColor = currentTab == 1 ? activeColor : inactiveColor;
             twoRoomLabel.ForeColor = currentTab == 2 ? activeColor : inactiveColor;
@@ -256,39 +233,33 @@ namespace Hotels_app
 
         private void BookButton_Click(object sender, EventArgs e)
         {
-            // Проверяем, выбран ли номер
             if (selectedRoom == null)
             {
                 MessageBox.Show("Пожалуйста, выберите номер.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Проверяем, выбраны ли даты
             if (fromDatePicker.Value == null || toDatePicker.Value == null)
             {
                 MessageBox.Show("Пожалуйста, выберите даты заезда и выезда.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Преобразуем даты в локальное время
-            var checkInDate = fromDatePicker.Value.Date; // Только дата (без времени)
+            var checkInDate = fromDatePicker.Value.Date;
             var checkOutDate = toDatePicker.Value.Date;
 
-            // Проверяем, что дата заезда не в прошлом (сегодняшняя дата разрешена)
             if (checkInDate < DateTime.Today)
             {
                 MessageBox.Show("Нельзя выбрать дату заезда в прошлом.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Проверяем, что дата выезда больше или равна дате заезда
             if (checkOutDate < checkInDate)
             {
                 MessageBox.Show("Дата выезда должна быть больше или равна дате заезда.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Проверяем, что бронирование не превышает 2 года вперёд
             var maxBookingDate = DateTime.Today.AddYears(2);
             if (checkOutDate > maxBookingDate)
             {
@@ -319,7 +290,6 @@ namespace Hotels_app
                 return;
             }
 
-            // Создаем новую запись в таблице Bookings
             var booking = new Booking
             {
                 room_id = selectedRoom.room_id,

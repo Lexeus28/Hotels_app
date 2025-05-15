@@ -9,10 +9,12 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Hotels_app.classes;
 
 namespace Hotels_app
 {
+    // <summary>
+    ///  форма анкеты
+    ///</summary>
     public partial class QuestionForm : Form
     {
         [DllImport("user32.dll")]
@@ -53,7 +55,6 @@ namespace Hotels_app
             _currentUser.prefers_asian_cuisine = rbAsianCuisine.Checked; // Азиатская кухня (true) или Европейская (false)
             _currentUser.prefers_quiet_place = rbQuietLocation.Checked; // Тихая местность (true) или Шумный город (false)
 
-            // Обновление данных в базе
             _context.Users.Update(_currentUser);
             _context.SaveChanges();
 
@@ -63,8 +64,6 @@ namespace Hotels_app
             {
                 hotelListingForm.ReloadHotels();
             }
-
-            // Закрытие формы после сохранения
             this.Close();
         }
     }

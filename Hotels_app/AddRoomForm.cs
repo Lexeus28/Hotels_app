@@ -1,11 +1,8 @@
-﻿using System;
-using System.Windows.Forms;
-using Hotels_app.classes;
-using Microsoft.EntityFrameworkCore;
-using Hotels_app.Properties;
-
-namespace Hotels_app
+﻿namespace Hotels_app
 {
+    // <summary>
+    ///  форма для добавления комнат
+    ///</summary>
     public partial class AddRoomForm : Form
     {
         private readonly ApplicationDbContext _context;
@@ -21,26 +18,6 @@ namespace Hotels_app
             InitializeComponent();
             CreatedRoom = new Room();
         }
-
-        private void pictureBox_Paint(object sender, PaintEventArgs e)
-        {
-            if (pictureBox.Image == null)
-            {
-                using (Pen pen = new Pen(Color.LightGray, 1))
-                {
-                    int gridSize = 10;
-                    for (int y = 0; y < pictureBox.Height; y += gridSize)
-                    {
-                        e.Graphics.DrawLine(pen, 0, y, pictureBox.Width, y);
-                    }
-                    for (int x = 0; x < pictureBox.Width; x += gridSize)
-                    {
-                        e.Graphics.DrawLine(pen, x, 0, x, pictureBox.Height);
-                    }
-                }
-            }
-        }
-
         private bool IsRoomNameUnique(string roomName)
         {
             return !TemporaryRooms.Any(room => room.name.Equals(roomName, StringComparison.OrdinalIgnoreCase));
@@ -119,9 +96,11 @@ namespace Hotels_app
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
+                    var filePath = openFileDialog.FileName;
+
                     try
                     {
-                        pictureBox.Image = Image.FromFile(openFileDialog.FileName);
+                        pictureBox.Image = Image.FromFile(filePath);
                         CreatedRoom.image = pictureBox.Image;
                     }
                     catch

@@ -1,6 +1,5 @@
 ﻿using System.Windows.Forms;
 using System.Xml.Linq;
-using Hotels_app.classes;
 using Hotels_app.Properties;
 
 namespace Hotels_app
@@ -332,7 +331,6 @@ namespace Hotels_app
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox.TabIndex = 5;
             pictureBox.TabStop = false;
-            pictureBox.Paint += pictureBox_Paint;
             // 
             // btnDeleteImage
             // 

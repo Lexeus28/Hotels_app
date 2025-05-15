@@ -5,6 +5,9 @@ using System.Windows.Forms;
 
 namespace Hotels_app
 {
+    /// <summary>
+    /// класс круглой кнопки
+    /// </summary>
     public class RoundButton : Button
     {
         private int _borderRadius = 15;
@@ -14,36 +17,50 @@ namespace Hotels_app
         private float _pressOffset = 0f;
         private Color _currentColor;
 
+        /// <summary>
+        /// Радиус закругления углов кнопки.
+        /// </summary>
         public int BorderRadius
         {
             get => _borderRadius;
             set { _borderRadius = value; Invalidate(); }
         }
 
+        /// <summary>
+        /// Цвет кнопки при наведении курсора.
+        /// </summary>
         public Color HoverColor { get; set; }
+
+        /// <summary>
+        /// Цвет кнопки при нажатии.
+        /// </summary>
         public Color PressColor { get; set; }
+
+        /// <summary>
+        /// Цвет границы кнопки. По умолчанию прозрачный.
+        /// </summary>
         public Color BorderColor { get; set; } = Color.Transparent;
-        public float PressDepth { get; set; } = 0.15f; // Глубина "вдавливания" (0-0.5)
+
+        // <summary>
+        /// Глубина "вдавливания" кнопки при нажатии (значение от 0 до 0.5).
+        /// </summary>
+        public float PressDepth { get; set; } = 0.15f;
 
         public RoundButton()
         {
-            // Базовые настройки
             FlatStyle = FlatStyle.Flat;
             FlatAppearance.BorderSize = 0;
-            BackColor = Color.FromArgb(209, 131, 170); // #D183AA
+            BackColor = Color.FromArgb(209, 131, 170);
             ForeColor = Color.White;
             Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             MinimumSize = new Size(100, 46);
 
-            // Автоматические цвета состояний
             HoverColor = ControlPaint.Light(BackColor, 0.15f);
             PressColor = ControlPaint.Dark(BackColor, 0.2f);
 
-            // Настройка анимации
             _animationTimer = new System.Windows.Forms.Timer { Interval = 15 };
             _animationTimer.Tick += (s, e) => UpdateAnimation();
 
-            // Обработчики событий
             MouseEnter += (s, e) => { _isHovered = true; Invalidate(); };
             MouseLeave += (s, e) => { _isHovered = false; _isPressed = false; Invalidate(); };
             MouseDown += (s, e) => { _isPressed = true; _animationTimer.Start(); };
@@ -71,29 +88,24 @@ namespace Hotels_app
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            // Очистка фона (убирает артефакты)
             e.Graphics.Clear(Parent.BackColor);
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-            // Определение цветов
             _currentColor = _isPressed ? PressColor :
                           _isHovered ? HoverColor : BackColor;
 
-            // Прямоугольник с учетом нажатия
             Rectangle rect = new Rectangle(
                 (int)(_pressOffset * 4),
                 (int)(_pressOffset * 4),
                 Width - (int)(_pressOffset * 8) - 1,
                 Height - (int)(_pressOffset * 8) - 1);
 
-            // Отрисовка фона
             using (GraphicsPath path = GetRoundRectangle(rect, BorderRadius))
             using (SolidBrush brush = new SolidBrush(_currentColor))
             {
                 e.Graphics.FillPath(brush, path);
 
-                // Обводка (исчезает при наведении/нажатии)
                 if (!_isHovered && !_isPressed)
                 {
                     using (Pen pen = new Pen(BorderColor, 1))
@@ -101,7 +113,6 @@ namespace Hotels_app
                 }
             }
 
-            // Текст со смещением при нажатии
             Rectangle textRect = new Rectangle(
                 0,
                 (int)(_pressOffset * 2),
