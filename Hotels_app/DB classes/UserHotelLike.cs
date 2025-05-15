@@ -1,10 +1,10 @@
-﻿using Hotels_app;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Hotels_app
 {
+    /// <summary>
+    /// класс для связи пользователей и их оценок
+    /// </summary>
     public class UserHotelLike
     {
         private User _user;
@@ -13,28 +13,43 @@ namespace Hotels_app
         private Guid _hotel_id;
         private bool _liked;
 
+        /// <summary>
+        /// Навигационное свойство пользователя
+        /// </summary>
         public User user
         {
             get { return _user; }
             set { _user = value; }
         }
+        /// <summary>
+        /// Айди пользователя
+        /// </summary>
         [Key]
         public Guid user_id
         {
             get { return _user_id; }
             set { _user_id = value; }
         }
+        /// <summary>
+        /// Навигационное свойство отеля
+        /// </summary>
         public Hotel hotel
         {
             get { return _hotel; }
             set { _hotel = value; }
         }
+        /// <summary>
+        /// Айди отеля
+        /// </summary>
         [Key]
         public Guid hotel_id
         {
             get { return _hotel_id; }
             set { _hotel_id = value; }
         }
+        /// <summary>
+        /// Оценка пользователя отелю
+        /// </summary>
         public bool liked
         {
             get { return _liked; }
