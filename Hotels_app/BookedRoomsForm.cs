@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Hotels_app.classes;
+using Hotels_app.Properties;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hotels_app
@@ -60,22 +61,32 @@ namespace Hotels_app
                 Margin = new Padding(0, 0, 0, 10),
                 Tag = booking
             };
+
+            var namePanel = new Panel
+            {
+                Size = new Size(290, 70),
+                BackColor = Color.Transparent,
+                Location = new Point(200, 5)
+            };
+            bookingPanel.Controls.Add(namePanel);
+            // Лейбл с названием комнаты
             var nameLabel = new Label
             {
-                Font = new Font("Microsoft Sans Serif", 23F, FontStyle.Regular),
-                ForeColor = Color.FromArgb(243, 200, 220),
-                Location = new Point(190, 20),
-                Size = new Size(293, 40),
                 Text = hotel.stars != null ? $"{hotel.stars}* {hotel.hotel_name}" : hotel.hotel_name,
-                TextAlign = ContentAlignment.MiddleLeft
+                Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Regular),
+                ForeColor = Color.FromArgb(243, 200, 220),
+                Dock = DockStyle.Fill,
+                Location = new Point(0, 0),
+                TextAlign = ContentAlignment.MiddleLeft,
+                Padding = new Padding(0, 0, 0, 5),
+                UseCompatibleTextRendering = true
             };
-
-            bookingPanel.Controls.Add(nameLabel);
+            namePanel.Controls.Add(nameLabel);
 
             // Кнопка выбора
             var selectButton = new RoundButton
             {
-                Text = "ВЫБРАТЬ",
+                Text = Resources.TextSelect,
                 BackColor = Color.FromArgb(209, 131, 170),
                 BorderColor = Color.Transparent,
                 BorderRadius = 15,

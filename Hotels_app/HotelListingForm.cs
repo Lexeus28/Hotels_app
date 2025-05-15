@@ -1,4 +1,5 @@
 ﻿using Hotels_app.classes;
+using Hotels_app.Properties;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -175,7 +176,7 @@ namespace Hotels_app
                     PressColor = Color.FromArgb(132, 49, 90),
                     PressDepth = 0.15F,
                     Size = new Size(160, 40),
-                    Text = "редактировать",
+                    Text = Resources.TextEdit,
                     UseVisualStyleBackColor = false
                 };
 
@@ -204,7 +205,7 @@ namespace Hotels_app
                     PressColor = Color.FromArgb(132, 49, 90),
                     PressDepth = 0.15F,
                     Size = new Size(160, 40),
-                    Text = "НОМЕРА",
+                    Text = Resources.TextRooms,
                     UseVisualStyleBackColor = false
                 };
 

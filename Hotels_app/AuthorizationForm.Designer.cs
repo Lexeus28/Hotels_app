@@ -1,4 +1,6 @@
-﻿namespace Hotels_app
+﻿using Hotels_app.Properties;
+
+namespace Hotels_app
 {
     partial class AuthorizationForm
     {
@@ -75,7 +77,7 @@
             btnRegister.PressDepth = 0.15F;
             btnRegister.Size = new Size(224, 46);
             btnRegister.TabIndex = 5;
-            btnRegister.Text = "ЗАРЕГИСТРИРОВАТЬСЯ";
+            btnRegister.Text = Resources.TextRegister;
             btnRegister.UseVisualStyleBackColor = false;
             btnRegister.Click += btnRegister_Click;
             // 
@@ -98,7 +100,7 @@
             btnLogin.PressDepth = 0.15F;
             btnLogin.Size = new Size(200, 46);
             btnLogin.TabIndex = 4;
-            btnLogin.Text = "ВОЙТИ";
+            btnLogin.Text = Resources.TextEnter;
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
             // 
@@ -154,7 +156,7 @@
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(23, 23);
             btnClose.TabIndex = 0;
-            btnClose.Text = "×";
+            btnClose.Text = Resources.TextX;
             btnClose.UseVisualStyleBackColor = false;
             // 
             // btntogglePassword

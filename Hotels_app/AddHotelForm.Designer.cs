@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using System.Xml.Linq;
 using Hotels_app.classes;
+using Hotels_app.Properties;
 
 namespace Hotels_app
 {
@@ -350,7 +351,7 @@ namespace Hotels_app
             btnDeleteImage.PressDepth = 0.15F;
             btnDeleteImage.Size = new Size(102, 46);
             btnDeleteImage.TabIndex = 24;
-            btnDeleteImage.Text = "удалить";
+            btnDeleteImage.Text = Resources.TextDelete;
             btnDeleteImage.UseVisualStyleBackColor = false;
             btnDeleteImage.Click += btnDeleteImage_Click;
             // 
@@ -371,7 +372,7 @@ namespace Hotels_app
             btnUploadImage.PressDepth = 0.15F;
             btnUploadImage.Size = new Size(102, 46);
             btnUploadImage.TabIndex = 4;
-            btnUploadImage.Text = "загрузить\nкартинку";
+            btnUploadImage.Text = Resources.TextUploadImage ;
             btnUploadImage.UseVisualStyleBackColor = false;
             btnUploadImage.Click += btnUploadImage_Click;
             // 
@@ -583,7 +584,7 @@ namespace Hotels_app
             btnDeleteHotel.PressDepth = 0.15F;
             btnDeleteHotel.Size = new Size(175, 46);
             btnDeleteHotel.TabIndex = 2;
-            btnDeleteHotel.Text = "удалить отель";
+            btnDeleteHotel.Text = Resources.TextDeleteHotel;
             btnDeleteHotel.UseVisualStyleBackColor = false;
             btnDeleteHotel.Click += btnDeleteHotel_Click;
             // 
@@ -616,7 +617,7 @@ namespace Hotels_app
             btnAddHotel.PressDepth = 0.15F;
             btnAddHotel.Size = new Size(175, 46);
             btnAddHotel.TabIndex = 3;
-            btnAddHotel.Text = "сохранить";
+            btnAddHotel.Text = Resources.TextSaveLower;
             btnAddHotel.UseVisualStyleBackColor = false;
             btnAddHotel.Click += btnAddHotel_Click;
             // 
@@ -653,7 +654,7 @@ namespace Hotels_app
             btnAddRoom.PressDepth = 0.15F;
             btnAddRoom.Size = new Size(117, 46);
             btnAddRoom.TabIndex = 7;
-            btnAddRoom.Text = "добавить";
+            btnAddRoom.Text = Resources.TextAdd;
             btnAddRoom.UseVisualStyleBackColor = false;
             btnAddRoom.Click += btnAddRoom_Click;
             // 
@@ -674,7 +675,7 @@ namespace Hotels_app
             btnDeleteRoom.PressDepth = 0.15F;
             btnDeleteRoom.Size = new Size(117, 46);
             btnDeleteRoom.TabIndex = 8;
-            btnDeleteRoom.Text = "удалить";
+            btnDeleteRoom.Text = Resources.TextDelete;
             btnDeleteRoom.UseVisualStyleBackColor = false;
             btnDeleteRoom.Click += btnDeleteRoom_Click;
             // 

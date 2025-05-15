@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Hotels_app.classes;
+using Hotels_app.Properties;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hotels_app
@@ -103,7 +104,7 @@ namespace Hotels_app
             // Кнопка выбора
             var selectButton = new RoundButton
             {
-                Text = "ВЫБРАТЬ",
+                Text = Resources.TextSelect,
                 BackColor = Color.FromArgb(209, 131, 170),
                 BorderColor = Color.Transparent,
                 BorderRadius = 15,

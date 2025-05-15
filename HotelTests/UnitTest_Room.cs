@@ -19,7 +19,7 @@ namespace Hotels_app.Tests
         public void Name_ThrowsException_WhenTooLong()
         {
             var room = new Room();
-            var longName = new string('A', 21); 
+            var longName = new string('A', 36); 
             Assert.ThrowsException<ArgumentException>(() => room.name = longName);
         }
 

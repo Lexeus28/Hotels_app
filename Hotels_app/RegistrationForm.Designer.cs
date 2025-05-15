@@ -1,4 +1,6 @@
-﻿namespace Hotels_app
+﻿using Hotels_app.Properties;
+
+namespace Hotels_app
 {
     partial class RegistrationForm
     {
@@ -114,7 +116,7 @@
             btnRegister.PressDepth = 0.15F;
             btnRegister.Size = new Size(182, 39);
             btnRegister.TabIndex = 5;
-            btnRegister.Text = "ЗАРЕГИСТРИРОВАТЬСЯ";
+            btnRegister.Text = Resources.TextRegister;
             btnRegister.UseVisualStyleBackColor = false;
             // 
             // txtPatronymic
@@ -245,7 +247,7 @@
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(30, 32);
             btnClose.TabIndex = 0;
-            btnClose.Text = "×";
+            btnClose.Text = Resources.TextX;
             btnClose.UseVisualStyleBackColor = false;
             // 
             // btntogglePassword

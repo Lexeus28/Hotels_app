@@ -121,4 +121,67 @@
     <value>Host=localhost;Port=5432;Database=hotels_db;Username=postgres;Password=THEWORLD;SslMode=Prefer;</value>
     <comment>строка подключения к бд</comment>
   </data>
+  <data name="TextAdd" xml:space="preserve">
+    <value>добавить</value>
+  </data>
+  <data name="TextAddHotel" xml:space="preserve">
+    <value>добавить отель</value>
+  </data>
+  <data name="TextBackToHotels" xml:space="preserve">
+    <value>вернуться к отелям</value>
+  </data>
+  <data name="TextBook" xml:space="preserve">
+    <value>забронировать</value>
+  </data>
+  <data name="TextBooked" xml:space="preserve">
+    <value>забронированные</value>
+  </data>
+  <data name="TextCancelBooking" xml:space="preserve">
+    <value>отменить
+бронирование</value>
+  </data>
+  <data name="TextDelete" xml:space="preserve">
+    <value>удалить</value>
+  </data>
+  <data name="TextDeleteAccount" xml:space="preserve">
+    <value>УДАЛИТЬ АККАУНТ</value>
+  </data>
+  <data name="TextDeleteHotel" xml:space="preserve">
+    <value>удалить отель</value>
+  </data>
+  <data name="TextEdit" xml:space="preserve">
+    <value>редактировать</value>
+  </data>
+  <data name="TextEditAccount" xml:space="preserve">
+    <value>редактировать
+аккаунт</value>
+  </data>
+  <data name="TextEnter" xml:space="preserve">
+    <value>ВОЙТИ</value>
+  </data>
+  <data name="TextOpenQuestionnaire" xml:space="preserve">
+    <value>пройти анкету</value>
+  </data>
+  <data name="TextRegister" xml:space="preserve">
+    <value>ЗАРЕГИСТРИРОВАТЬСЯ</value>
+  </data>
+  <data name="TextRooms" xml:space="preserve">
+    <value>НОМЕРА</value>
+  </data>
+  <data name="TextSaveLower" xml:space="preserve">
+    <value>сохранить</value>
+  </data>
+  <data name="TextSaveUpper" xml:space="preserve">
+    <value>СОХРАНИТЬ</value>
+  </data>
+  <data name="TextSelect" xml:space="preserve">
+    <value>ВЫБРАТЬ</value>
+  </data>
+  <data name="TextUploadImage" xml:space="preserve">
+    <value>загрузить
+картинку</value>
+  </data>
+  <data name="TextX" xml:space="preserve">
+    <value>x</value>
+  </data>
 </root>

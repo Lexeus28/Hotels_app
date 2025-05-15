@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using Hotels_app.Properties;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace Hotels_app
@@ -140,7 +141,7 @@ namespace Hotels_app
             btnDeleteImage.PressDepth = 0.15F;
             btnDeleteImage.Size = new Size(102, 46);
             btnDeleteImage.TabIndex = 24;
-            btnDeleteImage.Text = "удалить";
+            btnDeleteImage.Text = Resources.TextDelete;
             btnDeleteImage.UseVisualStyleBackColor = false;
             btnDeleteImage.Click += btnDeleteImage_Click;
             // 
@@ -161,7 +162,7 @@ namespace Hotels_app
             btnUploadImage.PressDepth = 0.15F;
             btnUploadImage.Size = new Size(102, 46);
             btnUploadImage.TabIndex = 4;
-            btnUploadImage.Text = "загрузить\nкартинку";
+            btnUploadImage.Text = Resources.TextUploadImage;
             btnUploadImage.UseVisualStyleBackColor = false;
             btnUploadImage.Click += btnUploadImage_Click;
             // 
@@ -281,7 +282,7 @@ namespace Hotels_app
             btnAddRoom.PressDepth = 0.15F;
             btnAddRoom.Size = new Size(175, 46);
             btnAddRoom.TabIndex = 3;
-            btnAddRoom.Text = "сохранить";
+            btnAddRoom.Text = Resources.TextAdd;
             btnAddRoom.UseVisualStyleBackColor = false;
             btnAddRoom.Click += btnAddRoom_Click;
             // 

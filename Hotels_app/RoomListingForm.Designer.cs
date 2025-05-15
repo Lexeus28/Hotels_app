@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using Hotels_app.classes;
+using Hotels_app.Properties;
 namespace Hotels_app
 {
     partial class RoomListingForm
@@ -107,7 +108,7 @@ namespace Hotels_app
             bookButton.PressDepth = 0.15F;
             bookButton.Size = new Size(131, 46);
             bookButton.TabIndex = 3;
-            bookButton.Text = "забронировать";
+            bookButton.Text = Resources.TextBook;
             bookButton.UseVisualStyleBackColor = false;
             bookButton.Click += BookButton_Click;
             // 

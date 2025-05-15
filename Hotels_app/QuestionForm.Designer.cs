@@ -1,4 +1,6 @@
-﻿namespace Hotels_app
+﻿using Hotels_app.Properties;
+
+namespace Hotels_app
 {
     partial class QuestionForm
     {
@@ -85,7 +87,7 @@
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(30, 32);
             btnClose.TabIndex = 17;
-            btnClose.Text = "×";
+            btnClose.Text = Resources.TextX;
             btnClose.UseVisualStyleBackColor = false;
             // 
             // groupBoxCuisine
@@ -323,7 +325,7 @@
             btnSave.PressDepth = 0.15F;
             btnSave.Size = new Size(106, 38);
             btnSave.TabIndex = 5;
-            btnSave.Text = "СОХРАНИТЬ";
+            btnSave.Text = Resources.TextSaveUpper;
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
             // 

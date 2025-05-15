@@ -1,4 +1,6 @@
-﻿namespace Hotels_app
+﻿using Hotels_app.Properties;
+
+namespace Hotels_app
 {
     partial class BookedRoomsForm
     {
@@ -159,7 +161,7 @@
             cancelBookingButton.PressDepth = 0.15F;
             cancelBookingButton.Size = new Size(158, 46);
             cancelBookingButton.TabIndex = 4;
-            cancelBookingButton.Text = "отменить\nбронирование";
+            cancelBookingButton.Text = Resources.TextCancelBooking;
             cancelBookingButton.UseVisualStyleBackColor = false;
             cancelBookingButton.Click += cancelBookingButton_Click;
             // 
@@ -181,7 +183,7 @@
             backToHotelsButton.PressDepth = 0.15F;
             backToHotelsButton.Size = new Size(158, 46);
             backToHotelsButton.TabIndex = 3;
-            backToHotelsButton.Text = "вернуться к отелям";
+            backToHotelsButton.Text = Resources.TextBackToHotels;
             backToHotelsButton.UseVisualStyleBackColor = false;
             backToHotelsButton.Click += backToHotelsButton_Click;
             // 

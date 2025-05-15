@@ -68,5 +68,188 @@ namespace Hotels_app.Properties {
                 return ResourceManager.GetString("ConnectionString", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на добавить.
+        /// </summary>
+        internal static string TextAdd {
+            get {
+                return ResourceManager.GetString("TextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на добавить отель.
+        /// </summary>
+        internal static string TextAddHotel {
+            get {
+                return ResourceManager.GetString("TextAddHotel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на вернуться к отелям.
+        /// </summary>
+        internal static string TextBackToHotels {
+            get {
+                return ResourceManager.GetString("TextBackToHotels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на забронировать.
+        /// </summary>
+        internal static string TextBook {
+            get {
+                return ResourceManager.GetString("TextBook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на забронированные.
+        /// </summary>
+        internal static string TextBooked {
+            get {
+                return ResourceManager.GetString("TextBooked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на отменить
+        ///бронирование.
+        /// </summary>
+        internal static string TextCancelBooking {
+            get {
+                return ResourceManager.GetString("TextCancelBooking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на удалить.
+        /// </summary>
+        internal static string TextDelete {
+            get {
+                return ResourceManager.GetString("TextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на УДАЛИТЬ АККАУНТ.
+        /// </summary>
+        internal static string TextDeleteAccount {
+            get {
+                return ResourceManager.GetString("TextDeleteAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на удалить отель.
+        /// </summary>
+        internal static string TextDeleteHotel {
+            get {
+                return ResourceManager.GetString("TextDeleteHotel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на редактировать.
+        /// </summary>
+        internal static string TextEdit {
+            get {
+                return ResourceManager.GetString("TextEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на редактировать
+        ///аккаунт.
+        /// </summary>
+        internal static string TextEditAccount {
+            get {
+                return ResourceManager.GetString("TextEditAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ВОЙТИ.
+        /// </summary>
+        internal static string TextEnter {
+            get {
+                return ResourceManager.GetString("TextEnter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на пройти анкету.
+        /// </summary>
+        internal static string TextOpenQuestionnaire {
+            get {
+                return ResourceManager.GetString("TextOpenQuestionnaire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ЗАРЕГИСТРИРОВАТЬСЯ.
+        /// </summary>
+        internal static string TextRegister {
+            get {
+                return ResourceManager.GetString("TextRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на НОМЕРА.
+        /// </summary>
+        internal static string TextRooms {
+            get {
+                return ResourceManager.GetString("TextRooms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на сохранить.
+        /// </summary>
+        internal static string TextSaveLower {
+            get {
+                return ResourceManager.GetString("TextSaveLower", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на СОХРАНИТЬ.
+        /// </summary>
+        internal static string TextSaveUpper {
+            get {
+                return ResourceManager.GetString("TextSaveUpper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ВЫБРАТЬ.
+        /// </summary>
+        internal static string TextSelect {
+            get {
+                return ResourceManager.GetString("TextSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на загрузить
+        ///картинку.
+        /// </summary>
+        internal static string TextUploadImage {
+            get {
+                return ResourceManager.GetString("TextUploadImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на x.
+        /// </summary>
+        internal static string TextX {
+            get {
+                return ResourceManager.GetString("TextX", resourceCulture);
+            }
+        }
     }
 }

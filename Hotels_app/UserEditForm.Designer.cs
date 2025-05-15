@@ -1,4 +1,6 @@
-﻿namespace Hotels_app
+﻿using Hotels_app.Properties;
+
+namespace Hotels_app
 {
     partial class UserEditForm
     {
@@ -96,7 +98,7 @@
             btnDeleteAccount.PressDepth = 0.15F;
             btnDeleteAccount.Size = new Size(153, 38);
             btnDeleteAccount.TabIndex = 16;
-            btnDeleteAccount.Text = "УДАЛИТЬ АККАУНТ";
+            btnDeleteAccount.Text = Resources.TextDeleteAccount;
             btnDeleteAccount.UseVisualStyleBackColor = false;
             btnDeleteAccount.Click += btnDeleteAccount_Click;
             // 
@@ -140,7 +142,7 @@
             btnSave.PressDepth = 0.15F;
             btnSave.Size = new Size(127, 38);
             btnSave.TabIndex = 5;
-            btnSave.Text = "СОХРАНИТЬ";
+            btnSave.Text = Resources.TextSaveUpper;
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
             // 
@@ -269,7 +271,7 @@
             btnClose.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnClose.ForeColor = Color.FromArgb(64, 0, 64);
             btnClose.Location = new Point(383, -1);
-            btnClose.Name = "btnClose";
+            btnClose.Name = Resources.TextX;
             btnClose.Size = new Size(30, 32);
             btnClose.TabIndex = 0;
             btnClose.Text = "×";

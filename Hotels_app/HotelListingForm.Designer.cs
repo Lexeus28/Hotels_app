@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hotels_app.Properties;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -119,7 +120,7 @@ namespace Hotels_app
             BtnOpenQuestionnaire.PressDepth = 0.15F;
             BtnOpenQuestionnaire.Size = new Size(109, 32);
             BtnOpenQuestionnaire.TabIndex = 1;
-            BtnOpenQuestionnaire.Text = "пройти анкету";
+            BtnOpenQuestionnaire.Text = Resources.TextOpenQuestionnaire;
             BtnOpenQuestionnaire.UseVisualStyleBackColor = false;
             BtnOpenQuestionnaire.Click += BtnOpenQuestionnaire_Click;
             // 
@@ -140,7 +141,7 @@ namespace Hotels_app
             btnEditAccount.PressDepth = 0.15F;
             btnEditAccount.Size = new Size(187, 53);
             btnEditAccount.TabIndex = 15;
-            btnEditAccount.Text = "редактировать\nаккаунт";
+            btnEditAccount.Text = Resources.TextEditAccount;
             btnEditAccount.UseVisualStyleBackColor = false;
             btnEditAccount.Click += btnEditAccount_Click;
             // 
@@ -162,7 +163,7 @@ namespace Hotels_app
             btnBooked.PressDepth = 0.15F;
             btnBooked.Size = new Size(187, 53);
             btnBooked.TabIndex = 14;
-            btnBooked.Text = "забронированные";
+            btnBooked.Text = Resources.TextBooked;
             btnBooked.UseVisualStyleBackColor = false;
             btnBooked.Click += btnBooked_Click;
             // 
