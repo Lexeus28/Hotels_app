@@ -571,7 +571,7 @@ namespace Hotels_app
             var bookedRoomsForm = new BookedRoomsForm(userBookings, _currentUser, _context);
 
             // Показываем форму
-            bookedRoomsForm.Show();
+            bookedRoomsForm.ShowDialog(this);
         }
         private List<User> FindSimilarUsers(User currentUser)
         {

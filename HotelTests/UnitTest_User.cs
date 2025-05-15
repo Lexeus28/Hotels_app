@@ -80,7 +80,7 @@ namespace Hotels_app.Tests
         public void Patronymic_ThrowsException_WhenTooLong()
         {
             var user = new User();
-            var longPatronymic = new string('А', 51); // Превышение лимита в 50 символов
+            var longPatronymic = new string('А', 51); 
             Assert.ThrowsException<ArgumentException>(() => user.patronymic = longPatronymic);
         }
 
