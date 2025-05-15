@@ -117,9 +117,66 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Confirm_DeleteHotel" xml:space="preserve">
+    <value>Вы уверены, что хотите удалить этот отель и все связанные с ним номера? Это действие нельзя отменить.</value>
+  </data>
   <data name="ConnectionString" xml:space="preserve">
-    <value>Host=localhost;Port=5432;Database=hotels_db;Username=postgres;Password=THEWORLD;SslMode=Prefer;</value>
+    <value>Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=2343;SslMode=Prefer;</value>
     <comment>строка подключения к бд</comment>
+  </data>
+  <data name="EditHotels" xml:space="preserve">
+    <value>Редактирование отелей</value>
+  </data>
+  <data name="Error_AddAtLeastOneRoom" xml:space="preserve">
+    <value>Добавьте хотя бы один номер для отеля.</value>
+  </data>
+  <data name="Error_AddRoomException" xml:space="preserve">
+    <value>Ошибка при добавлении номера: {0}</value>
+  </data>
+  <data name="Error_ImageUploadFailed" xml:space="preserve">
+    <value>Не удалось загрузить изображение.</value>
+  </data>
+  <data name="Error_mes" xml:space="preserve">
+    <value>ошибка</value>
+  </data>
+  <data name="Error_RequiredFields" xml:space="preserve">
+    <value>Пожалуйста, заполните все обязательные поля</value>
+  </data>
+  <data name="Error_RoomExists" xml:space="preserve">
+    <value>Комната с таким названием уже существует</value>
+  </data>
+  <data name="Error_RoomNotFound" xml:space="preserve">
+    <value>Не удалось найти выбранный номер.</value>
+  </data>
+  <data name="Error_SelectRoomToDelete" xml:space="preserve">
+    <value>Выберите номер для удаления.</value>
+  </data>
+  <data name="FalseCity" xml:space="preserve">
+    <value>Город \"{0}\" не найден в базе данных. Выберите существующий город.</value>
+  </data>
+  <data name="ImageFilesFilter" xml:space="preserve">
+    <value>Image Files|.jpg;.jpeg;.png;.bmp;*.gif</value>
+  </data>
+  <data name="SelectImageTitle" xml:space="preserve">
+    <value>Выберите изображение</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Успех</value>
+  </data>
+  <data name="Success_HotelAdded" xml:space="preserve">
+    <value>Отель и номера успешно добавлены!</value>
+  </data>
+  <data name="Success_HotelDeleted" xml:space="preserve">
+    <value>Отель и все связанные номера успешно удалены</value>
+  </data>
+  <data name="Success_HotelUpdated" xml:space="preserve">
+    <value>Отель успешно обновлен!</value>
+  </data>
+  <data name="Success_RoomAdded" xml:space="preserve">
+    <value>Номер успешно добавлен!</value>
+  </data>
+  <data name="Success_RoomDeleted" xml:space="preserve">
+    <value>Номер успешно удален.</value>
   </data>
   <data name="TextAdd" xml:space="preserve">
     <value>добавить</value>
@@ -183,5 +240,8 @@
   </data>
   <data name="TextX" xml:space="preserve">
     <value>x</value>
+  </data>
+  <data name="Title_DeleteConfirmation" xml:space="preserve">
+    <value>Подтверждение удаления</value>
   </data>
 </root>

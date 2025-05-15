@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Hotels_app.classes;
 using Microsoft.EntityFrameworkCore;
+using Hotels_app.Properties;
 
 namespace Hotels_app
 {
@@ -11,6 +12,7 @@ namespace Hotels_app
         public List<Room> TemporaryRooms { get; private set; } = new List<Room>();
         public Room CreatedRoom { get; private set; }
         private Hotel _hotel;
+
         public AddRoomForm(ApplicationDbContext context, Hotel hotel, List<Room> temporaryRooms)
         {
             _context = context;
@@ -19,23 +21,18 @@ namespace Hotels_app
             InitializeComponent();
             CreatedRoom = new Room();
         }
+
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
-            // Если изображение отсутствует, рисуем сетку
             if (pictureBox.Image == null)
             {
                 using (Pen pen = new Pen(Color.LightGray, 1))
                 {
-                    // Размер ячейки сетки
                     int gridSize = 10;
-
-                    // Рисуем горизонтальные линии
                     for (int y = 0; y < pictureBox.Height; y += gridSize)
                     {
                         e.Graphics.DrawLine(pen, 0, y, pictureBox.Width, y);
                     }
-
-                    // Рисуем вертикальные линии
                     for (int x = 0; x < pictureBox.Width; x += gridSize)
                     {
                         e.Graphics.DrawLine(pen, x, 0, x, pictureBox.Height);
@@ -43,32 +40,38 @@ namespace Hotels_app
                 }
             }
         }
+
         private bool IsRoomNameUnique(string roomName)
         {
             return !TemporaryRooms.Any(room => room.name.Equals(roomName, StringComparison.OrdinalIgnoreCase));
         }
+
         private void btnAddRoom_Click(object sender, EventArgs e)
         {
             try
             {
-                // Проверка обязательных полей
                 if (string.IsNullOrWhiteSpace(txtName.Text) ||
                     string.IsNullOrWhiteSpace(txtPrice.Text) ||
                     numericCapacity.Value <= 0 ||
                     numericAmount.Value <= 0)
                 {
-                    MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                // Проверка уникальности номера комнаты
-                string roomNumber = txtName.Text.Trim();
-                if (!IsRoomNameUnique(roomNumber))
-                {
-                    MessageBox.Show("Комната с таким названием уже существует.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.Error_RequiredFields,
+                                  Resources.Error_mes,
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Создаем объект Room
+                string roomNumber = txtName.Text.Trim();
+                if (!IsRoomNameUnique(roomNumber))
+                {
+                    MessageBox.Show(Resources.Error_RoomExists,
+                                  Resources.Error_mes,
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Warning);
+                    return;
+                }
+
                 var room = new Room
                 {
                     hotel = _hotel,
@@ -79,28 +82,31 @@ namespace Hotels_app
                     room_description = txtDescription.Text.Trim()
                 };
 
-                // Сохраняем изображение
                 if (pictureBox.Image != null)
                 {
-                    room.image = pictureBox.Image; // Автоматически конвертируется в массив байтов
+                    room.image = pictureBox.Image;
                 }
                 else
                 {
                     room.image = null;
                 }
 
-                // Устанавливаем созданный объект Room
                 CreatedRoom = room;
 
-                MessageBox.Show("Номер успешно добавлен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.Success_RoomAdded,
+                             Resources.Success,
+                             MessageBoxButtons.OK,
+                             MessageBoxIcon.Information);
 
-                // Закрываем форму
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при добавлении номера: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(Resources.Error_AddRoomException, ex.Message),
+                              Resources.Error_mes,
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Error);
             }
         }
 
@@ -108,24 +114,22 @@ namespace Hotels_app
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
-                openFileDialog.Title = "Выберите изображение";
+                openFileDialog.Filter = Resources.ImageFilesFilter;
+                openFileDialog.Title = Resources.SelectImageTitle;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    string filePath = openFileDialog.FileName;
-
                     try
                     {
-                        // Загружаем изображение в PictureBox
-                        pictureBox.Image = Image.FromFile(filePath);
-
-                        // Преобразуем изображение в массив байтов через класс Room
+                        pictureBox.Image = Image.FromFile(openFileDialog.FileName);
                         CreatedRoom.image = pictureBox.Image;
                     }
                     catch
                     {
-                        MessageBox.Show("Не удалось загрузить изображение.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(Resources.Error_ImageUploadFailed,
+                                      Resources.Error_mes,
+                                      MessageBoxButtons.OK,
+                                      MessageBoxIcon.Warning);
                     }
                 }
             }

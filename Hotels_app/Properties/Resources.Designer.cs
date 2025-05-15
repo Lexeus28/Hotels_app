@@ -61,11 +61,182 @@ namespace Hotels_app.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Host=localhost;Port=5432;Database=hotels_db;Username=postgres;Password=THEWORLD;SslMode=Prefer;.
+        ///   Ищет локализованную строку, похожую на Вы уверены, что хотите удалить этот отель и все связанные с ним номера? Это действие нельзя отменить..
+        /// </summary>
+        internal static string Confirm_DeleteHotel {
+            get {
+                return ResourceManager.GetString("Confirm_DeleteHotel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=2343;SslMode=Prefer;.
         /// </summary>
         internal static string ConnectionString {
             get {
                 return ResourceManager.GetString("ConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Редактирование отелей.
+        /// </summary>
+        internal static string EditHotels {
+            get {
+                return ResourceManager.GetString("EditHotels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Добавьте хотя бы один номер для отеля..
+        /// </summary>
+        internal static string Error_AddAtLeastOneRoom {
+            get {
+                return ResourceManager.GetString("Error_AddAtLeastOneRoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ошибка при добавлении номера: {0}.
+        /// </summary>
+        internal static string Error_AddRoomException {
+            get {
+                return ResourceManager.GetString("Error_AddRoomException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Не удалось загрузить изображение..
+        /// </summary>
+        internal static string Error_ImageUploadFailed {
+            get {
+                return ResourceManager.GetString("Error_ImageUploadFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ошибка.
+        /// </summary>
+        internal static string Error_mes {
+            get {
+                return ResourceManager.GetString("Error_mes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пожалуйста, заполните все обязательные поля.
+        /// </summary>
+        internal static string Error_RequiredFields {
+            get {
+                return ResourceManager.GetString("Error_RequiredFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Комната с таким названием уже существует.
+        /// </summary>
+        internal static string Error_RoomExists {
+            get {
+                return ResourceManager.GetString("Error_RoomExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Не удалось найти выбранный номер..
+        /// </summary>
+        internal static string Error_RoomNotFound {
+            get {
+                return ResourceManager.GetString("Error_RoomNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Выберите номер для удаления..
+        /// </summary>
+        internal static string Error_SelectRoomToDelete {
+            get {
+                return ResourceManager.GetString("Error_SelectRoomToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Город \&quot;{0}\&quot; не найден в базе данных. Выберите существующий город..
+        /// </summary>
+        internal static string FalseCity {
+            get {
+                return ResourceManager.GetString("FalseCity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Image Files|.jpg;.jpeg;.png;.bmp;*.gif.
+        /// </summary>
+        internal static string ImageFilesFilter {
+            get {
+                return ResourceManager.GetString("ImageFilesFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Выберите изображение.
+        /// </summary>
+        internal static string SelectImageTitle {
+            get {
+                return ResourceManager.GetString("SelectImageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Успех.
+        /// </summary>
+        internal static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Отель и номера успешно добавлены!.
+        /// </summary>
+        internal static string Success_HotelAdded {
+            get {
+                return ResourceManager.GetString("Success_HotelAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Отель и все связанные номера успешно удалены.
+        /// </summary>
+        internal static string Success_HotelDeleted {
+            get {
+                return ResourceManager.GetString("Success_HotelDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Отель успешно обновлен!.
+        /// </summary>
+        internal static string Success_HotelUpdated {
+            get {
+                return ResourceManager.GetString("Success_HotelUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Номер успешно добавлен!.
+        /// </summary>
+        internal static string Success_RoomAdded {
+            get {
+                return ResourceManager.GetString("Success_RoomAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Номер успешно удален..
+        /// </summary>
+        internal static string Success_RoomDeleted {
+            get {
+                return ResourceManager.GetString("Success_RoomDeleted", resourceCulture);
             }
         }
         
@@ -249,6 +420,15 @@ namespace Hotels_app.Properties {
         internal static string TextX {
             get {
                 return ResourceManager.GetString("TextX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Подтверждение удаления.
+        /// </summary>
+        internal static string Title_DeleteConfirmation {
+            get {
+                return ResourceManager.GetString("Title_DeleteConfirmation", resourceCulture);
             }
         }
     }
