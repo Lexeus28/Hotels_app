@@ -212,7 +212,7 @@ namespace Hotels_app
             oneRoomLabel.ForeColor = Color.FromArgb(64, 0, 64);
             oneRoomLabel.Location = new Point(30, 7);
             oneRoomLabel.Name = "oneRoomLabel";
-            oneRoomLabel.Size = new Size(150, 31);
+            oneRoomLabel.Size = new Size(155, 31);
             oneRoomLabel.TabIndex = 0;
             oneRoomLabel.Text = "одноместные";
             oneRoomLabel.Click += oneRoomLabel_Click;
@@ -225,7 +225,7 @@ namespace Hotels_app
             twoRoomLabel.ForeColor = Color.FromArgb(64, 0, 64);
             twoRoomLabel.Location = new Point(280, 7);
             twoRoomLabel.Name = "twoRoomLabel";
-            twoRoomLabel.Size = new Size(150, 31);
+            twoRoomLabel.Size = new Size(139, 31);
             twoRoomLabel.TabIndex = 1;
             twoRoomLabel.Text = "двуместные";
             twoRoomLabel.Click += twoRoomLabel_Click;
@@ -249,9 +249,11 @@ namespace Hotels_app
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1052, 562);
             Controls.Add(mainPanel);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "RoomListingForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Room Listing";
+            Text = "Список номеров";
             mainPanel.ResumeLayout(false);
             rightPanel.ResumeLayout(false);
             rightPanel.PerformLayout();

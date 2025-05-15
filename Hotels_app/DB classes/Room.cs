@@ -18,7 +18,7 @@ namespace Hotels_app
         private Image _image;
         private byte[]? _imageByte;
         /// <summary>
-        /// Айди комнаты
+        /// Идентификатор комнаты
         /// </summary>
         [Key]
         public Guid room_id

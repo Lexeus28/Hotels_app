@@ -61,6 +61,15 @@ namespace Hotels_app.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Вы уверены, что хотите удалить свой аккаунт? Это действие нельзя отменить..
+        /// </summary>
+        internal static string Confirm_DeleteAccount {
+            get {
+                return ResourceManager.GetString("Confirm_DeleteAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Вы уверены, что хотите удалить этот отель и все связанные с ним номера? Это действие нельзя отменить..
         /// </summary>
         internal static string Confirm_DeleteHotel {
@@ -75,6 +84,15 @@ namespace Hotels_app.Properties {
         internal static string ConnectionString {
             get {
                 return ResourceManager.GetString("ConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Вы впервые авторизуетесь. Хотите пройти анкету?.
+        /// </summary>
+        internal static string DoYouWantQuestionnaire {
+            get {
+                return ResourceManager.GetString("DoYouWantQuestionnaire", resourceCulture);
             }
         }
         
@@ -106,6 +124,150 @@ namespace Hotels_app.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Бронирование доступно только на срок до 2 лет вперёд..
+        /// </summary>
+        internal static string Error_BookingInFuture {
+            get {
+                return ResourceManager.GetString("Error_BookingInFuture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Бронирование не найдено..
+        /// </summary>
+        internal static string Error_BookingNotFound {
+            get {
+                return ResourceManager.GetString("Error_BookingNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Произошла ошибка при отмене бронирования:.
+        /// </summary>
+        internal static string Error_CancelingBooking {
+            get {
+                return ResourceManager.GetString("Error_CancelingBooking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Дата выезда должна быть больше или равна дате заезда..
+        /// </summary>
+        internal static string Error_CheckOutEarlier {
+            get {
+                return ResourceManager.GetString("Error_CheckOutEarlier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Нельзя выбрать дату заезда в прошлом..
+        /// </summary>
+        internal static string Error_DateInPast {
+            get {
+                return ResourceManager.GetString("Error_DateInPast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Номер уже полностью забронирован на выбранные даты..
+        /// </summary>
+        internal static string Error_DatesAreFull {
+            get {
+                return ResourceManager.GetString("Error_DatesAreFull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пожалуйста, выберите даты заезда и выезда..
+        /// </summary>
+        internal static string Error_DatesNotSelected {
+            get {
+                return ResourceManager.GetString("Error_DatesNotSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пожалуйста, выберите номер для отмены бронирования..
+        /// </summary>
+        internal static string Error_DeletingBooking {
+            get {
+                return ResourceManager.GetString("Error_DeletingBooking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Фамилия не может быть пустой..
+        /// </summary>
+        internal static string Error_EmptyLastname {
+            get {
+                return ResourceManager.GetString("Error_EmptyLastname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Имя не может быть пустым..
+        /// </summary>
+        internal static string Error_EmptyName {
+            get {
+                return ResourceManager.GetString("Error_EmptyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пожалуйста, введите новый пароль..
+        /// </summary>
+        internal static string Error_EmptyNewPassword {
+            get {
+                return ResourceManager.GetString("Error_EmptyNewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пожалуйста, введите старый пароль..
+        /// </summary>
+        internal static string Error_EmptyOldPassword {
+            get {
+                return ResourceManager.GetString("Error_EmptyOldPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пароль не может быть пустым..
+        /// </summary>
+        internal static string Error_EmptyPassword {
+            get {
+                return ResourceManager.GetString("Error_EmptyPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Номер телефона не может быть пустым..
+        /// </summary>
+        internal static string Error_EmptyPhoneNumber {
+            get {
+                return ResourceManager.GetString("Error_EmptyPhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Логин не может быть пустым..
+        /// </summary>
+        internal static string Error_EmptyUserName {
+            get {
+                return ResourceManager.GetString("Error_EmptyUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пользователь с таким логином уже существует!.
+        /// </summary>
+        internal static string Error_ExistingUserName {
+            get {
+                return ResourceManager.GetString("Error_ExistingUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Не удалось загрузить изображение..
         /// </summary>
         internal static string Error_ImageUploadFailed {
@@ -115,11 +277,83 @@ namespace Hotels_app.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на ошибка.
+        ///   Ищет локализованную строку, похожую на Пользователь с таким логином не найден!.
+        /// </summary>
+        internal static string Error_LoginNotFound {
+            get {
+                return ResourceManager.GetString("Error_LoginNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Фамилия не должна превышать 50 символов..
+        /// </summary>
+        internal static string Error_LongLastName {
+            get {
+                return ResourceManager.GetString("Error_LongLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Имя не должно превышать 50 символов..
+        /// </summary>
+        internal static string Error_LongName {
+            get {
+                return ResourceManager.GetString("Error_LongName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Отчество не должно превышать 50 символов..
+        /// </summary>
+        internal static string Error_LongPatronomyc {
+            get {
+                return ResourceManager.GetString("Error_LongPatronomyc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Логин не должен превышать 50 символов..
+        /// </summary>
+        internal static string Error_LongUserName {
+            get {
+                return ResourceManager.GetString("Error_LongUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ошибка.
         /// </summary>
         internal static string Error_mes {
             get {
                 return ResourceManager.GetString("Error_mes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Произошла ошибка:.
+        /// </summary>
+        internal static string Error_Mistake {
+            get {
+                return ResourceManager.GetString("Error_Mistake", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Введите логин и пароль!.
+        /// </summary>
+        internal static string Error_PasswordOrLoginIsEmpty {
+            get {
+                return ResourceManager.GetString("Error_PasswordOrLoginIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ошибка при обработке пароля:.
+        /// </summary>
+        internal static string Error_PasswordValidation {
+            get {
+                return ResourceManager.GetString("Error_PasswordValidation", resourceCulture);
             }
         }
         
@@ -142,6 +376,15 @@ namespace Hotels_app.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Пожалуйста, выберите номер..
+        /// </summary>
+        internal static string Error_RoomIsNotSelected {
+            get {
+                return ResourceManager.GetString("Error_RoomIsNotSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Не удалось найти выбранный номер..
         /// </summary>
         internal static string Error_RoomNotFound {
@@ -156,6 +399,69 @@ namespace Hotels_app.Properties {
         internal static string Error_SelectRoomToDelete {
             get {
                 return ResourceManager.GetString("Error_SelectRoomToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пароль должен содержать минимум 6 символов..
+        /// </summary>
+        internal static string Error_ShortPassword {
+            get {
+                return ResourceManager.GetString("Error_ShortPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Старый пароль неверен..
+        /// </summary>
+        internal static string Error_WrongOldPassword {
+            get {
+                return ResourceManager.GetString("Error_WrongOldPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Неверный пароль!.
+        /// </summary>
+        internal static string Error_WrongPassword {
+            get {
+                return ResourceManager.GetString("Error_WrongPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Имя должно начинаться с заглавной буквы и содержать только русские буквы..
+        /// </summary>
+        internal static string Error_WrongSimbolsName {
+            get {
+                return ResourceManager.GetString("Error_WrongSimbolsName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Фамилия должна начинаться с заглавной буквы и содержать только русские буквы..
+        /// </summary>
+        internal static string Error_WrongSymbolsLastname {
+            get {
+                return ResourceManager.GetString("Error_WrongSymbolsLastname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Отчество должно начинаться с заглавной буквы и содержать только русские буквы..
+        /// </summary>
+        internal static string Error_WrongSymbolsPatronomyc {
+            get {
+                return ResourceManager.GetString("Error_WrongSymbolsPatronomyc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Номер телефона должен содержать цифры (9-15).&quot;.
+        /// </summary>
+        internal static string Error_WrongSymbolsPhoneNumber {
+            get {
+                return ResourceManager.GetString("Error_WrongSymbolsPhoneNumber", resourceCulture);
             }
         }
         
@@ -178,6 +484,33 @@ namespace Hotels_app.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Информация.
+        /// </summary>
+        internal static string Information {
+            get {
+                return ResourceManager.GetString("Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на У вас нет забронированных номеров..
+        /// </summary>
+        internal static string Information_NoBookedRooms {
+            get {
+                return ResourceManager.GetString("Information_NoBookedRooms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Анкета.
+        /// </summary>
+        internal static string Qustionnaire {
+            get {
+                return ResourceManager.GetString("Qustionnaire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Выберите изображение.
         /// </summary>
         internal static string SelectImageTitle {
@@ -192,6 +525,42 @@ namespace Hotels_app.Properties {
         internal static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Авторизация успешна!.
+        /// </summary>
+        internal static string Success_Authorization {
+            get {
+                return ResourceManager.GetString("Success_Authorization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Номер успешно забронирован!.
+        /// </summary>
+        internal static string Success_Booking {
+            get {
+                return ResourceManager.GetString("Success_Booking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Аккаунт успешно удален..
+        /// </summary>
+        internal static string Success_DeletingAccount {
+            get {
+                return ResourceManager.GetString("Success_DeletingAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Бронирование успешно отменено..
+        /// </summary>
+        internal static string Success_DeletingBooking {
+            get {
+                return ResourceManager.GetString("Success_DeletingBooking", resourceCulture);
             }
         }
         
@@ -223,6 +592,24 @@ namespace Hotels_app.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Пароль успешно изменен..
+        /// </summary>
+        internal static string Success_PasswordChange {
+            get {
+                return ResourceManager.GetString("Success_PasswordChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Регистрация успешно завершена!&quot;.
+        /// </summary>
+        internal static string Success_Registration {
+            get {
+                return ResourceManager.GetString("Success_Registration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Номер успешно добавлен!.
         /// </summary>
         internal static string Success_RoomAdded {
@@ -237,6 +624,24 @@ namespace Hotels_app.Properties {
         internal static string Success_RoomDeleted {
             get {
                 return ResourceManager.GetString("Success_RoomDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Анкета успешно сохранена!.
+        /// </summary>
+        internal static string Success_SaveQuestionnaire {
+            get {
+                return ResourceManager.GetString("Success_SaveQuestionnaire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Данные успешно сохранены..
+        /// </summary>
+        internal static string Success_SavingData {
+            get {
+                return ResourceManager.GetString("Success_SavingData", resourceCulture);
             }
         }
         

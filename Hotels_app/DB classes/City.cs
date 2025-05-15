@@ -10,7 +10,7 @@ namespace Hotels_app
         private string _title;
 
         /// <summary>
-        /// Айди города
+        /// Идентификатор города
         /// </summary>
         [Key]
         public Guid city_id

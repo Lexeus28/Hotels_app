@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using Hotels_app.Properties;
+using System.Runtime.InteropServices;
 namespace Hotels_app
 {
     // <summary>
@@ -6,9 +7,23 @@ namespace Hotels_app
     ///</summary>
     public partial class QuestionForm : Form
     {
+        /// <summary>
+        /// Импортирует функцию SendMessage из user32.dll.
+        /// Используется для отправки сообщений оконной системе Windows.
+        /// </summary>
+        /// <param name="hWnd">Дескриптор окна, которому отправляется сообщение.</param>
+        /// <param name="Msg">Тип сообщения.</param>
+        /// <param name="wParam">Дополнительный параметр сообщения.</param>
+        /// <param name="lParam">Дополнительный параметр сообщения.</param>
+        /// <returns>Результат выполнения сообщения.</returns>
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
+        /// <summary>
+        /// Импортирует функцию ReleaseCapture из user32.dll.
+        /// Используется для освобождения захвата мыши на элементе управления или окне.
+        /// </summary>
+        /// <returns>Возвращает true, если операция успешна; иначе false.</returns>
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
@@ -47,7 +62,7 @@ namespace Hotels_app
             _context.Users.Update(_currentUser);
             _context.SaveChanges();
 
-            MessageBox.Show("Анкета успешно сохранена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Resources.Success_SaveQuestionnaire, Resources.Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             if (Owner is HotelListingForm hotelListingForm)
             {

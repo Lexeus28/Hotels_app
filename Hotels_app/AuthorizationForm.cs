@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using Hotels_app.Properties;
+using System.Runtime.InteropServices;
 namespace Hotels_app
 {
     // <summary>
@@ -6,9 +7,23 @@ namespace Hotels_app
     ///</summary>
     public partial class AuthorizationForm : Form
     {
+        /// <summary>
+        /// Импортирует функцию SendMessage из user32.dll.
+        /// Используется для отправки сообщений оконной системе Windows.
+        /// </summary>
+        /// <param name="hWnd">Дескриптор окна, которому отправляется сообщение.</param>
+        /// <param name="Msg">Тип сообщения.</param>
+        /// <param name="wParam">Дополнительный параметр сообщения.</param>
+        /// <param name="lParam">Дополнительный параметр сообщения.</param>
+        /// <returns>Результат выполнения сообщения.</returns>
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
+        /// <summary>
+        /// Импортирует функцию ReleaseCapture из user32.dll.
+        /// Используется для освобождения захвата мыши на элементе управления или окне.
+        /// </summary>
+        /// <returns>Возвращает true, если операция успешна; иначе false.</returns>
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
@@ -41,7 +56,7 @@ namespace Hotels_app
 
             if (user == null)
             {
-                MessageBox.Show("Пользователь с таким логином не найден!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.Error_LoginNotFound, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
@@ -51,7 +66,7 @@ namespace Hotels_app
             }
             else
             {
-                MessageBox.Show("Неверный пароль!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.Error_WrongPassword, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
         }
@@ -63,20 +78,20 @@ namespace Hotels_app
 
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Введите логин и пароль!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.Error_PasswordOrLoginIsEmpty, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (ValidateUser(login, password))
             {
-                MessageBox.Show("Авторизация успешна!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.Success_Authorization, Resources.Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 var user = _context.Users.FirstOrDefault(u => u.username == login);
                 if (user.isfirstlogin)
                 {
                     var hotelListingForm = new HotelListingForm(user, _context, this);
                     var result = MessageBox.Show(
-                        "Вы впервые авторизуетесь. Хотите пройти анкету?",
-                        "Анкета",
+                        Resources.DoYouWantQuestionnaire,
+                        Resources.Qustionnaire,
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Question);
 
@@ -99,15 +114,12 @@ namespace Hotels_app
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            RegistrationForm registrationForm = new RegistrationForm(this, _context);
+            var registrationForm = new RegistrationForm(this, _context);
             registrationForm.Show();
             this.Hide();
             this.ClearFormFields();
         }
-        // <summary>
-        ///  Метод для очистки полей формы
-        ///</summary>
-        public void ClearFormFields()
+        private void ClearFormFields()
         {
             txtLogin.Clear();
             txtPassword.Clear();

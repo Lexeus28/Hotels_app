@@ -117,12 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Confirm_DeleteAccount" xml:space="preserve">
+    <value>Вы уверены, что хотите удалить свой аккаунт? Это действие нельзя отменить.</value>
+  </data>
   <data name="Confirm_DeleteHotel" xml:space="preserve">
     <value>Вы уверены, что хотите удалить этот отель и все связанные с ним номера? Это действие нельзя отменить.</value>
   </data>
   <data name="ConnectionString" xml:space="preserve">
     <value>Host=localhost;Port=5432;Database=hotels_db;Username=postgres;Password=THEWORLD;SslMode=Prefer;</value>
     <comment>строка подключения к бд</comment>
+  </data>
+  <data name="DoYouWantQuestionnaire" xml:space="preserve">
+    <value>Вы впервые авторизуетесь. Хотите пройти анкету?</value>
   </data>
   <data name="EditHotels" xml:space="preserve">
     <value>Редактирование отелей</value>
@@ -133,11 +139,83 @@
   <data name="Error_AddRoomException" xml:space="preserve">
     <value>Ошибка при добавлении номера: {0}</value>
   </data>
+  <data name="Error_BookingInFuture" xml:space="preserve">
+    <value>Бронирование доступно только на срок до 2 лет вперёд.</value>
+  </data>
+  <data name="Error_BookingNotFound" xml:space="preserve">
+    <value>Бронирование не найдено.</value>
+  </data>
+  <data name="Error_CancelingBooking" xml:space="preserve">
+    <value>Произошла ошибка при отмене бронирования:</value>
+  </data>
+  <data name="Error_CheckOutEarlier" xml:space="preserve">
+    <value>Дата выезда должна быть больше или равна дате заезда.</value>
+  </data>
+  <data name="Error_DateInPast" xml:space="preserve">
+    <value>Нельзя выбрать дату заезда в прошлом.</value>
+  </data>
+  <data name="Error_DatesAreFull" xml:space="preserve">
+    <value>Номер уже полностью забронирован на выбранные даты.</value>
+  </data>
+  <data name="Error_DatesNotSelected" xml:space="preserve">
+    <value>Пожалуйста, выберите даты заезда и выезда.</value>
+  </data>
+  <data name="Error_DeletingBooking" xml:space="preserve">
+    <value>Пожалуйста, выберите номер для отмены бронирования.</value>
+  </data>
+  <data name="Error_EmptyLastname" xml:space="preserve">
+    <value>Фамилия не может быть пустой.</value>
+  </data>
+  <data name="Error_EmptyName" xml:space="preserve">
+    <value>Имя не может быть пустым.</value>
+  </data>
+  <data name="Error_EmptyNewPassword" xml:space="preserve">
+    <value>Пожалуйста, введите новый пароль.</value>
+  </data>
+  <data name="Error_EmptyOldPassword" xml:space="preserve">
+    <value>Пожалуйста, введите старый пароль.</value>
+  </data>
+  <data name="Error_EmptyPassword" xml:space="preserve">
+    <value>Пароль не может быть пустым.</value>
+  </data>
+  <data name="Error_EmptyPhoneNumber" xml:space="preserve">
+    <value>Номер телефона не может быть пустым.</value>
+  </data>
+  <data name="Error_EmptyUserName" xml:space="preserve">
+    <value>Логин не может быть пустым.</value>
+  </data>
+  <data name="Error_ExistingUserName" xml:space="preserve">
+    <value>Пользователь с таким логином уже существует!</value>
+  </data>
   <data name="Error_ImageUploadFailed" xml:space="preserve">
     <value>Не удалось загрузить изображение.</value>
   </data>
+  <data name="Error_LoginNotFound" xml:space="preserve">
+    <value>Пользователь с таким логином не найден!</value>
+  </data>
+  <data name="Error_LongLastName" xml:space="preserve">
+    <value>Фамилия не должна превышать 50 символов.</value>
+  </data>
+  <data name="Error_LongName" xml:space="preserve">
+    <value>Имя не должно превышать 50 символов.</value>
+  </data>
+  <data name="Error_LongPatronomyc" xml:space="preserve">
+    <value>Отчество не должно превышать 50 символов.</value>
+  </data>
+  <data name="Error_LongUserName" xml:space="preserve">
+    <value>Логин не должен превышать 50 символов.</value>
+  </data>
   <data name="Error_mes" xml:space="preserve">
-    <value>ошибка</value>
+    <value>Ошибка</value>
+  </data>
+  <data name="Error_Mistake" xml:space="preserve">
+    <value>Произошла ошибка:</value>
+  </data>
+  <data name="Error_PasswordOrLoginIsEmpty" xml:space="preserve">
+    <value>Введите логин и пароль!</value>
+  </data>
+  <data name="Error_PasswordValidation" xml:space="preserve">
+    <value>Ошибка при обработке пароля:</value>
   </data>
   <data name="Error_RequiredFields" xml:space="preserve">
     <value>Пожалуйста, заполните все обязательные поля</value>
@@ -145,11 +223,35 @@
   <data name="Error_RoomExists" xml:space="preserve">
     <value>Комната с таким названием уже существует</value>
   </data>
+  <data name="Error_RoomIsNotSelected" xml:space="preserve">
+    <value>Пожалуйста, выберите номер.</value>
+  </data>
   <data name="Error_RoomNotFound" xml:space="preserve">
     <value>Не удалось найти выбранный номер.</value>
   </data>
   <data name="Error_SelectRoomToDelete" xml:space="preserve">
     <value>Выберите номер для удаления.</value>
+  </data>
+  <data name="Error_ShortPassword" xml:space="preserve">
+    <value>Пароль должен содержать минимум 6 символов.</value>
+  </data>
+  <data name="Error_WrongOldPassword" xml:space="preserve">
+    <value>Старый пароль неверен.</value>
+  </data>
+  <data name="Error_WrongPassword" xml:space="preserve">
+    <value>Неверный пароль!</value>
+  </data>
+  <data name="Error_WrongSimbolsName" xml:space="preserve">
+    <value>Имя должно начинаться с заглавной буквы и содержать только русские буквы.</value>
+  </data>
+  <data name="Error_WrongSymbolsLastname" xml:space="preserve">
+    <value>Фамилия должна начинаться с заглавной буквы и содержать только русские буквы.</value>
+  </data>
+  <data name="Error_WrongSymbolsPatronomyc" xml:space="preserve">
+    <value>Отчество должно начинаться с заглавной буквы и содержать только русские буквы.</value>
+  </data>
+  <data name="Error_WrongSymbolsPhoneNumber" xml:space="preserve">
+    <value>Номер телефона должен содержать цифры (9-15)."</value>
   </data>
   <data name="FalseCity" xml:space="preserve">
     <value>Город \"{0}\" не найден в базе данных. Выберите существующий город.</value>
@@ -157,11 +259,32 @@
   <data name="ImageFilesFilter" xml:space="preserve">
     <value>Image Files|.jpg;.jpeg;.png;.bmp;*.gif</value>
   </data>
+  <data name="Information" xml:space="preserve">
+    <value>Информация</value>
+  </data>
+  <data name="Information_NoBookedRooms" xml:space="preserve">
+    <value>У вас нет забронированных номеров.</value>
+  </data>
+  <data name="Qustionnaire" xml:space="preserve">
+    <value>Анкета</value>
+  </data>
   <data name="SelectImageTitle" xml:space="preserve">
     <value>Выберите изображение</value>
   </data>
   <data name="Success" xml:space="preserve">
     <value>Успех</value>
+  </data>
+  <data name="Success_Authorization" xml:space="preserve">
+    <value>Авторизация успешна!</value>
+  </data>
+  <data name="Success_Booking" xml:space="preserve">
+    <value>Номер успешно забронирован!</value>
+  </data>
+  <data name="Success_DeletingAccount" xml:space="preserve">
+    <value>Аккаунт успешно удален.</value>
+  </data>
+  <data name="Success_DeletingBooking" xml:space="preserve">
+    <value>Бронирование успешно отменено.</value>
   </data>
   <data name="Success_HotelAdded" xml:space="preserve">
     <value>Отель и номера успешно добавлены!</value>
@@ -172,11 +295,23 @@
   <data name="Success_HotelUpdated" xml:space="preserve">
     <value>Отель успешно обновлен!</value>
   </data>
+  <data name="Success_PasswordChange" xml:space="preserve">
+    <value>Пароль успешно изменен.</value>
+  </data>
+  <data name="Success_Registration" xml:space="preserve">
+    <value>Регистрация успешно завершена!"</value>
+  </data>
   <data name="Success_RoomAdded" xml:space="preserve">
     <value>Номер успешно добавлен!</value>
   </data>
   <data name="Success_RoomDeleted" xml:space="preserve">
     <value>Номер успешно удален.</value>
+  </data>
+  <data name="Success_SaveQuestionnaire" xml:space="preserve">
+    <value>Анкета успешно сохранена!</value>
+  </data>
+  <data name="Success_SavingData" xml:space="preserve">
+    <value>Данные успешно сохранены.</value>
   </data>
   <data name="TextAdd" xml:space="preserve">
     <value>добавить</value>

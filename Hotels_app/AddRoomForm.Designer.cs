@@ -292,7 +292,9 @@ namespace Hotels_app
             ClientSize = new Size(833, 536);
             Controls.Add(panelLeft);
             Controls.Add(panelRight);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(4, 3, 4, 3);
+            MaximizeBox = false;
             Name = "AddRoomForm";
             Text = "Добавление номеров";
             panelLeft.ResumeLayout(false);

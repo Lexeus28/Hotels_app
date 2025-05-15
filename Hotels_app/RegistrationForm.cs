@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using Hotels_app.Properties;
+using System.Text.RegularExpressions;
 
 namespace Hotels_app
 {
@@ -33,34 +34,34 @@ namespace Hotels_app
                 // Проверка имени
                 if (string.IsNullOrWhiteSpace(firstName))
                 {
-                    MessageBox.Show("Имя не может быть пустым.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.Error_EmptyName, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 if (firstName.Length > 50)
                 {
-                    MessageBox.Show("Имя не должно превышать 50 символов.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.Error_LongName, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 if (!Regex.IsMatch(firstName, @"^[А-ЯЁ][а-яё]*$"))
                 {
-                    MessageBox.Show("Имя должно начинаться с заглавной буквы и содержать только буквы.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.Error_WrongSimbolsName, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Проверка фамилии
                 if (string.IsNullOrWhiteSpace(lastName))
                 {
-                    MessageBox.Show("Фамилия не может быть пустой.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.Error_EmptyLastname, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 if (lastName.Length > 50)
                 {
-                    MessageBox.Show("Фамилия не должна превышать 50 символов.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.Error_LongLastName, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 if (!Regex.IsMatch(lastName, @"^[А-ЯЁ][а-яё]*$"))
                 {
-                    MessageBox.Show("Фамилия должна начинаться с заглавной буквы и содержать только буквы.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.Error_WrongSymbolsLastname, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -69,12 +70,12 @@ namespace Hotels_app
                 {
                     if (!Regex.IsMatch(patronymic, @"^[А-ЯЁ][а-яё]*$"))
                     {
-                        MessageBox.Show("Отчество должно начинаться с заглавной буквы и содержать только буквы.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(Resources.Error_WrongSymbolsPatronomyc, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     if (patronymic.Length > 50)
                     {
-                        MessageBox.Show("Отчество не должно превышать 50 символов.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(Resources.Error_LongPatronomyc, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                 }
@@ -82,39 +83,44 @@ namespace Hotels_app
                 // Проверка логина
                 if (string.IsNullOrWhiteSpace(login))
                 {
-                    MessageBox.Show("Логин не может быть пустым.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.Error_EmptyUserName, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 if (login.Length > 50)
                 {
-                    MessageBox.Show("Логин не должен превышать 50 символов.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    MessageBox.Show(Resources.Error_LongUserName, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return; 
                 }
 
                 // Проверка уникальности логина
                 var existingUser = _context.Users.FirstOrDefault(u => u.username == login);
                 if (existingUser != null)
                 {
-                    MessageBox.Show("Пользователь с таким логином уже существует!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.Error_ExistingUserName, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Проверка пароля
                 if (string.IsNullOrWhiteSpace(password))
                 {
-                    MessageBox.Show("Пароль не может быть пустым.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.Error_EmptyPassword, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (password.Length < 6)
+                {
+                    MessageBox.Show(Resources.Error_ShortPassword, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Проверка номера телефона
                 if (string.IsNullOrWhiteSpace(phoneNumber))
                 {
-                    MessageBox.Show("Номер телефона не может быть пустым.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.Error_EmptyPhoneNumber, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 if (!Regex.IsMatch(phoneNumber, @"^[0-9]{9,15}$"))
                 {
-                    MessageBox.Show("Номер телефона должен содержать цифры (9-15).", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.Error_WrongSymbolsPhoneNumber, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -131,7 +137,7 @@ namespace Hotels_app
                 _context.Users.Add(newUser);
                 _context.SaveChanges();
 
-                MessageBox.Show("Регистрация успешно завершена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.Success_Registration, Resources.Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 ClearFormFields();
 
@@ -141,7 +147,7 @@ namespace Hotels_app
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"{Resources.Error_Mistake} {ex.Message}", Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void ClearFormFields()

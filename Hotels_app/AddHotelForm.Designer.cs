@@ -370,7 +370,7 @@ namespace Hotels_app
             btnUploadImage.PressDepth = 0.15F;
             btnUploadImage.Size = new Size(102, 46);
             btnUploadImage.TabIndex = 4;
-            btnUploadImage.Text = Resources.TextUploadImage ;
+            btnUploadImage.Text = Resources.TextUploadImage;
             btnUploadImage.UseVisualStyleBackColor = false;
             btnUploadImage.Click += btnUploadImage_Click;
             // 
@@ -684,7 +684,9 @@ namespace Hotels_app
             ClientSize = new Size(833, 617);
             Controls.Add(panelLeft);
             Controls.Add(panelRight);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(4, 3, 4, 3);
+            MaximizeBox = false;
             Name = "AddHotelForm";
             Text = "Добавление отелей";
             panelArea.ResumeLayout(false);

@@ -22,7 +22,7 @@ namespace Hotels_app
             set { _user = value; }
         }
         /// <summary>
-        /// Айди пользователя
+        /// Идентификатор пользователя
         /// </summary>
         [Key]
         public Guid user_id
@@ -39,7 +39,7 @@ namespace Hotels_app
             set { _hotel = value; }
         }
         /// <summary>
-        /// Айди отеля
+        /// Идентификатор отеля
         /// </summary>
         [Key]
         public Guid hotel_id

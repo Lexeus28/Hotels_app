@@ -233,13 +233,13 @@ namespace Hotels_app
         {
             if (selectedRoom == null)
             {
-                MessageBox.Show("Пожалуйста, выберите номер.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.Error_RoomIsNotSelected, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (fromDatePicker.Value == null || toDatePicker.Value == null)
             {
-                MessageBox.Show("Пожалуйста, выберите даты заезда и выезда.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.Error_DatesNotSelected, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -248,20 +248,20 @@ namespace Hotels_app
 
             if (checkInDate < DateTime.Today)
             {
-                MessageBox.Show("Нельзя выбрать дату заезда в прошлом.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.Error_DateInPast, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (checkOutDate < checkInDate)
             {
-                MessageBox.Show("Дата выезда должна быть больше или равна дате заезда.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.Error_CheckOutEarlier, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             var maxBookingDate = DateTime.Today.AddYears(2);
             if (checkOutDate > maxBookingDate)
             {
-                MessageBox.Show("Бронирование доступно только на срок до 2 лет вперёд.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.Error_BookingInFuture, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -284,7 +284,7 @@ namespace Hotels_app
             // Проверяем, не превышено ли количество бронирований
             if (overlappingBookings.Count >= selectedRoom.amount)
             {
-                MessageBox.Show("Номер уже полностью забронирован на выбранные даты.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.Error_DatesAreFull, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -297,7 +297,7 @@ namespace Hotels_app
             };
             _context.Bookings.Add(booking);
             _context.SaveChanges();
-            MessageBox.Show("Номер успешно забронирован!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Resources.Success_Booking, Resources.Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
             
         }
     }

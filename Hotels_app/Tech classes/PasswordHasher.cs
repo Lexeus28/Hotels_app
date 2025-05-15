@@ -14,7 +14,7 @@ namespace Hotels_app
 
         private const int Iterations = 10000;
 
-        /// <summary>
+        /// <summary>A
         /// Хеширует пароль с использованием алгоритма PBKDF2.
         /// </summary>
         /// <param name="password">Пароль, который нужно хешировать.</param>
@@ -25,7 +25,7 @@ namespace Hotels_app
         /// </remarks>
         public static string HashPassword(string password)
         {
-            byte[] salt = new byte[SaltSize];
+            var salt = new byte[SaltSize];
             using (var rng = new RNGCryptoServiceProvider())
             {
                 rng.GetBytes(salt);
@@ -61,11 +61,11 @@ namespace Hotels_app
 
             using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, Iterations))
             {
-                byte[] hash = pbkdf2.GetBytes(HashSize);
+                var hash = pbkdf2.GetBytes(HashSize);
 
-                for (int i = 0; i < HashSize; i++)
+                for (var index = 0; index < HashSize; index++)
                 {
-                    if (hashBytes[i + SaltSize] != hash[i])
+                    if (hashBytes[index + SaltSize] != hash[index])
                     {
                         return false;
                     }

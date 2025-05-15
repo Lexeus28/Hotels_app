@@ -22,13 +22,13 @@ namespace Hotels_app
 
         private void OnPaint(object sender, PaintEventArgs e)
         {
-            bool isPasswordVisible = _passwordTextBox.PasswordChar == '\0';
+            var isPasswordVisible = _passwordTextBox.PasswordChar == '\0';
             using (var brush = new SolidBrush(Color.FromArgb(243, 200, 220)))
             {
-                string eyeIcon = "👁️‍🗨️";
+                var eyeIcon = "👁️‍🗨️";
                 var textSize = TextRenderer.MeasureText(eyeIcon, new Font("Segoe UI Emoji", 16F, FontStyle.Regular));
-                int x = (Width - textSize.Width) / 2;
-                int y = (Height - textSize.Height) / 2;
+                var x = (Width - textSize.Width) / 2;
+                var y = (Height - textSize.Height) / 2;
                 e.Graphics.DrawString(
                     eyeIcon,
                     new Font("Segoe UI Emoji", 16F, FontStyle.Regular),

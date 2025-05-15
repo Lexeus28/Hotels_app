@@ -6,13 +6,28 @@ namespace Hotels_app
     /// </summary>
     public class ApplicationDbContext : DbContext
     {   /// <summary>
-        /// DbSet для каждой таблицы
+        /// DbSet для пользователей
         /// </summary>
         public DbSet<User> Users { get; set; }
+        /// <summary>
+        /// DbSet для отелей
+        /// </summary>
         public DbSet<Hotel> Hotels { get; set; }
+        /// <summary>
+        /// DbSet для лайков
+        /// </summary>
         public DbSet<UserHotelLike> Likes { get; set; }
+        /// <summary>
+        /// DbSet для комнат
+        /// </summary>
         public DbSet<Room> Rooms { get; set; }
+        /// <summary>
+        /// DbSet для бронирований
+        /// </summary>
         public DbSet<Booking> Bookings { get; set; }
+        /// <summary>
+        /// DbSet для городов
+        /// </summary>
         public DbSet<City> Cities { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

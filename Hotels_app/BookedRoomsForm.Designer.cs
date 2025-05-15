@@ -226,9 +226,11 @@ namespace Hotels_app
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1052, 562);
             Controls.Add(mainPanel);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "BookedRoomsForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Booked Rooms";
+            Text = "Список забронированных номеров";
             mainPanel.ResumeLayout(false);
             rightPanel.ResumeLayout(false);
             rightPanel.PerformLayout();

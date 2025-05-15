@@ -318,6 +318,8 @@ namespace Hotels_app
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1050, 594);
             Controls.Add(panelMain);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "HotelListingForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Список отелей";

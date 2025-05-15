@@ -15,7 +15,7 @@ namespace Hotels_app
         private DateTime _checkOutDate;
 
         /// <summary>
-        /// Айди бронирования
+        /// Идентификатор бронирования
         /// </summary>
         [Key]
         public Guid booking_id
@@ -25,7 +25,7 @@ namespace Hotels_app
         }
 
         /// <summary>
-        /// Айди комнаты
+        /// Идентификатор комнаты
         /// </summary>
         public Guid room_id
         {
@@ -34,7 +34,7 @@ namespace Hotels_app
         }
 
         /// <summary>
-        /// Айди пользователя
+        /// Идентификатор пользователя
         /// </summary>
         public Guid user_id
         {
@@ -52,7 +52,7 @@ namespace Hotels_app
         }
 
         /// <summary>
-        /// Дата вьезда
+        /// Дата заезда
         /// </summary>
         public DateTime check_in_date
         {

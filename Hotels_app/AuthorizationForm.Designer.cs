@@ -177,6 +177,7 @@ namespace Hotels_app
             Controls.Add(panelMain);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4, 3, 4, 3);
+            MaximizeBox = false;
             Name = "AuthorizationForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Авторизация";

@@ -76,14 +76,20 @@ namespace Hotels_app
         private void UpdateAnimation()
         {
             if (_isPressed)
+            {
                 _pressOffset = Math.Min(_pressOffset + 0.05f, PressDepth);
+            }
             else
+            {
                 _pressOffset = Math.Max(_pressOffset - 0.05f, 0f);
+            }
 
             Invalidate();
 
             if (_pressOffset <= 0 && !_isPressed)
+            {
                 _animationTimer.Stop();
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -95,7 +101,7 @@ namespace Hotels_app
             _currentColor = _isPressed ? PressColor :
                           _isHovered ? HoverColor : BackColor;
 
-            Rectangle rect = new Rectangle(
+            var rect = new Rectangle(
                 (int)(_pressOffset * 4),
                 (int)(_pressOffset * 4),
                 Width - (int)(_pressOffset * 8) - 1,
@@ -113,7 +119,7 @@ namespace Hotels_app
                 }
             }
 
-            Rectangle textRect = new Rectangle(
+            var textRect = new Rectangle(
                 0,
                 (int)(_pressOffset * 2),
                 Width,
@@ -131,8 +137,8 @@ namespace Hotels_app
 
         private GraphicsPath GetRoundRectangle(Rectangle bounds, int radius)
         {
-            GraphicsPath path = new GraphicsPath();
-            int diameter = radius * 2;
+            var path = new GraphicsPath();
+            var diameter = radius * 2;
 
             path.AddArc(bounds.X, bounds.Y, diameter, diameter, 180, 90);
             path.AddArc(bounds.Right - diameter, bounds.Y, diameter, diameter, 270, 90);
@@ -145,7 +151,10 @@ namespace Hotels_app
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing) _animationTimer.Dispose();
+            if (disposing)
+            {
+                _animationTimer.Dispose();
+            }
             base.Dispose(disposing);
         }
     }

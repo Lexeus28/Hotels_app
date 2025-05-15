@@ -19,8 +19,8 @@ namespace Hotels_app
                         user_id = Guid.NewGuid(),
                         first_name = "Админ",
                         last_name = "Админов",
-                        username = "Admin",
-                        password_hash = PasswordHasher.HashPassword("123"),
+                        username = "Admin1",
+                        password_hash = PasswordHasher.HashPassword("123456"),
                         phone_number = "1234567890",
                         role = Role.Admin,
                         isfirstlogin = false

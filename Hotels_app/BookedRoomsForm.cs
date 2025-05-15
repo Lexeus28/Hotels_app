@@ -206,7 +206,7 @@ namespace Hotels_app
         {
             if (selectedBooking == null)
             {
-                MessageBox.Show("Пожалуйста, выберите номер для отмены бронирования.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.Error_DeletingBooking, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -216,7 +216,7 @@ namespace Hotels_app
 
                 if (booking == null)
                 {
-                    MessageBox.Show("Бронирование не найдено.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.Error_BookingNotFound, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 _context.Bookings.Remove(booking);
@@ -230,11 +230,11 @@ namespace Hotels_app
                 txtDateTo.Text = string.Empty;
                 selectedBooking = null;
 
-                MessageBox.Show("Бронирование успешно отменено.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.Success_DeletingBooking, Resources.Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Произошла ошибка при отмене бронирования: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"{Resources.Error_CancelingBooking} {ex.Message}", Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

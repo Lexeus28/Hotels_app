@@ -18,13 +18,28 @@ namespace Hotels_app
         private string _phone_number;
 
         /// <summary>
-        /// ответы на анкету
+        /// Своство, проверяющее, предпочитает ли пользователь море или горы
         /// </summary>
         public bool? prefers_sea { get; set; }               // Море (true) или Горы (false)
+        /// <summary>
+        /// Своство, проверяющее, предпочитает ли пользователь исторические места
+        /// </summary>
         public bool? prefers_historical_places { get; set; }  // Исторические места (true) или Нет (false)
+        /// <summary>
+        /// Своство, проверяющее, предпочитает ли пользователь активный отдых
+        /// </summary>
         public bool? prefers_active_rest { get; set; }        // Активный отдых (true) или Спокойный (false)
+        /// <summary>
+        /// Своство, проверяющее, предпочитает ли пользователь азиатскую кухню
+        /// </summary>
         public bool? prefers_asian_cuisine { get; set; }      // Азиатская кухня (true) или Европейская (false)
+        /// <summary>
+        /// Своство, проверяющее, предпочитает ли пользователь спокойные места
+        /// </summary>
         public bool? prefers_quiet_place { get; set; }        // Тихая местность (true) или Шумный город (false)
+        /// <summary>
+        /// Своство, проверяющее, в первый ли раз пользователь заходит в учётную запись
+        /// </summary>
         public bool isfirstlogin { get; set; } = true;
         /// <summary>
         /// Роль пользователя
@@ -33,7 +48,7 @@ namespace Hotels_app
         public Role role { get; set; } = Role.User;
 
         /// <summary>
-        /// Айди пользователя
+        /// Идентификатор пользователя
         /// </summary>
         [Key]
         public Guid user_id
@@ -122,7 +137,7 @@ namespace Hotels_app
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException("Пароль не может быть пустым.");
-                if (value.Length < 6)
+                if ((value).Length < 6)
                     throw new ArgumentException("Пароль должен быть меньше 6 символов.", nameof(value));
                 _passwordHash = value;
             }

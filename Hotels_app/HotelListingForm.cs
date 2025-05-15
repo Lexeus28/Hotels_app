@@ -30,7 +30,7 @@ namespace Hotels_app
             if (IsAdmin())
             {
                 BtnOpenQuestionnaire.Visible = false;
-                btnBooked.Text = "добавить отель";
+                btnBooked.Text = Resources.TextAddHotel;
                 btnBooked.Click -= btnBooked_Click;
                 btnBooked.Click += AddHotelButton_Click; 
                 btnEditAccount.Enabled = false;
@@ -60,7 +60,7 @@ namespace Hotels_app
                 FilterHotels();
             };
         }
-        bool IsAdmin()
+        private bool IsAdmin()
         { 
             return _context.Users.Any(u => u.username == _currentUser.username && u.role == Role.Admin);
         }
@@ -71,10 +71,18 @@ namespace Hotels_app
                 .Include(h => h.city) 
                 .ToList();
         }
+        /// <summary>
+        /// Перезагружает данные об отелях и применяет фильтры.
+        /// </summary>
+        /// <remarks>
+        /// Метод выполняет следующие действия:
+        /// 1. Загружает актуальные данные об отелях из базы данных.
+        /// 2. Применяет фильтры для отображения отелей в соответствии с текущими параметрами.
+        /// </remarks>
         public void ReloadHotels()
         {
-            LoadHotelsData(); 
-            FilterHotels(); 
+            LoadHotelsData();
+            FilterHotels();
         }
         private void LoadHotels(List<Hotel> filteredHotels = null)
         {
@@ -161,12 +169,12 @@ namespace Hotels_app
                     Text = Resources.TextEdit,
                     UseVisualStyleBackColor = false
                 };
-
                 editButton.Click += (sender, e) =>
                 {
-                    // Открываем форму AddHotelForm с данными отеля
-                    var addHotelForm = new AddHotelForm(_context, hotel, this);
-                    addHotelForm.Show();
+                    using (var addHotelForm = new AddHotelForm(_context, hotel, this))
+                    {
+                        addHotelForm.ShowDialog();
+                    }
                 };
 
                 hotelPanel.Controls.Add(editButton);
@@ -190,11 +198,12 @@ namespace Hotels_app
                     Text = Resources.TextRooms,
                     UseVisualStyleBackColor = false
                 };
-
                 roomsButton.Click += (sender, e) =>
                 {
-                    var roomListingForm = new RoomListingForm(_currentUser ,hotel, _context);
-                    roomListingForm.Show();
+                    using (var roomListingForm = new RoomListingForm(_currentUser, hotel, _context))
+                    {
+                        roomListingForm.ShowDialog();
+                    }
                 };
 
                 hotelPanel.Controls.Add(roomsButton);
@@ -412,6 +421,7 @@ namespace Hotels_app
         {
             var score = 0;
 
+            // Учет предпочтений пользователя
             if (user.prefers_sea.HasValue && user.prefers_sea.Value && hotel.has_sea_access) score++;
             if (user.prefers_sea.HasValue && !user.prefers_sea.Value && hotel.has_mountain_view) score++;
 
@@ -424,17 +434,55 @@ namespace Hotels_app
             if (user.prefers_quiet_place.HasValue && user.prefers_quiet_place.Value) score++;
             if (user.prefers_quiet_place.HasValue && !user.prefers_quiet_place.Value && hotel.is_city_center) score++;
 
+            // Учет лайков и дизлайков
             var likeRecord = _context.Likes
                 .FirstOrDefault(like => like.user_id == user.user_id && like.hotel_id == hotel.hotel_id);
 
             if (likeRecord != null)
             {
                 if (likeRecord.liked)
-                    score += 3;
+                    score += 3; // Лайк добавляет +3 балла
                 else
-                    score -= 2; 
+                    score -= 2; // Дизлайк вычитает -2 балла
             }
 
+            // Учет схожести с ранее лайкнутыми отелями
+            var likedHotels = _context.Likes
+                .Where(like => like.user_id == user.user_id && like.liked == true)
+                .Select(like => like.hotel)
+                .ToList();
+
+            foreach (var likedHotel in likedHotels)
+            {
+                // Исключаем сам лайкнутый отель из анализа схожести
+                if (hotel.hotel_id == likedHotel.hotel_id)
+                    continue;
+
+                var similarityScore = GetSimilarityScore(hotel, likedHotel);
+                if (similarityScore >= 3)
+                {
+                    score += 2;
+                }
+            }
+
+            // Учет схожести с ранее дизлайкнутыми отелями
+            var dislikedHotels = _context.Likes
+                .Where(like => like.user_id == user.user_id && like.liked == false)
+                .Select(like => like.hotel)
+                .ToList();
+
+            foreach (var dislikedHotel in dislikedHotels)
+            {
+                // Исключаем сам дизлайкнутый отель из анализа схожести
+                if (hotel.hotel_id == dislikedHotel.hotel_id)
+                    continue;
+
+                var similarityScore = GetSimilarityScore(hotel, dislikedHotel);
+                if (similarityScore >= 3) 
+                {
+                    score -= 2;
+                }
+            }
             // Учет схожести с ранее забронированными отелями
             var bookedHotels = _context.Bookings
                 .Where(b => b.user_id == user.user_id)
@@ -445,9 +493,9 @@ namespace Hotels_app
             foreach (var bookedHotel in bookedHotels)
             {
                 var similarityScore = GetSimilarityScore(hotel, bookedHotel);
-                if (similarityScore >= 3) // Если отель совпадает минимум по 3 пунктам
+                if (similarityScore >= 3) 
                 {
-                    score += 2; // Добавляем 2 балла за схожесть
+                    score += 2;
                 }
             }
 
@@ -533,7 +581,7 @@ namespace Hotels_app
 
             if (userBookings.Count == 0)
             {
-                MessageBox.Show("У вас нет забронированных номеров.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.Information_NoBookedRooms, Resources.Information, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return; 
             }
             var bookedRoomsForm = new BookedRoomsForm(userBookings, _currentUser, _context);

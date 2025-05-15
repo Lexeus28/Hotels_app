@@ -6,7 +6,13 @@
     public partial class AddRoomForm : Form
     {
         private readonly ApplicationDbContext _context;
+        // <summary>
+        ///  австосвойство для временного хранения списка комнат
+        ///</summary>
         public List<Room> TemporaryRooms { get; private set; } = new List<Room>();
+        // <summary>
+        ///  автосвойство для хранения созданной комнаты
+        ///</summary>
         public Room CreatedRoom { get; private set; }
         private Hotel _hotel;
 
@@ -91,7 +97,7 @@
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = Properties.Resources.ImageFilesFilter;
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
                 openFileDialog.Title = Properties.Resources.SelectImageTitle;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -117,6 +123,7 @@
         private void btnDeleteImage_Click(object sender, EventArgs e)
         {
             pictureBox.Image = null;
+            CreatedRoom.image = null;
         }
     }
 }

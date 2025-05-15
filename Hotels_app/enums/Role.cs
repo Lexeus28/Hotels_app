@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Hotels_app
 {
     /// <summary>
-    /// Енам роли пользователя
+    /// Перечисление ролей пользователя
     /// </summary>
     public enum Role
     {

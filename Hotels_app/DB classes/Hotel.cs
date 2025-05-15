@@ -27,7 +27,7 @@ namespace Hotels_app
         private bool _isCityCenter;
 
         /// <summary>
-        /// Айди отеля
+        /// Идентификатор отеля
         /// </summary>
         [Key]
         public Guid hotel_id
@@ -50,7 +50,7 @@ namespace Hotels_app
                 }
                 if (value.Length > 35)
                 {
-                    throw new ArgumentException("Название отеля не должно превышать 35  символов.", nameof(value));
+                    throw new ArgumentException("Название отеля не должно превышать 35 символов.", nameof(value));
                 }
                 _hotelName = value;
             }

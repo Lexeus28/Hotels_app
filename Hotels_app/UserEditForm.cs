@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using Hotels_app.Properties;
 namespace Hotels_app
 {
     // <summary>
@@ -6,9 +7,23 @@ namespace Hotels_app
     ///</summary>
     public partial class UserEditForm : Form
     {
+        /// <summary>
+        /// Импортирует функцию SendMessage из user32.dll.
+        /// Используется для отправки сообщений оконной системе Windows.
+        /// </summary>
+        /// <param name="hWnd">Дескриптор окна, которому отправляется сообщение.</param>
+        /// <param name="Msg">Тип сообщения.</param>
+        /// <param name="wParam">Дополнительный параметр сообщения.</param>
+        /// <param name="lParam">Дополнительный параметр сообщения.</param>
+        /// <returns>Результат выполнения сообщения.</returns>
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
+        /// <summary>
+        /// Импортирует функцию ReleaseCapture из user32.dll.
+        /// Используется для освобождения захвата мыши на элементе управления или окне.
+        /// </summary>
+        /// <returns>Возвращает true, если операция успешна; иначе false.</returns>
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
@@ -48,25 +63,31 @@ namespace Hotels_app
                 _user.last_name = txtLastName.Text;
                 _user.patronymic = txtPatronymic.Text;
                 _user.phone_number = txtPhoneNumber.Text;
+                var newPassword = txtNewPassword.Text;
 
                 try
                 {
+                    if (newPassword.Length < 6 && newPassword.Length != 0)
+                    {
+                        MessageBox.Show(Resources.Error_ShortPassword, Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     SavePassword();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при обработке пароля: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"{Resources.Error_PasswordValidation} {ex.Message}",Resources.Error_mes , MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return; 
                 }
                 _context.SaveChanges();
 
-                MessageBox.Show("Данные успешно сохранены.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.Success_SavingData, Resources.Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"{Resources.Error_Mistake} {ex.Message}", Resources.Error_mes, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void SavePassword()
@@ -81,31 +102,31 @@ namespace Hotels_app
 
             if (string.IsNullOrEmpty(oldPassword))
             {
-                throw new Exception("Пожалуйста, введите старый пароль.");
+                throw new Exception(Resources.Error_EmptyOldPassword);
             }
 
             if (string.IsNullOrEmpty(newPassword))
             {
-                throw new Exception("Пожалуйста, введите новый пароль.");
+                throw new Exception(Resources.Error_EmptyNewPassword);
             }
 
             var isOldPasswordCorrect = PasswordHasher.VerifyPassword(oldPassword, _user.password_hash);
             if (!isOldPasswordCorrect)
             {
-                throw new Exception("Старый пароль неверен.");
+                throw new Exception(Resources.Error_WrongOldPassword);
             }
             var hashedNewPassword = PasswordHasher.HashPassword(newPassword);
 
             _user.password_hash = hashedNewPassword;
 
-            MessageBox.Show("Пароль успешно изменен.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Resources.Success_PasswordChange, Resources.Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnDeleteAccount_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
-                "Вы уверены, что хотите удалить свой аккаунт? Это действие нельзя отменить.",
-                "Подтверждение удаления",
+                Resources.Confirm_DeleteAccount,
+                Resources.Title_DeleteConfirmation,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
 
@@ -114,7 +135,7 @@ namespace Hotels_app
                 _context.Users.Remove(_user);
                 _context.SaveChanges();
 
-                MessageBox.Show("Аккаунт успешно удален.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.Success_DeletingAccount, Resources.Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.Close();
 
