@@ -601,7 +601,7 @@ namespace Hotels_app
                     .ToList();
             }
         }
-        public int GetSimilarityScore(Hotel hotel1, Hotel hotel2)
+        private int GetSimilarityScore(Hotel hotel1, Hotel hotel2)
         {
             var similarityScore = 0;
 
