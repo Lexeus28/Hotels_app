@@ -29,9 +29,7 @@ namespace Hotels_app.Tests
             [TestMethod]
             public void HotelDescription_ThrowsException_WhenTooLong()
             {
-                // Arrange
                 var hotel = new Hotel();
-                // Act & Assert
                 Assert.ThrowsException<ArgumentException>(() => hotel.hotel_description = new string('A', 300));
             }
 
@@ -39,8 +37,8 @@ namespace Hotels_app.Tests
             public void HotelDescription_SetsCorrectly_WhenValid()
             {
                 var hotel = new Hotel();
-                hotel.hotel_description = "Luxury hotel with sea view.";
-                Assert.AreEqual("Luxury hotel with sea view.", hotel.hotel_description);
+                hotel.hotel_description = "шикарный отель";
+                Assert.AreEqual("шикарный отель", hotel.hotel_description);
             }
 
             [TestMethod]
@@ -55,8 +53,8 @@ namespace Hotels_app.Tests
             public void Address_SetsCorrectly_WhenValid()
             {
                 var hotel = new Hotel();
-                hotel.address = "123 Ocean Drive";
-                Assert.AreEqual("123 Ocean Drive", hotel.address);
+                hotel.address = "30 лет победы";
+                Assert.AreEqual("30 лет победы", hotel.address);
             }
 
             [TestMethod]
