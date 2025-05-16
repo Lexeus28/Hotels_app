@@ -601,7 +601,7 @@ namespace Hotels_app
                     .ToList();
             }
         }
-        private int GetSimilarityScore(Hotel hotel1, Hotel hotel2)
+        public int GetSimilarityScore(Hotel hotel1, Hotel hotel2)
         {
             var similarityScore = 0;
 
@@ -650,5 +650,6 @@ namespace Hotels_app
             var addHotelForm = new AddHotelForm(_context, null, this); ;
             addHotelForm.ShowDialog();
         }
+
     }
 }

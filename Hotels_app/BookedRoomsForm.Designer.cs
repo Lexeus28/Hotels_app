@@ -54,8 +54,9 @@ namespace Hotels_app
             mainPanel.Controls.Add(leftPanel);
             mainPanel.Dock = DockStyle.Fill;
             mainPanel.Location = new Point(0, 0);
+            mainPanel.Margin = new Padding(3, 4, 3, 4);
             mainPanel.Name = "mainPanel";
-            mainPanel.Size = new Size(1052, 562);
+            mainPanel.Size = new Size(1202, 749);
             mainPanel.TabIndex = 0;
             // 
             // rightPanel
@@ -67,9 +68,10 @@ namespace Hotels_app
             rightPanel.Controls.Add(fromDatePanel);
             rightPanel.Controls.Add(cancelBookingButton);
             rightPanel.Controls.Add(backToHotelsButton);
-            rightPanel.Location = new Point(802, 14);
+            rightPanel.Location = new Point(917, 19);
+            rightPanel.Margin = new Padding(3, 4, 3, 4);
             rightPanel.Name = "rightPanel";
-            rightPanel.Size = new Size(236, 535);
+            rightPanel.Size = new Size(270, 713);
             rightPanel.TabIndex = 1;
             // 
             // selectDateLabel
@@ -77,9 +79,9 @@ namespace Hotels_app
             selectDateLabel.AutoSize = true;
             selectDateLabel.Font = new Font("Microsoft Sans Serif", 14F);
             selectDateLabel.ForeColor = Color.FromArgb(64, 0, 64);
-            selectDateLabel.Location = new Point(36, 18);
+            selectDateLabel.Location = new Point(41, 24);
             selectDateLabel.Name = "selectDateLabel";
-            selectDateLabel.Size = new Size(153, 24);
+            selectDateLabel.Size = new Size(196, 29);
             selectDateLabel.TabIndex = 5;
             selectDateLabel.Text = "Забронировано";
             // 
@@ -87,19 +89,21 @@ namespace Hotels_app
             // 
             toDatePanel.Controls.Add(txtDateTo);
             toDatePanel.Controls.Add(toLabel);
-            toDatePanel.Location = new Point(5, 141);
+            toDatePanel.Location = new Point(6, 188);
+            toDatePanel.Margin = new Padding(3, 4, 3, 4);
             toDatePanel.Name = "toDatePanel";
-            toDatePanel.Size = new Size(228, 38);
+            toDatePanel.Size = new Size(261, 51);
             toDatePanel.TabIndex = 2;
             // 
             // txtDateTo
             // 
             txtDateTo.BackColor = Color.FromArgb(243, 200, 220);
             txtDateTo.ForeColor = Color.FromArgb(64, 0, 64);
-            txtDateTo.Location = new Point(96, 8);
+            txtDateTo.Location = new Point(110, 11);
+            txtDateTo.Margin = new Padding(3, 4, 3, 4);
             txtDateTo.Name = "txtDateTo";
             txtDateTo.ReadOnly = true;
-            txtDateTo.Size = new Size(129, 23);
+            txtDateTo.Size = new Size(147, 27);
             txtDateTo.TabIndex = 14;
             // 
             // toLabel
@@ -107,9 +111,9 @@ namespace Hotels_app
             toLabel.AutoSize = true;
             toLabel.Font = new Font("Segoe UI", 10F);
             toLabel.ForeColor = Color.FromArgb(64, 0, 64);
-            toLabel.Location = new Point(65, 8);
+            toLabel.Location = new Point(74, 11);
             toLabel.Name = "toLabel";
-            toLabel.Size = new Size(25, 19);
+            toLabel.Size = new Size(30, 23);
             toLabel.TabIndex = 0;
             toLabel.Text = "по";
             // 
@@ -117,19 +121,21 @@ namespace Hotels_app
             // 
             fromDatePanel.Controls.Add(txtDateFrom);
             fromDatePanel.Controls.Add(fromLabel);
-            fromDatePanel.Location = new Point(5, 97);
+            fromDatePanel.Location = new Point(6, 129);
+            fromDatePanel.Margin = new Padding(3, 4, 3, 4);
             fromDatePanel.Name = "fromDatePanel";
-            fromDatePanel.Size = new Size(228, 38);
+            fromDatePanel.Size = new Size(261, 51);
             fromDatePanel.TabIndex = 1;
             // 
             // txtDateFrom
             // 
             txtDateFrom.BackColor = Color.FromArgb(243, 200, 220);
             txtDateFrom.ForeColor = Color.FromArgb(64, 0, 64);
-            txtDateFrom.Location = new Point(95, 8);
+            txtDateFrom.Location = new Point(109, 11);
+            txtDateFrom.Margin = new Padding(3, 4, 3, 4);
             txtDateFrom.Name = "txtDateFrom";
             txtDateFrom.ReadOnly = true;
-            txtDateFrom.Size = new Size(130, 23);
+            txtDateFrom.Size = new Size(148, 27);
             txtDateFrom.TabIndex = 12;
             // 
             // fromLabel
@@ -137,9 +143,9 @@ namespace Hotels_app
             fromLabel.AutoSize = true;
             fromLabel.Font = new Font("Segoe UI", 10F);
             fromLabel.ForeColor = Color.FromArgb(64, 0, 64);
-            fromLabel.Location = new Point(68, 8);
+            fromLabel.Location = new Point(78, 11);
             fromLabel.Name = "fromLabel";
-            fromLabel.Size = new Size(15, 19);
+            fromLabel.Size = new Size(18, 23);
             fromLabel.TabIndex = 0;
             fromLabel.Text = "с";
             // 
@@ -154,12 +160,13 @@ namespace Hotels_app
             cancelBookingButton.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             cancelBookingButton.ForeColor = Color.FromArgb(243, 200, 220);
             cancelBookingButton.HoverColor = Color.FromArgb(213, 140, 176);
-            cancelBookingButton.Location = new Point(36, 475);
-            cancelBookingButton.MinimumSize = new Size(100, 46);
+            cancelBookingButton.Location = new Point(41, 633);
+            cancelBookingButton.Margin = new Padding(3, 4, 3, 4);
+            cancelBookingButton.MinimumSize = new Size(114, 61);
             cancelBookingButton.Name = "cancelBookingButton";
             cancelBookingButton.PressColor = Color.FromArgb(132, 49, 90);
             cancelBookingButton.PressDepth = 0.15F;
-            cancelBookingButton.Size = new Size(158, 46);
+            cancelBookingButton.Size = new Size(181, 61);
             cancelBookingButton.TabIndex = 4;
             cancelBookingButton.Text = Resources.TextCancelBooking;
             cancelBookingButton.UseVisualStyleBackColor = false;
@@ -176,12 +183,13 @@ namespace Hotels_app
             backToHotelsButton.Font = new Font("Microsoft Sans Serif", 12F);
             backToHotelsButton.ForeColor = Color.FromArgb(243, 200, 220);
             backToHotelsButton.HoverColor = Color.FromArgb(213, 140, 176);
-            backToHotelsButton.Location = new Point(36, 423);
-            backToHotelsButton.MinimumSize = new Size(100, 46);
+            backToHotelsButton.Location = new Point(41, 564);
+            backToHotelsButton.Margin = new Padding(3, 4, 3, 4);
+            backToHotelsButton.MinimumSize = new Size(114, 61);
             backToHotelsButton.Name = "backToHotelsButton";
             backToHotelsButton.PressColor = Color.FromArgb(132, 49, 90);
             backToHotelsButton.PressDepth = 0.15F;
-            backToHotelsButton.Size = new Size(158, 46);
+            backToHotelsButton.Size = new Size(181, 61);
             backToHotelsButton.TabIndex = 3;
             backToHotelsButton.Text = Resources.TextBackToHotels;
             backToHotelsButton.UseVisualStyleBackColor = false;
@@ -192,9 +200,10 @@ namespace Hotels_app
             leftPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             leftPanel.AutoScroll = true;
             leftPanel.Controls.Add(headlinePanel);
-            leftPanel.Location = new Point(14, 14);
+            leftPanel.Location = new Point(16, 19);
+            leftPanel.Margin = new Padding(3, 4, 3, 4);
             leftPanel.Name = "leftPanel";
-            leftPanel.Size = new Size(781, 535);
+            leftPanel.Size = new Size(893, 713);
             leftPanel.TabIndex = 0;
             // 
             // headlinePanel
@@ -203,8 +212,9 @@ namespace Hotels_app
             headlinePanel.Controls.Add(bookedRoomsLabel);
             headlinePanel.Dock = DockStyle.Top;
             headlinePanel.Location = new Point(0, 0);
+            headlinePanel.Margin = new Padding(3, 4, 3, 4);
             headlinePanel.Name = "headlinePanel";
-            headlinePanel.Size = new Size(781, 47);
+            headlinePanel.Size = new Size(893, 63);
             headlinePanel.TabIndex = 0;
             // 
             // bookedRoomsLabel
@@ -215,18 +225,19 @@ namespace Hotels_app
             bookedRoomsLabel.ForeColor = Color.FromArgb(64, 0, 64);
             bookedRoomsLabel.Location = new Point(0, 0);
             bookedRoomsLabel.Name = "bookedRoomsLabel";
-            bookedRoomsLabel.Size = new Size(220, 32);
+            bookedRoomsLabel.Size = new Size(274, 41);
             bookedRoomsLabel.TabIndex = 0;
             bookedRoomsLabel.Text = "Забронированные";
             bookedRoomsLabel.TextAlign = ContentAlignment.BottomLeft;
             // 
             // BookedRoomsForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1052, 562);
+            ClientSize = new Size(1202, 749);
             Controls.Add(mainPanel);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "BookedRoomsForm";
             StartPosition = FormStartPosition.CenterScreen;

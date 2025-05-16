@@ -24,7 +24,7 @@
             InitializeComponent();
             CreatedRoom = new Room();
         }
-        private bool IsRoomNameUnique(string roomName)
+        public bool IsRoomNameUnique(string roomName)
         {
             return !TemporaryRooms.Any(room => room.name.Equals(roomName, StringComparison.OrdinalIgnoreCase));
         }
